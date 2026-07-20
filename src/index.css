@@ -1,0 +1,205 @@
+:root {
+  --bg: #0f1b2d;
+  --bg-light: #edf1f7;
+  --card: #1e293b;
+  --card-light: #ffffff;
+  --segmented: #152238;
+  --text: #f0f4f8;
+  --text-dark: #0f1b2d;
+  --accent: #c87d2f;
+  --accent-blue: #3d5a80;
+  --border: rgba(240, 244, 248, 0.09);
+  --border-light: rgba(15, 27, 45, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.mono {
+  font-family: "Space Mono", monospace;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover utility classes (JSX inline styles can't do :hover) */
+.btn-accent {
+  transition: transform 0.15s, filter 0.15s;
+}
+.btn-accent:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.nav-link {
+  transition: color 0.15s;
+}
+.nav-link:hover {
+  color: var(--text) !important;
+}
+
+.footer-link {
+  transition: color 0.15s;
+}
+.footer-link:hover {
+  color: var(--accent) !important;
+}
+
+.underline-link {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.underline-link:hover {
+  border-bottom: 1px solid var(--accent);
+}
+
+.diff-card {
+  transition: border-color 0.15s, transform 0.15s;
+}
+.diff-card:hover {
+  border-color: rgba(200, 125, 47, 0.6);
+  transform: translateY(-3px);
+}
+
+.arrow-btn {
+  transition: border-color 0.15s, background 0.15s;
+}
+.arrow-btn:hover {
+  border-color: var(--accent);
+  background: rgba(200, 125, 47, 0.1);
+}
+
+.seg-btn {
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.project-card {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.project-card:hover {
+  border-color: rgba(200, 125, 47, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+}
+.project-card:hover .project-card__cta {
+  color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* Responsive layout overrides */
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .diff-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .servicos-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .connector {
+    flex-direction: row !important;
+    padding: 20px 0 !important;
+  }
+  .connector > div:first-child,
+  .connector > div:last-child {
+    width: auto !important;
+    height: 2px !important;
+  }
+  .connector > div:first-child {
+    background: linear-gradient(to right, transparent, #c87d2f) !important;
+  }
+  .connector > div:last-child {
+    background: linear-gradient(to left, transparent, #c87d2f) !important;
+  }
+  .servicos-grid > div:first-child {
+    border-radius: 14px 14px 0 0 !important;
+  }
+  .servicos-grid > div:last-child {
+    border-radius: 0 0 14px 14px !important;
+  }
+  .sobre-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .testimonial-card {
+    grid-template-columns: 1fr !important;
+  }
+  .testimonial-metric {
+    padding-left: 0 !important;
+    border-left: none !important;
+    padding-top: 24px !important;
+    border-top: 1px solid rgba(15, 27, 45, 0.1) !important;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .project-sections-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 38px !important;
+  }
+  h2 {
+    font-size: 28px !important;
+  }
+  .header-nav {
+    display: none !important;
+  }
+}
