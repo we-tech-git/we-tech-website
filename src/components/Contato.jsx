@@ -43,10 +43,11 @@ export default function Contato() {
               color: "#0F1B2D",
             }}
           >
-            BUILD. <span style={{ color: "#C87D2F" }}>SCALE.</span> REPEAT.
+            BUILD. <span style={{ color: "#C87D2F" }}>SCALE.</span> REPEAT..
           </div>
           <p
             style={{
+              
               fontSize: 18,
               lineHeight: 1.55,
               color: "rgba(15,27,45,0.66)",
