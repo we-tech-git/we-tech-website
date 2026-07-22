@@ -79,17 +79,6 @@ export default function ProjectsGallery() {
     <>
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "76px 28px 60px" }}>
         <div ref={intro.ref} className={intro.className} style={{ maxWidth: 680 }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.1em",
-              color: "#C87D2F",
-              marginBottom: 16,
-            }}
-          >
-            // 05 — PORTFÓLIO
-          </div>
           <h1
             style={{
               fontSize: 44,

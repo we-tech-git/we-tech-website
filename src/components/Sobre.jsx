@@ -16,17 +16,6 @@ export default function Sobre() {
         }}
       >
         <div ref={left.ref} className={left.className}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.1em",
-              color: "#C87D2F",
-              marginBottom: 16,
-            }}
-          >
-            // 04 — QUEM SOMOS
-          </div>
           <h2
             style={{
               fontSize: 38,

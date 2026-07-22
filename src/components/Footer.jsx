@@ -36,7 +36,7 @@ export default function Footer() {
           WhatsApp
         </a>
         <a
-          href="https://instagram.com/wetechhub"
+          href="https://www.instagram.com/wetech.h/"
           target="_blank"
           rel="noreferrer"
           className="footer-link"

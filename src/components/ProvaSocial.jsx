@@ -34,17 +34,6 @@ export default function ProvaSocial() {
           }}
         >
           <div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 12,
-                letterSpacing: "0.1em",
-                color: "#C87D2F",
-                marginBottom: 16,
-              }}
-            >
-              // 03 — QUEM JÁ ESCALOU COM A GENTE
-            </div>
             <h2
               style={{
                 fontSize: 38,

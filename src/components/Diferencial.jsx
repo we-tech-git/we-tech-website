@@ -60,17 +60,6 @@ export default function Diferencial() {
     >
       <div style={{ maxWidth: 1160, margin: "0 auto", padding: "84px 28px" }}>
         <div ref={intro.ref} className={intro.className} style={{ maxWidth: 760 }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.1em",
-              color: "#C87D2F",
-              marginBottom: 16,
-            }}
-          >
-            // 01 — O PROBLEMA QUE RESOLVEMOS
-          </div>
           <h2
             style={{
               fontSize: 38,

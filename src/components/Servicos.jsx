@@ -65,17 +65,6 @@ export default function Servicos() {
         className={intro.className}
         style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 52px" }}
       >
-        <div
-          className="mono"
-          style={{
-            fontSize: 12,
-            letterSpacing: "0.1em",
-            color: "#C87D2F",
-            marginBottom: 16,
-          }}
-        >
-          // 02 — O QUE FAZEMOS
-        </div>
         <h2
           style={{
             fontSize: 38,
