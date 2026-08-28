@@ -192,7 +192,7 @@ export default function ProjectDetail() {
 }
 
 /* Section card sub-component */
-function SectionCard({ num, titulo, texto, delay }) {
+function SectionCard({ titulo, texto, delay }) {
   const { ref, className } = useReveal();
   return (
     <div
@@ -200,7 +200,6 @@ function SectionCard({ num, titulo, texto, delay }) {
       className={`${className} surface pd__section-card`}
       style={{ transitionDelay: `${delay}s` }}
     >
-      <span className="pd__section-num">{num}</span>
       <h3 className="pd__section-title">{titulo}</h3>
       <p className="pd__section-text">{texto}</p>
     </div>

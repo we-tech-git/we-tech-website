@@ -1,8 +1,14 @@
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projetos } from "../projetos.js";
 import useReveal from "../hooks/useReveal.js";
+import { EASINGS, DURATIONS, prefersReducedMotion, isPointerFine } from "../motion.js";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ---------------------------------------------------------------
    PROJECT ORDER — curated for visual strength & sector variety
@@ -12,9 +18,9 @@ import useReveal from "../hooks/useReveal.js";
    4. Blue Token   — Web3, live link, monumental close
    --------------------------------------------------------------- */
 const projectOrder = ["toro-token", "genesis-bank", "triper", "blue-token"];
-const ordered = projectOrder.map((slug) =>
-  projetos.find((p) => p.slug === slug)
-).filter(Boolean);
+const ordered = projectOrder
+  .map((slug) => projetos.find((p) => p.slug === slug))
+  .filter(Boolean);
 
 /* Resolve WebP with PNG fallback */
 function imgSrc(path) {
@@ -26,53 +32,218 @@ function fallbackImgSrc(path) {
 }
 
 /* ---------------------------------------------------------------
-   PROJECT ROW — each row has a variant for visual rhythm
-   variant 0: image right, large (dominant)
-   variant 1: image left, reversed
-   variant 2: compact, default proportions
-   variant 3: monumental close, image emphasis
+   PROJECT CONFIGURATIONS — 3 Scales, Asymmetric Signatures & Rhythm
+   - toro-token:   LARGE / Opening case / Full-Bleed Right / Mask Reveal
+   - genesis-bank: MEDIUM / Institutional Precision / Reversed / Chrome-First
+   - triper:       COMPACT / Editorial Pause / Negative Space / Minimal Settle
+   - blue-token:   LARGE / Monumental Close / Panoramic Masked Expansion
    --------------------------------------------------------------- */
-function ProjectRow({ projeto, index, variant }) {
-  const reveal = useReveal();
+const projectConfigs = {
+  "toro-token": {
+    scale: "large",
+    variant: "bleed-right",
+    hasChrome: false,
+    aspectRatio: "16 / 8.5",
+    revealVariant: "mask",
+  },
+  "genesis-bank": {
+    scale: "medium",
+    variant: "reversed-chrome",
+    hasChrome: true,
+    chromeDomain: "genesisbank.com.br",
+    aspectRatio: "16 / 10",
+    revealVariant: "standard",
+  },
+  "triper": {
+    scale: "compact",
+    variant: "compact-editorial",
+    hasChrome: false,
+    aspectRatio: "16 / 11",
+    revealVariant: "standard",
+  },
+  "blue-token": {
+    scale: "large",
+    variant: "monumental-close",
+    hasChrome: false,
+    aspectRatio: "16 / 8.2",
+    revealVariant: "clip",
+  },
+};
+
+/* ---------------------------------------------------------------
+   PROJECT ROW — distinct compositive & motion signature per case
+   --------------------------------------------------------------- */
+function ProjectRow({ projeto, index }) {
   const num = String(index + 1).padStart(2, "0");
   const total = ordered.length;
-  const imgRef = useRef(null);
+  const rowRef = useRef(null);
+  const imgFrameRef = useRef(null);
+  const imgElementRef = useRef(null);
   const metaRef = useRef(null);
+  const chromeRef = useRef(null);
 
-  const isReversed = variant === 1;
+  const config = projectConfigs[projeto.slug] || {
+    scale: "medium",
+    variant: "default",
+    hasChrome: false,
+    revealVariant: "standard",
+  };
 
-  /* Subtle hover: image scale + metadata shift */
+  const isReversed = config.variant === "reversed-chrome";
+
+  /* ---- Dedicated GSAP Scroll-Triggered Entrance per Project Type ---- */
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      const isDesktop = window.innerWidth >= 1025;
+
+      if (projeto.slug === "toro-token") {
+        // TORO TOKEN: Image mask expands from left + subtle scale settle, metadata enters with stagger
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+
+        tl.fromTo(
+          imgFrameRef.current,
+          { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+          {
+            clipPath: "inset(0 0% 0 0)",
+            opacity: 1,
+            duration: 0.85,
+            ease: EASINGS.precisionOut,
+          },
+          0
+        )
+          .fromTo(
+            imgElementRef.current,
+            { scale: 1.04 },
+            { scale: 1, duration: 0.95, ease: EASINGS.precisionOut },
+            0.05
+          )
+          .fromTo(
+            metaRef.current,
+            { opacity: 0, x: -16 },
+            { opacity: 1, x: 0, duration: 0.65, ease: EASINGS.precisionOut },
+            0.25
+          );
+      } else if (projeto.slug === "genesis-bank") {
+        // GENESIS BANK: Browser Chrome appears first, UI screenshot reveals inside, metadata completes
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+
+        if (chromeRef.current) {
+          tl.fromTo(
+            chromeRef.current,
+            { opacity: 0, y: -8 },
+            { opacity: 1, y: 0, duration: 0.45, ease: EASINGS.precisionOut },
+            0
+          );
+        }
+
+        tl.fromTo(
+          imgFrameRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7, ease: EASINGS.precisionOut },
+          0.1
+        ).fromTo(
+          metaRef.current,
+          { opacity: 0, x: 16 },
+          { opacity: 1, x: 0, duration: 0.6, ease: EASINGS.precisionOut },
+          0.25
+        );
+      } else if (projeto.slug === "triper") {
+        // TRIPER: Editorial pause — minimal, calm fade with short translate
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            ease: EASINGS.editorial,
+            scrollTrigger: {
+              trigger: el,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      } else if (projeto.slug === "blue-token") {
+        // BLUE TOKEN: Monumental Close — Wide masked expansion
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: "top 78%",
+            toggleActions: "play none none none",
+          },
+        });
+
+        tl.fromTo(
+          imgFrameRef.current,
+          { clipPath: "inset(0 0 100% 0)", opacity: 0 },
+          {
+            clipPath: "inset(0 0 0% 0)",
+            opacity: 1,
+            duration: 0.9,
+            ease: EASINGS.precisionOut,
+          },
+          0
+        ).fromTo(
+          metaRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.65, ease: EASINGS.precisionOut },
+          0.3
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, [projeto.slug]);
+
+  /* ---- Subtle Interactive Hover (Image Scale 1.015, Meta Shift +4px) ---- */
   const handleMouseEnter = useCallback(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const img = imgRef.current;
+    if (prefersReducedMotion() || !isPointerFine()) return;
+    const img = imgElementRef.current;
     const meta = metaRef.current;
-    if (img) gsap.to(img, { scale: 1.02, duration: 0.6, ease: "power3.out" });
-    if (meta) gsap.to(meta, { x: 4, duration: 0.5, ease: "power3.out" });
+    if (img) gsap.to(img, { scale: 1.015, duration: 0.5, ease: EASINGS.precisionOut, overwrite: "auto" });
+    if (meta) gsap.to(meta, { x: 4, duration: 0.45, ease: EASINGS.precisionOut, overwrite: "auto" });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    const img = imgRef.current;
+    if (prefersReducedMotion() || !isPointerFine()) return;
+    const img = imgElementRef.current;
     const meta = metaRef.current;
-    if (img) gsap.to(img, { scale: 1, duration: 0.5, ease: "power3.out" });
-    if (meta) gsap.to(meta, { x: 0, duration: 0.4, ease: "power3.out" });
+    if (img) gsap.to(img, { scale: 1, duration: 0.45, ease: EASINGS.precisionOut, overwrite: "auto" });
+    if (meta) gsap.to(meta, { x: 0, duration: 0.4, ease: EASINGS.precisionOut, overwrite: "auto" });
   }, []);
 
   return (
     <article
-      className={`sw-row sw-row--v${variant}`}
+      ref={rowRef}
+      className={`sw-row sw-row--${config.variant} sw-row--scale-${config.scale}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <Link
         to={`/projetos/${projeto.slug}`}
-        ref={reveal.ref}
-        className={`sw-row__link ${reveal.className}`}
+        className="sw-row__link"
         aria-label={`Ver projeto ${projeto.nome}`}
       >
         {/* Metadata column */}
         <div
-          className={`sw-row__meta ${isReversed ? "sw-row__meta--right" : ""}`}
           ref={metaRef}
+          className={`sw-row__meta ${isReversed ? "sw-row__meta--right" : ""}`}
         >
           <div className="sw-row__index">
             <span className="mono sw-row__num">{num}</span>
@@ -82,7 +253,7 @@ function ProjectRow({ projeto, index, variant }) {
             </span>
           </div>
 
-          <h3 className={`sw-row__name ${variant === 3 ? "sw-row__name--lg" : ""}`}>
+          <h3 className={`sw-row__name sw-row__name--${config.scale}`}>
             {projeto.nome}
           </h3>
 
@@ -99,21 +270,38 @@ function ProjectRow({ projeto, index, variant }) {
           )}
 
           <span className="sw-row__cta">
-            Ver projeto <span className="btn-arrow">→</span>
+            Ver projeto <span className="btn-arrow" aria-hidden="true">→</span>
           </span>
         </div>
 
         {/* Media column */}
         <div
-          className={`sw-row__media ${isReversed ? "sw-row__media--left" : ""} ${variant === 3 ? "sw-row__media--monumental" : ""}`}
+          className={`sw-row__media ${isReversed ? "sw-row__media--left" : ""}`}
         >
-          <div className="sw-row__media-frame" ref={imgRef}>
+          <div className="sw-row__media-frame" ref={imgFrameRef}>
+            {/* Optional Browser Chrome (Genesis Bank) */}
+            {config.hasChrome && (
+              <div ref={chromeRef} className="sw-chrome" aria-hidden="true">
+                <div className="sw-chrome__dots">
+                  <span className="sw-chrome__dot" />
+                  <span className="sw-chrome__dot" />
+                  <span className="sw-chrome__dot" />
+                </div>
+                <div className="sw-chrome__address">
+                  <span className="mono sw-chrome__url">
+                    {config.chromeDomain}
+                  </span>
+                </div>
+              </div>
+            )}
+
             <picture>
               <source
                 srcSet={imgSrc(projeto.preview || projeto.capa)}
                 type="image/webp"
               />
               <img
+                ref={imgElementRef}
                 src={fallbackImgSrc(projeto.preview || projeto.capa)}
                 alt={`Interface do projeto ${projeto.nome}`}
                 loading={index === 0 ? "eager" : "lazy"}
@@ -133,9 +321,7 @@ function ProjectRow({ projeto, index, variant }) {
    SELECTED WORK SECTION
    --------------------------------------------------------------- */
 export default function SelectedWork() {
-  const introReveal = useReveal();
-
-  const variants = [0, 1, 2, 3];
+  const introReveal = useReveal({ variant: "mask" });
 
   return (
     <section id="work" className="sw" aria-labelledby="sw-heading">
@@ -146,8 +332,8 @@ export default function SelectedWork() {
           ref={introReveal.ref}
         >
           <div className="sw-intro__top">
-            <span className="mono eyebrow">01 / Projetos</span>
-            <span className="mono sw-intro__count">04 projetos</span>
+            <span className="mono eyebrow">Projetos</span>
+            <span className="mono sw-intro__count">{ordered.length} projetos</span>
           </div>
 
           <div className="sw-intro__hairline" aria-hidden="true" />
@@ -169,7 +355,6 @@ export default function SelectedWork() {
               key={projeto.slug}
               projeto={projeto}
               index={i}
-              variant={variants[i]}
             />
           ))}
         </div>
@@ -177,7 +362,7 @@ export default function SelectedWork() {
         {/* Section close — link to full index */}
         <div className="sw-close">
           <Link to="/projetos" className="btn btn--ghost sw-close__btn">
-            Ver todos os projetos <span className="btn-arrow">→</span>
+            Ver todos os projetos <span className="btn-arrow" aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

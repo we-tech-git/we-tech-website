@@ -1,8 +1,9 @@
 import useReveal from "../hooks/useReveal.js";
 
 /* ---------------------------------------------------------------
-   WE TECH HUB — WHY WE TECH (FASE 7)
+   WE TECH HUB — WHY WE TECH (FASE 7 & FASE F)
    Direction: OPERATING PRINCIPLES
+   Motion: DECOMPRESSION & EDITORIAL PAUSE
    Clear, defensible operating principles demonstrating the value
    of unified product, design, and engineering execution.
    --------------------------------------------------------------- */
@@ -38,8 +39,36 @@ const PRINCIPLES = [
   },
 ];
 
+function PrincipleItem({ principle, index }) {
+  const itemReveal = useReveal({ variant: "standard", threshold: 0.15, delay: index * 40 });
+
+  return (
+    <li
+      ref={itemReveal.ref}
+      className={`why-principle-item ${itemReveal.className}`}
+    >
+      <div className="why-principle-header">
+        <div className="why-principle-meta">
+          <span className="mono why-principle-cat">
+            {principle.category}
+          </span>
+        </div>
+      </div>
+
+      <div className="why-principle-body">
+        <h3 className="why-principle-title">
+          {principle.title}
+        </h3>
+        <p className="why-principle-desc">
+          {principle.description}
+        </p>
+      </div>
+    </li>
+  );
+}
+
 export default function WhyWeTech() {
-  const introReveal = useReveal();
+  const introReveal = useReveal({ variant: "mask" });
 
   return (
     <section
@@ -52,7 +81,7 @@ export default function WhyWeTech() {
           {/* LEFT COLUMN: Narrative Positioning & Bridge (Cols 1–5) */}
           <div ref={introReveal.ref} className={`${introReveal.className} why-sticky-col`}>
             <div className="why-eyebrow-wrap">
-              <span className="mono eyebrow">04 / Princípios</span>
+              <span className="mono eyebrow">Princípios</span>
             </div>
 
             <h2 id="why-heading" className="heading-lg why-heading">
@@ -80,35 +109,13 @@ export default function WhyWeTech() {
           {/* RIGHT COLUMN: Editorial List of Operating Principles (Cols 6–12) */}
           <div className="why-principles-col">
             <ol className="why-principles-list" role="list">
-              {PRINCIPLES.map((principle, idx) => {
-                return (
-                  <li
-                    key={principle.index}
-                    className="why-principle-item"
-                    style={{ transitionDelay: `${idx * 0.08}s` }}
-                  >
-                    <div className="why-principle-header">
-                      <div className="why-principle-meta">
-                        <span className="mono why-principle-num" aria-hidden="true">
-                          {principle.index}
-                        </span>
-                        <span className="mono why-principle-cat">
-                          {principle.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="why-principle-body">
-                      <h3 className="why-principle-title">
-                        {principle.title}
-                      </h3>
-                      <p className="why-principle-desc">
-                        {principle.description}
-                      </p>
-                    </div>
-                  </li>
-                );
-              })}
+              {PRINCIPLES.map((principle, idx) => (
+                <PrincipleItem
+                  key={principle.index}
+                  principle={principle}
+                  index={idx}
+                />
+              ))}
             </ol>
           </div>
         </div>

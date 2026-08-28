@@ -32,9 +32,6 @@ function ProjectItem({ projeto, index }) {
         {/* Info */}
         <div>
           <div className="pg__item-meta">
-            <span className="mono" style={{ fontSize: "var(--text-xs)", color: "var(--accent-text)" }}>
-              {num}
-            </span>
             <span className="eyebrow">{projeto.categoria}</span>
             <span className="mono" style={{ fontSize: "var(--text-xs)", color: "var(--text-faint)" }}>
               {projeto.data}

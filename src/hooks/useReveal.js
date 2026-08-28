@@ -1,12 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useReveal() {
+/**
+ * useReveal — IntersectionObserver-based reveal with support for custom variants
+ * (standard, mask, clip, scale, line).
+ * Automatically honors prefers-reduced-motion.
+ */
+export default function useReveal(options = {}) {
+  const {
+    variant = "standard", // "standard" | "mask" | "clip" | "scale" | "line"
+    threshold = 0.12,
+    rootMargin = "0px 0px -8% 0px",
+    delay = 0,
+  } = options;
+
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
 
     if (!("IntersectionObserver" in window)) {
       setVisible(true);
@@ -17,23 +34,31 @@ export default function useReveal() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisible(true);
+            if (delay > 0) {
+              setTimeout(() => setVisible(true), delay);
+            } else {
+              setVisible(true);
+            }
             io.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      { threshold, rootMargin }
     );
 
     io.observe(node);
-    // Safety net: force-show if the observer never fires (e.g. element
-    // starts off-screen in a way the browser never reports as intersecting).
+
+    // Safety fallback
     const fallback = setTimeout(() => setVisible(true), 2600);
+
     return () => {
       io.disconnect();
       clearTimeout(fallback);
     };
-  }, []);
+  }, [threshold, rootMargin, delay]);
 
-  return { ref, className: `reveal${visible ? " visible" : ""}` };
+  const variantClass = variant !== "standard" ? `reveal--${variant}` : "";
+  const className = `reveal ${variantClass}${visible ? " visible" : ""}`.trim();
+
+  return { ref, visible, className };
 }

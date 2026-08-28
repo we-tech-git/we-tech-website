@@ -1,26 +1,26 @@
 /* ---------------------------------------------------------------
    WE TECH HUB — BUILD PROTOCOL
-   Assembly Viewport Artifact (SVG Monolith)
-   Progressive visual definition across 6 states:
-   01: Boundary / Frame
-   02: Structure / Define
-   03: Experience / Shape
-   04: Functional System / Build
-   05: Validation / Validate
-   06: Evolution / Evolve
+   Assembly Viewport Artifact (SVG Digital Product Evolution)
+   Progressive visual definition across 6 cumulative states:
+   01: Entender  — Contexto, Objetivo e Restrição delimitados
+   02: Definir   — Grid funcional (Navegação, Conteúdo, Ação)
+   03: Dar forma — Interface e wireframe reconhecíveis
+   04: Construir — Componentes, estados A/B e conexões do sistema
+   05: Validar   — Inspeção com 4 checkpoints reais (sem verde)
+   06: Evoluir   — Expansão modular contínua pós-lançamento
    --------------------------------------------------------------- */
 
 import React from "react";
 
 export default function ProtocolArtifact({ activeStep = 0, isMini = false, miniStep = null }) {
-  const step = isMini ? miniStep : activeStep;
+  const step = isMini ? (miniStep ?? 0) : activeStep;
 
-  // Visual flags based on active progressive step (0 to 5)
-  const showFrame = step >= 0;
+  // Visual accumulation flags based on active progressive step (0 to 5)
+  const isStep0 = step === 0;
   const showDefine = step >= 1;
   const showShape = step >= 2;
   const showBuild = step >= 3;
-  const showValidate = step >= 4;
+  const isValidateStep = step === 4;
   const showEvolve = step >= 5;
 
   return (
@@ -32,228 +32,542 @@ export default function ProtocolArtifact({ activeStep = 0, isMini = false, miniS
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Background Subtle Grid Texture */}
+        {/* Subtle grid pattern background */}
         <defs>
           <pattern id="protoGrid" width="28" height="28" patternUnits="userSpaceOnUse">
             <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(255, 255, 255, 0.025)" strokeWidth="1" />
           </pattern>
-          <linearGradient id="scanGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(255, 77, 0, 0)" />
-            <stop offset="50%" stopColor="rgba(255, 77, 0, 0.35)" />
-            <stop offset="100%" stopColor="rgba(255, 77, 0, 0)" />
-          </linearGradient>
         </defs>
 
         <rect width="100%" height="100%" fill="url(#protoGrid)" />
 
-        {/* -------------------------------------------------------------
-            STAGE 01: FRAME / BOUNDARY (Always base)
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--frame ${showFrame ? "active" : ""}`}>
-          {/* Corner Crosshairs */}
-          <path d="M 32 44 L 48 44 M 40 36 L 40 52" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-          <path d="M 512 44 L 528 44 M 520 36 L 520 52" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-          <path d="M 32 316 L 48 316 M 40 308 L 40 324" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-          <path d="M 512 316 L 528 316 M 520 308 L 520 324" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-
-          {/* Primary Bounding Box (Dashed/Hairline) */}
+        {/* =============================================================
+            PERSISTENT BASE CANVAS & BOUNDARY (ACUMULAÇÃO A)
+            Sempre visível do Passo 01 ao 06. O MESMO produto.
+            ============================================================= */}
+        <g className="proto-layer proto-layer--base active">
+          {/* Main Product Window Boundary */}
           <rect
-            x="40"
-            y="44"
-            width="480"
-            height="272"
-            stroke="rgba(255,255,255,0.18)"
-            strokeWidth="1"
-            strokeDasharray={step === 0 ? "4 4" : "none"}
-            fill="rgba(10, 11, 13, 0.4)"
+            x="38"
+            y="36"
+            width="460"
+            height="288"
+            rx="6"
+            className="proto-window-frame"
+            stroke={isStep0 ? "rgba(255, 255, 255, 0.35)" : "rgba(255, 255, 255, 0.45)"}
+            strokeWidth={isStep0 ? "1.2" : "1.5"}
+            strokeDasharray={isStep0 ? "6 4" : "none"}
+            fill={isStep0 ? "rgba(13, 16, 21, 0.6)" : "#0D1015"}
           />
 
-          {/* Center Guide Axes (Subtle) */}
-          <line x1="280" y1="44" x2="280" y2="316" stroke="rgba(255,255,255,0.06)" strokeDasharray="2 4" strokeWidth="1" />
-          <line x1="40" y1="180" x2="520" y2="180" stroke="rgba(255,255,255,0.06)" strokeDasharray="2 4" strokeWidth="1" />
-
-          {/* Axis Labels */}
-          <text x="46" y="60" fill="rgba(255,255,255,0.3)" fontSize="9" fontFamily="var(--font-mono)">
-            Base [0, 0]
-          </text>
-          <text x="456" y="306" fill="rgba(255,255,255,0.3)" fontSize="9" fontFamily="var(--font-mono)">
-            Grade [560, 360]
-          </text>
-        </g>
-
-        {/* -------------------------------------------------------------
-            STAGE 02: DEFINE / STRUCTURAL DIVISIONS
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--define ${showDefine ? "active" : ""}`}>
-          {/* Header Bar Partition */}
-          <line x1="40" y1="84" x2="520" y2="84" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-
-          {/* Left Sidebar Partition */}
-          <line x1="160" y1="84" x2="160" y2="316" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-
-          {/* Right Split Partition */}
-          <line x1="380" y1="84" x2="380" y2="316" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-          <line x1="160" y1="200" x2="380" y2="200" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-
-          {/* Caliper Measurement Marks along Sidebar */}
-          <line x1="156" y1="120" x2="164" y2="120" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-          <line x1="156" y1="160" x2="164" y2="160" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-          <line x1="156" y1="240" x2="164" y2="240" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-          <line x1="156" y1="280" x2="164" y2="280" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-
-          {/* Zone Tags */}
-          <text x="52" y="104" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="var(--font-mono)">
-            Navegação
-          </text>
-          <text x="172" y="104" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="var(--font-mono)">
-            Conteúdo
-          </text>
-          <text x="392" y="104" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="var(--font-mono)">
-            Detalhes
-          </text>
-        </g>
-
-        {/* -------------------------------------------------------------
-            STAGE 03: SHAPE / EXPERIENCE & INTERACTION PLANES
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--shape ${showShape ? "active" : ""}`}>
-          {/* Top Bar Action Elements */}
-          <rect x="52" y="56" width="36" height="14" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-          <line x1="100" y1="63" x2="140" y2="63" stroke="rgba(255,255,255,0.25)" strokeWidth="2" />
-          <line x1="150" y1="63" x2="185" y2="63" stroke="rgba(255,255,255,0.15)" strokeWidth="2" />
-          <circle cx="496" cy="63" r="4" fill="var(--accent)" />
-          <circle cx="480" cy="63" r="3" fill="rgba(255,255,255,0.2)" />
-
-          {/* Left Menu Items (Abstract Interface) */}
-          <rect x="52" y="120" width="94" height="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-          <line x1="60" y1="130" x2="120" y2="130" stroke="rgba(255,255,255,0.4)" strokeWidth="2" />
-
-          <rect x="52" y="148" width="94" height="20" fill="transparent" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <line x1="60" y1="158" x2="105" y2="158" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-
-          <rect x="52" y="176" width="94" height="20" fill="transparent" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <line x1="60" y1="186" x2="115" y2="186" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-
-          {/* Main Content Functional Cards */}
-          <rect x="174" y="118" width="192" height="68" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-          <line x1="186" y1="134" x2="250" y2="134" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
-          <line x1="186" y1="148" x2="340" y2="148" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <line x1="186" y1="160" x2="310" y2="160" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-          <circle cx="348" cy="134" r="3" fill="var(--accent)" />
-
-          {/* Lower Main Grid Sub-blocks */}
-          <rect x="174" y="214" width="90" height="88" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1="186" y1="230" x2="230" y2="230" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <rect x="186" y="246" width="66" height="42" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-
-          <rect x="276" y="214" width="90" height="88" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1="288" y1="230" x2="332" y2="230" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <rect x="288" y="246" width="66" height="42" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-
-          {/* Right Inspector Panel Rows */}
-          <rect x="392" y="118" width="114" height="184" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1="404" y1="136" x2="470" y2="136" stroke="rgba(255,255,255,0.4)" strokeWidth="2" />
-          <line x1="404" y1="156" x2="492" y2="156" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-          <line x1="404" y1="174" x2="450" y2="174" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-          <line x1="404" y1="194" x2="492" y2="194" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-          <line x1="404" y1="212" x2="465" y2="212" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-        </g>
-
-        {/* -------------------------------------------------------------
-            STAGE 04: BUILD / INTEGRATED ARCHITECTURAL SYSTEM
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--build ${showBuild ? "active" : ""}`}>
-          {/* Depth / Extrusion Shadows & Underlines (Isometric Structural Anchor) */}
-          <path
-            d="M 40 316 L 46 322 L 526 322 L 520 316"
-            fill="rgba(255,255,255,0.04)"
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="1"
-          />
-          <path
-            d="M 520 44 L 526 50 L 526 322 L 520 316"
-            fill="rgba(255,255,255,0.04)"
-            stroke="rgba(255,255,255,0.15)"
+          {/* Window Header Bar Divider */}
+          <line
+            x1="38"
+            y1="72"
+            x2="498"
+            y2="72"
+            stroke="rgba(255, 255, 255, 0.22)"
             strokeWidth="1"
           />
 
-          {/* High-Integrity Solid Borders */}
-          <rect x="174" y="118" width="192" height="68" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="transparent" />
-          <rect x="392" y="118" width="114" height="184" stroke="rgba(255,255,255,0.25)" strokeWidth="1" fill="transparent" />
+          {/* Window Control Indicators (3 discrete dots) */}
+          <circle cx="54" cy="54" r="3" fill="rgba(255, 255, 255, 0.25)" />
+          <circle cx="66" cy="54" r="3" fill="rgba(255, 255, 255, 0.25)" />
+          <circle cx="78" cy="54" r="3" fill="rgba(255, 255, 255, 0.25)" />
 
-          {/* Inter-Module Bus Lines & Routing */}
-          <path d="M 146 130 L 174 130" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 2" />
-          <path d="M 366 148 L 392 148" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 2" />
-          <path d="M 270 186 L 270 214" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 2" />
-
-          {/* Connection Terminal Pins */}
-          <circle cx="174" cy="130" r="2.5" fill="#FFFFFF" />
-          <circle cx="366" cy="148" r="2.5" fill="#FFFFFF" />
-          <circle cx="392" cy="148" r="2.5" fill="#FFFFFF" />
-          <circle cx="270" cy="214" r="2.5" fill="#FFFFFF" />
+          {/* Window Header Title Bar Wireframe */}
+          <line
+            x1="98"
+            y1="54"
+            x2="154"
+            y2="54"
+            stroke="rgba(255, 255, 255, 0.35)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
         </g>
 
-        {/* -------------------------------------------------------------
-            STAGE 05: VALIDATE / INSPECTION & PRECISION CHECKPOINTS
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--validate ${showValidate ? "active" : ""}`}>
-          {/* Scanline Sweep Bar */}
-          <rect x="40" y="140" width="480" height="24" fill="url(#scanGradient)" opacity="0.8" />
-          <line x1="40" y1="152" x2="520" y2="152" stroke="var(--accent)" strokeWidth="1" strokeOpacity="0.7" />
-
-          {/* Inspection Target Reticles on Key Joints */}
-          <g transform="translate(174, 118)">
-            <circle cx="0" cy="0" r="6" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-            <circle cx="0" cy="0" r="2" fill="var(--accent)" />
-          </g>
-
-          <g transform="translate(366, 186)">
-            <circle cx="0" cy="0" r="6" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-            <circle cx="0" cy="0" r="2" fill="var(--accent)" />
-          </g>
-
-          <g transform="translate(506, 118)">
-            <circle cx="0" cy="0" r="6" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-            <circle cx="0" cy="0" r="2" fill="var(--accent)" />
-          </g>
-
-          <g transform="translate(366, 302)">
-            <circle cx="0" cy="0" r="6" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-            <circle cx="0" cy="0" r="2" fill="var(--accent)" />
-          </g>
-
-          {/* Calibration Marks (Ticks) */}
-          <line x1="36" y1="152" x2="44" y2="152" stroke="var(--accent)" strokeWidth="1.5" />
-          <line x1="516" y1="152" x2="524" y2="152" stroke="var(--accent)" strokeWidth="1.5" />
-        </g>
-
-        {/* -------------------------------------------------------------
-            STAGE 06: EVOLVE / CONTINUOUS SYSTEM EXPANSION
-            ------------------------------------------------------------- */}
-        <g className={`proto-layer proto-layer--evolve ${showEvolve ? "active" : ""}`}>
-          {/* Extended Modular Projection (Right Outer Vector) */}
-          <path
-            d="M 520 84 L 540 84 L 540 316 L 520 316"
-            stroke="var(--accent)"
-            strokeWidth="1"
+        {/* =============================================================
+            ESTADO 01: ENTENDER (Problem Framing)
+            Aparece quando step === 0: delimitação do problema sem solução pronta.
+            3 áreas vagas com propósito: CONTEXTO, OBJETIVO, RESTRIÇÃO.
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--framing ${isStep0 ? "active" : ""}`}>
+          {/* Zona 1: CONTEXTO (Área de origem do problema) */}
+          <rect
+            x="52"
+            y="88"
+            width="100"
+            height="216"
+            rx="4"
+            fill="rgba(255, 255, 255, 0.02)"
+            stroke="rgba(255, 255, 255, 0.22)"
             strokeDasharray="4 3"
-            opacity="0.8"
           />
-          <line x1="520" y1="200" x2="540" y2="200" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
-
-          {/* Directional Expansion Arrows */}
-          <path d="M 544 196 L 550 200 L 544 204" stroke="var(--accent)" strokeWidth="1.5" fill="none" />
-
-          {/* Active Continuity Node */}
-          <circle cx="520" cy="84" r="3" fill="var(--accent)" />
-          <circle cx="540" cy="84" r="2" fill="var(--accent)" opacity="0.8" />
-          <circle cx="540" cy="200" r="2" fill="var(--accent)" opacity="0.8" />
-
-          {/* Continuity marker */}
-          <circle cx="52" cy="304" r="3" fill="var(--accent)" />
-          <text x="62" y="307" fill="var(--accent)" fontSize="8" fontFamily="var(--font-mono)" letterSpacing="0.04em">
-            Sistema contínuo · Pronto para evoluir
+          <text
+            x="64"
+            y="112"
+            fill="rgba(255, 255, 255, 0.85)"
+            fontSize="9"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+          >
+            CONTEXTO
           </text>
+          <line x1="64" y1="134" x2="136" y2="134" stroke="rgba(255, 255, 255, 0.28)" strokeDasharray="3 3" />
+          <line x1="64" y1="152" x2="120" y2="152" stroke="rgba(255, 255, 255, 0.2)" strokeDasharray="3 3" />
+          <line x1="64" y1="170" x2="130" y2="170" stroke="rgba(255, 255, 255, 0.16)" strokeDasharray="3 3" />
+
+          {/* Zona 2: OBJETIVO (Foco central do valor do produto) */}
+          <rect
+            x="166"
+            y="88"
+            width="192"
+            height="216"
+            rx="4"
+            fill="rgba(255, 77, 0, 0.04)"
+            stroke="rgba(255, 77, 0, 0.35)"
+            strokeDasharray="5 3"
+          />
+          <text
+            x="180"
+            y="112"
+            fill="#FF8547"
+            fontSize="9"
+            fontWeight="700"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+          >
+            OBJETIVO
+          </text>
+          {/* Delimitação do espaço de solução */}
+          <line x1="180" y1="140" x2="336" y2="140" stroke="rgba(255, 77, 0, 0.35)" strokeWidth="1.5" strokeDasharray="4 3" />
+          <line x1="180" y1="162" x2="290" y2="162" stroke="rgba(255, 255, 255, 0.25)" strokeDasharray="3 3" />
+          <line x1="180" y1="184" x2="260" y2="184" stroke="rgba(255, 255, 255, 0.18)" strokeDasharray="3 3" />
+
+          {/* Zona 3: RESTRIÇÃO (Premissas e limites funcionais) */}
+          <rect
+            x="372"
+            y="88"
+            width="112"
+            height="216"
+            rx="4"
+            fill="rgba(255, 255, 255, 0.02)"
+            stroke="rgba(255, 255, 255, 0.22)"
+            strokeDasharray="4 3"
+          />
+          <text
+            x="384"
+            y="112"
+            fill="rgba(255, 255, 255, 0.85)"
+            fontSize="9"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+          >
+            RESTRIÇÃO
+          </text>
+          <line x1="384" y1="134" x2="466" y2="134" stroke="rgba(255, 255, 255, 0.28)" strokeDasharray="3 3" />
+          <line x1="384" y1="152" x2="444" y2="152" stroke="rgba(255, 255, 255, 0.2)" strokeDasharray="3 3" />
+          <line x1="384" y1="170" x2="456" y2="170" stroke="rgba(255, 255, 255, 0.16)" strokeDasharray="3 3" />
+        </g>
+
+        {/* =============================================================
+            ESTADO 02: DEFINIR (Functional Grid & Structural Columns)
+            Visível a partir do Passo 02 (step >= 1).
+            As 3 zonas ganham estrutura concreta: NAVEGAÇÃO, CONTEÚDO, AÇÃO.
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--define ${showDefine ? "active" : ""}`}>
+          {/* Superfícies estruturais distintas para contraste */}
+          <rect x="38" y="72" width="116" height="252" fill="rgba(255, 255, 255, 0.015)" />
+          <rect x="154" y="72" width="214" height="252" fill="rgba(255, 255, 255, 0.035)" />
+          <rect x="368" y="72" width="130" height="252" fill="rgba(255, 255, 255, 0.02)" />
+
+          {/* Divisórias das 3 colunas principais */}
+          <line x1="154" y1="72" x2="154" y2="324" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
+          <line x1="368" y1="72" x2="368" y2="324" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
+
+          {/* Linhas guia de grid e hierarquia no conteúdo */}
+          <line x1="168" y1="140" x2="354" y2="140" stroke="rgba(255, 255, 255, 0.12)" strokeDasharray="3 3" />
+          <line x1="168" y1="216" x2="354" y2="216" stroke="rgba(255, 255, 255, 0.12)" strokeDasharray="3 3" />
+
+          {/* Labels Estruturais em Português (ocultos durante inspeção para evitar duplicação) */}
+          <text
+            x="52"
+            y="96"
+            fill="rgba(255, 255, 255, 0.75)"
+            fontSize="9"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+            opacity={isValidateStep ? 0 : 1}
+          >
+            NAVEGAÇÃO
+          </text>
+
+          <text
+            x="168"
+            y="96"
+            fill="rgba(255, 255, 255, 0.75)"
+            fontSize="9"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+            opacity={isValidateStep ? 0 : 1}
+          >
+            CONTEÚDO
+          </text>
+
+          <text
+            x="382"
+            y="96"
+            fill="rgba(255, 255, 255, 0.75)"
+            fontSize="9"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+            opacity={isValidateStep ? 0 : 1}
+          >
+            AÇÃO
+          </text>
+        </g>
+
+        {/* =============================================================
+            ESTADO 03: DAR FORMA (Recognizable UI / Wireframe)
+            Visível a partir do Passo 03 (step >= 2).
+            Componentes visíveis: menu ativo, hero header, cards e CTA.
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--shape ${showShape ? "active" : ""}`}>
+          {/* Top Bar Header Elements */}
+          <line x1="168" y1="54" x2="230" y2="54" stroke="rgba(255, 255, 255, 0.65)" strokeWidth="3" strokeLinecap="round" />
+          <rect x="246" y="46" width="92" height="16" rx="3" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.18)" />
+          <circle cx="478" cy="54" r="5" fill="rgba(255, 255, 255, 0.15)" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="1" />
+
+          {/* Navegação: Logo marcação & Itens de Menu */}
+          <rect x="52" y="112" width="20" height="10" rx="2" fill="rgba(255, 255, 255, 0.18)" />
+          <line x1="78" y1="117" x2="124" y2="117" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Item 1 da Navegação (Ativo / Destaque) */}
+          <rect
+            x="48"
+            y="136"
+            width="96"
+            height="24"
+            rx="4"
+            fill="rgba(255, 77, 0, 0.12)"
+            stroke="rgba(255, 77, 0, 0.45)"
+            strokeWidth="1"
+          />
+          <circle cx="58" cy="148" r="2.5" fill="#FF4D00" />
+          <line x1="68" y1="148" x2="126" y2="148" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" />
+
+          {/* Itens 2 e 3 da Navegação */}
+          <rect x="48" y="166" width="96" height="20" rx="3" fill="rgba(255, 255, 255, 0.02)" />
+          <circle cx="58" cy="176" r="2" fill="rgba(255, 255, 255, 0.3)" />
+          <line x1="68" y1="176" x2="114" y2="176" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="2" strokeLinecap="round" />
+
+          <rect x="48" y="190" width="96" height="20" rx="3" fill="rgba(255, 255, 255, 0.02)" />
+          <circle cx="58" cy="200" r="2" fill="rgba(255, 255, 255, 0.3)" />
+          <line x1="68" y1="200" x2="102" y2="200" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Conteúdo: Cabeçalho da Página (Hero Wireframe) */}
+          <line x1="168" y1="116" x2="252" y2="116" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
+          <line x1="168" y1="128" x2="300" y2="128" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="1.5" strokeLinecap="round" />
+
+          {/* Conteúdo: Cartão Principal (Módulo de Valor) */}
+          <rect
+            x="168"
+            y="146"
+            width="186"
+            height="64"
+            rx="4"
+            fill="rgba(255, 255, 255, 0.04)"
+            stroke="rgba(255, 255, 255, 0.24)"
+            strokeWidth="1"
+          />
+          <line x1="180" y1="162" x2="236" y2="162" stroke="rgba(255, 255, 255, 0.9)" strokeWidth="2.5" strokeLinecap="round" />
+          {/* Sub-blocos internos do cartão */}
+          <rect x="180" y="174" width="76" height="24" rx="2" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.14)" />
+          <line x1="188" y1="186" x2="246" y2="186" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="2" strokeLinecap="round" />
+          <rect x="264" y="174" width="80" height="24" rx="2" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.14)" />
+          <line x1="272" y1="186" x2="334" y2="186" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Conteúdo: 2 Cartões Inferiores da Grade */}
+          <rect x="168" y="222" width="88" height="84" rx="4" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
+          <line x1="178" y1="236" x2="226" y2="236" stroke="rgba(255, 255, 255, 0.75)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="178" y1="248" x2="242" y2="248" stroke="rgba(255, 255, 255, 0.35)" strokeWidth="1.5" strokeLinecap="round" />
+          <rect x="178" y="260" width="68" height="34" rx="2" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.1)" />
+
+          <rect x="266" y="222" width="88" height="84" rx="4" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
+          <line x1="276" y1="236" x2="324" y2="236" stroke="rgba(255, 255, 255, 0.75)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="276" y1="248" x2="340" y2="248" stroke="rgba(255, 255, 255, 0.35)" strokeWidth="1.5" strokeLinecap="round" />
+          <rect x="276" y="260" width="68" height="34" rx="2" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.1)" />
+
+          {/* Ação: Botão Primário CTA */}
+          <rect
+            x="382"
+            y="116"
+            width="102"
+            height="28"
+            rx="4"
+            fill="rgba(255, 77, 0, 0.16)"
+            stroke="#FF4D00"
+            strokeWidth="1.2"
+          />
+          <text
+            x="433"
+            y="134"
+            textAnchor="middle"
+            fill="#FF8547"
+            fontSize="9"
+            fontWeight="700"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.08em"
+          >
+            EXECUTAR
+          </text>
+
+          {/* Ação: Linhas de propriedades e metadados */}
+          <line x1="382" y1="162" x2="484" y2="162" stroke="rgba(255, 255, 255, 0.16)" />
+          <line x1="382" y1="178" x2="426" y2="178" stroke="rgba(255, 255, 255, 0.5)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="446" y1="178" x2="484" y2="178" stroke="rgba(255, 255, 255, 0.28)" strokeWidth="1.5" strokeLinecap="round" />
+          <line x1="382" y1="196" x2="484" y2="196" stroke="rgba(255, 255, 255, 0.16)" />
+          <line x1="382" y1="212" x2="418" y2="212" stroke="rgba(255, 255, 255, 0.5)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="438" y1="212" x2="484" y2="212" stroke="rgba(255, 255, 255, 0.28)" strokeWidth="1.5" strokeLinecap="round" />
+        </g>
+
+        {/* =============================================================
+            ESTADO 04: CONSTRUIR (Functional System, Components & States)
+            Visível a partir do Passo 04 (step >= 3).
+            Alternador de estados (ESTADO A / ESTADO B), conexões funcionais de dados.
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--build ${showBuild ? "active" : ""}`}>
+          {/* Seletor de Estados Interativos no Cartão Principal */}
+          <g transform="translate(244, 150)">
+            <rect x="0" y="0" width="102" height="18" rx="3" fill="rgba(255, 255, 255, 0.08)" stroke="rgba(255, 255, 255, 0.3)" />
+            {/* Pill Ativo ESTADO A */}
+            <rect x="2" y="2" width="48" height="14" rx="2" fill="#FF4D00" />
+            <text
+              x="26"
+              y="12"
+              textAnchor="middle"
+              fill="#FFFFFF"
+              fontSize="7.5"
+              fontWeight="700"
+              fontFamily="var(--font-mono)"
+            >
+              ESTADO A
+            </text>
+            {/* ESTADO B Inativo */}
+            <text
+              x="75"
+              y="12"
+              textAnchor="middle"
+              fill="rgba(255, 255, 255, 0.55)"
+              fontSize="7.5"
+              fontWeight="600"
+              fontFamily="var(--font-mono)"
+            >
+              ESTADO B
+            </text>
+          </g>
+
+          {/* Badge de Componente Ativo no Cartão Inferior */}
+          <rect
+            x="178"
+            y="266"
+            width="70"
+            height="16"
+            rx="2"
+            fill="rgba(255, 77, 0, 0.14)"
+            stroke="rgba(255, 77, 0, 0.45)"
+          />
+          <text
+            x="213"
+            y="276"
+            textAnchor="middle"
+            fill="#EDEDED"
+            fontSize="7"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+          >
+            COMPONENTE
+          </text>
+
+          {/* Linhas de Fluxo e Conexões do Sistema de Software */}
+          <path
+            d="M 144 148 L 168 158 M 354 158 L 382 130"
+            fill="none"
+            stroke="#FF4D00"
+            strokeWidth="1.5"
+            strokeDasharray="3 2"
+          />
+          <circle cx="144" cy="148" r="3" fill="#FF4D00" stroke="#FFFFFF" strokeWidth="1" />
+          <circle cx="168" cy="158" r="3" fill="#FF4D00" stroke="#FFFFFF" strokeWidth="1" />
+          <circle cx="354" cy="158" r="3" fill="#FF4D00" stroke="#FFFFFF" strokeWidth="1" />
+          <circle cx="382" cy="130" r="3" fill="#FF4D00" stroke="#FFFFFF" strokeWidth="1" />
+
+          {/* Badge de Status do Sistema no Painel de Ação (posição dedicada) */}
+          <rect
+            x="382"
+            y="238"
+            width="102"
+            height="22"
+            rx="3"
+            fill="rgba(255, 77, 0, 0.12)"
+            stroke="rgba(255, 77, 0, 0.4)"
+          />
+          <text
+            x="433"
+            y="252"
+            textAnchor="middle"
+            fill="#EDEDED"
+            fontSize="7.5"
+            fontWeight="600"
+            fontFamily="var(--font-mono)"
+          >
+            SISTEMA ATIVO
+          </text>
+        </g>
+
+        {/* =============================================================
+            ESTADO 05: VALIDAR (Visual Checkpoints Overlaying Existing System)
+            Visível no Passo 05. Inspeciona exatamente os módulos existentes.
+            4 Checkpoints de Inspeção: NAVEGAÇÃO, CONTEÚDO, AÇÃO, RESPONSIVIDADE.
+            Sem verde — somente Off-white (#F0EDE6) e Laranja (#FF4D00).
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--validate ${isValidateStep ? "active" : ""}`}>
+          {/* Checkpoint 1: NAVEGAÇÃO */}
+          <rect
+            x="44"
+            y="106"
+            width="104"
+            height="114"
+            rx="4"
+            fill="none"
+            stroke="#FF4D00"
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <g transform="translate(44, 84)">
+            <rect x="0" y="0" width="98" height="18" rx="3" fill="#141720" stroke="#FF4D00" strokeWidth="1" />
+            <text x="8" y="12" fill="#F0EDE6" fontSize="8" fontWeight="700" fontFamily="var(--font-mono)">
+              NAVEGAÇÃO
+            </text>
+            <text x="86" y="12" fill="#FF4D00" fontSize="9" fontWeight="700" fontFamily="var(--font-mono)">
+              ✓
+            </text>
+          </g>
+
+          {/* Checkpoint 2: CONTEÚDO */}
+          <rect
+            x="164"
+            y="142"
+            width="194"
+            height="72"
+            rx="4"
+            fill="none"
+            stroke="#FF4D00"
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <g transform="translate(164, 84)">
+            <rect x="0" y="0" width="88" height="18" rx="3" fill="#141720" stroke="#FF4D00" strokeWidth="1" />
+            <text x="8" y="12" fill="#F0EDE6" fontSize="8" fontWeight="700" fontFamily="var(--font-mono)">
+              CONTEÚDO
+            </text>
+            <text x="76" y="12" fill="#FF4D00" fontSize="9" fontWeight="700" fontFamily="var(--font-mono)">
+              ✓
+            </text>
+          </g>
+
+          {/* Checkpoint 3: AÇÃO */}
+          <rect
+            x="378"
+            y="112"
+            width="110"
+            height="36"
+            rx="4"
+            fill="none"
+            stroke="#FF4D00"
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <g transform="translate(382, 84)">
+            <rect x="0" y="0" width="68" height="18" rx="3" fill="#141720" stroke="#FF4D00" strokeWidth="1" />
+            <text x="7" y="12" fill="#F0EDE6" fontSize="8" fontWeight="700" fontFamily="var(--font-mono)">
+              AÇÃO
+            </text>
+            <text x="56" y="12" fill="#FF4D00" fontSize="9" fontWeight="700" fontFamily="var(--font-mono)">
+              ✓
+            </text>
+          </g>
+
+          {/* Checkpoint 4: RESPONSIVIDADE (Inspeção de ancoragem e escala) */}
+          <line x1="38" y1="316" x2="498" y2="316" stroke="#FF4D00" strokeWidth="1.2" strokeDasharray="3 3" />
+          <line x1="38" y1="311" x2="38" y2="321" stroke="#FF4D00" strokeWidth="2" />
+          <line x1="498" y1="311" x2="498" y2="321" stroke="#FF4D00" strokeWidth="2" />
+          <g transform="translate(198, 306)">
+            <rect x="0" y="0" width="138" height="18" rx="3" fill="#141720" stroke="#FF4D00" strokeWidth="1" />
+            <text x="8" y="12" fill="#F0EDE6" fontSize="8" fontWeight="700" fontFamily="var(--font-mono)">
+              RESPONSIVIDADE
+            </text>
+            <text x="126" y="12" fill="#FF4D00" fontSize="9" fontWeight="700" fontFamily="var(--font-mono)">
+              ✓
+            </text>
+          </g>
+        </g>
+
+        {/* =============================================================
+            ESTADO 06: EVOLUIR (Continuous Modular Expansion)
+            Visível no Passo 06 (step >= 5).
+            Expansão lateral do sistema com novo módulo e ramificação.
+            Sem termos proibidos (LIVE, PRODUCTION, SCALE, UPTIME, TELEMETRY).
+            ============================================================= */}
+        <g className={`proto-layer proto-layer--evolve ${showEvolve ? "active" : ""}`}>
+          {/* Novo Módulo em Expansão Lateral */}
+          <rect
+            x="506"
+            y="96"
+            width="46"
+            height="176"
+            rx="4"
+            fill="rgba(255, 77, 0, 0.06)"
+            stroke="#FF4D00"
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+
+          {/* Ramificação Conectora saindo do sistema principal */}
+          <path
+            d="M 484 130 L 506 130"
+            stroke="#FF4D00"
+            strokeWidth="1.5"
+            strokeDasharray="3 2"
+          />
+          <circle cx="506" cy="130" r="3" fill="#FF4D00" />
+
+          {/* Elementos internos do novo módulo */}
+          <line x1="514" y1="114" x2="544" y2="114" stroke="#FF8547" strokeWidth="2" strokeLinecap="round" />
+          <rect x="512" y="126" width="34" height="24" rx="2" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.2)" />
+          <line x1="517" y1="138" x2="541" y2="138" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.5" strokeLinecap="round" />
+          <rect x="512" y="158" width="34" height="24" rx="2" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.2)" />
+          <line x1="517" y1="170" x2="538" y2="170" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.5" strokeLinecap="round" />
+
+          {/* Indicador de Continuidade e Futuro */}
+          <path d="M 526 216 L 532 222 L 526 228" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* Badge de Continuidade Pós-Entrega */}
+          <g transform="translate(366, 276)">
+            <rect x="0" y="0" width="118" height="22" rx="3" fill="#141720" stroke="#FF4D00" strokeWidth="1" />
+            <text x="12" y="14" fill="#F0EDE6" fontSize="7.5" fontWeight="700" fontFamily="var(--font-mono)">
+              NOVO MÓDULO
+            </text>
+            <text x="74" y="14" fill="#FF4D00" fontSize="7.5" fontWeight="700" fontFamily="var(--font-mono)">
+              + EXPANSÃO
+            </text>
+          </g>
         </g>
       </svg>
     </div>

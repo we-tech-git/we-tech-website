@@ -1,10 +1,13 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import useReveal from "../hooks/useReveal.js";
 import { INSTAGRAM_URL } from "../data.js";
+import { initMagneticElement } from "../motion.js";
 
 /* ---------------------------------------------------------------
-   WE TECH HUB — CLOSING CTA (FASE 8)
+   WE TECH HUB — CLOSING CTA (FASE 8 & FASE F)
    Direction: PROJECT INITIATION
+   Motion: CONVERGENCE & MAGNETIC INVITATION
    Transforms built trust into a clear, direct, and factual next step.
    --------------------------------------------------------------- */
 
@@ -27,8 +30,16 @@ const INITIATION_PILLARS = [
 ];
 
 export default function ClosingCta() {
-  const introReveal = useReveal();
-  const cardReveal = useReveal();
+  const introReveal = useReveal({ variant: "mask" });
+  const pillarsReveal = useReveal({ variant: "standard", threshold: 0.2 });
+  const cardReveal = useReveal({ variant: "standard", threshold: 0.2 });
+  const primaryBtnRef = useRef(null);
+
+  /* ---- Magnetic CTA interaction (Desktop only) ---- */
+  useEffect(() => {
+    const cleanup = initMagneticElement(primaryBtnRef.current, 0.22, 6);
+    return cleanup;
+  }, []);
 
   return (
     <section
@@ -37,53 +48,53 @@ export default function ClosingCta() {
       aria-labelledby="cta-heading"
     >
       <div className="container">
-        {/* Main Initiation Monolith */}
-        <div className="closing-cta-card">
-          {/* Top metadata & Eyebrow */}
-          <div
-            ref={introReveal.ref}
-            className={`${introReveal.className} closing-cta-header`}
-          >
-            <div className="closing-cta-eyebrow-row">
-              <span className="mono eyebrow">05 / Começar um projeto</span>
-            </div>
-
-            <h2 id="cta-heading" className="heading-xl closing-cta-heading">
-              Conte o que você está construindo.
-            </h2>
-
-            <p className="body-lg closing-cta-lead">
-              Se existe um produto para lançar, evoluir ou reorganizar, comece
-              pelo contexto. A conversa parte do problema real e dos objetivos do
-              negócio — não de uma lista genérica de funcionalidades.
-            </p>
+        {/* Top metadata & Eyebrow */}
+        <div
+          ref={introReveal.ref}
+          className={`${introReveal.className} closing-cta-header`}
+        >
+          <div className="closing-cta-eyebrow-row">
+            <span className="mono eyebrow">Começar um projeto</span>
           </div>
 
-          {/* Initiation Guidelines — 3 columns */}
-          <div className="closing-cta-pillars" role="list">
-            {INITIATION_PILLARS.map((pillar) => (
-              <div
-                key={pillar.num}
-                className="closing-cta-pillar"
-                role="listitem"
-              >
-                <div className="pillar-top">
-                  <span className="mono pillar-num" aria-hidden="true">
-                    {pillar.num}
-                  </span>
-                  <span className="mono pillar-label">{pillar.label}</span>
-                </div>
-                <p className="pillar-detail">{pillar.detail}</p>
+          <h2 id="cta-heading" className="heading-xl closing-cta-heading">
+            Conte o que você está construindo.
+          </h2>
+
+          <p className="body-lg closing-cta-lead">
+            Se existe um produto para lançar, evoluir ou reorganizar, comece
+            pelo contexto. A conversa parte do problema real e dos objetivos do
+            negócio — não de uma lista genérica de funcionalidades.
+          </p>
+        </div>
+
+        {/* Initiation Guidelines — 3 columns */}
+        <div
+          ref={pillarsReveal.ref}
+          className={`closing-cta-pillars reveal-stagger ${pillarsReveal.className}`}
+          role="list"
+        >
+          {INITIATION_PILLARS.map((pillar) => (
+            <div
+              key={pillar.label}
+              className="closing-cta-pillar"
+              role="listitem"
+            >
+              <div className="pillar-top">
+                <span className="mono pillar-label">{pillar.label}</span>
               </div>
-            ))}
-          </div>
+              <p className="pillar-detail">{pillar.detail}</p>
+            </div>
+          ))}
+        </div>
 
-          {/* Action Row */}
-          <div
-            ref={cardReveal.ref}
-            className={`${cardReveal.className} closing-cta-actions-wrap`}
-          >
-            <div className="closing-cta-actions">
+        {/* Action Row */}
+        <div
+          ref={cardReveal.ref}
+          className={`${cardReveal.className} closing-cta-actions-wrap`}
+        >
+          <div className="closing-cta-actions">
+            <div ref={primaryBtnRef} className="cta-magnetic-wrap">
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
@@ -93,20 +104,20 @@ export default function ClosingCta() {
               >
                 Falar sobre o projeto <span className="btn-arrow" aria-hidden="true">→</span>
               </a>
-
-              <Link
-                to="/projetos"
-                className="btn btn--ghost closing-cta-secondary-btn"
-              >
-                Ver todos os projetos <span className="btn-arrow" aria-hidden="true">→</span>
-              </Link>
             </div>
 
-            <div className="closing-cta-channel-meta">
-              <span className="mono channel-meta-text">
-                Instagram @wetech.h
-              </span>
-            </div>
+            <Link
+              to="/projetos"
+              className="btn btn--ghost closing-cta-secondary-btn"
+            >
+              Ver todos os projetos <span className="btn-arrow" aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="closing-cta-channel-meta">
+            <span className="mono channel-meta-text">
+              Instagram @wetech.h
+            </span>
           </div>
         </div>
       </div>
