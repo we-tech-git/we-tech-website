@@ -1,92 +1,167 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo.jsx";
-import { waLink } from "../data.js";
 
 const navItems = [
-  { href: "/#diferencial", label: "Diferencial" },
-  { href: "/#servicos", label: "Serviços" },
-  { href: "/#prova", label: "Clientes" },
-  { href: "/#sobre", label: "Sobre" },
-  { href: "/projetos", label: "Projetos" },
+  { href: "/#work", hash: "#work", label: "Projetos" },
+  { href: "/#expertise", hash: "#expertise", label: "Capacidades" },
+  { href: "/#process", hash: "#process", label: "Processo" },
+  { href: "/#about", hash: "#about", label: "Sobre" },
 ];
 
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isFloating, setIsFloating] = useState(false);
+  const location = useLocation();
+
+  // Activate floating navbar when user scrolls past the hero section
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const heroEl = document.querySelector(".hero");
+          if (heroEl) {
+            const heroRect = heroEl.getBoundingClientRect();
+            // When the bottom of the hero section reaches or passes the top of the viewport
+            setIsFloating(heroRect.bottom <= 60);
+          } else {
+            // Fallback for pages without a hero section
+            setIsFloating(window.scrollY > 80);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [location.pathname]);
+
+  // Close mobile menu on navigation
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        backdropFilter: "blur(14px)",
-        background: "rgba(15,27,45,0.72)",
-        borderBottom: "1px solid rgba(240,244,248,0.08)",
-      }}
-    >
+    <header className="nav-wrapper" role="banner">
       <div
-        style={{
-          maxWidth: 1160,
-          margin: "0 auto",
-          padding: "14px 28px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 20,
-        }}
+        className={`nav${isFloating ? " nav--floating" : ""}${
+          menuOpen ? " is-menu-open" : ""
+        }`}
       >
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 11,
-            textDecoration: "none",
+        <div className="container container--ultra nav__inner">
+          <Link
+            to="/"
+            className="nav__brand"
+            aria-label="We Tech Hub — página inicial"
+          onClick={(e) => {
+            if (location.pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              if (window.location.hash) {
+                window.history.pushState(null, "", "/");
+              }
+            }
+            setMenuOpen(false);
           }}
         >
           <Logo />
-          <span style={{ fontWeight: 700, fontSize: 16, letterSpacing: "-0.01em" }}>
-            We Tech Hub
-          </span>
+          <span>We Tech</span>
         </Link>
 
-        <nav
-          className="header-nav"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 26,
-            fontSize: 13.5,
-            color: "rgba(240,244,248,0.72)",
-          }}
-        >
+        <nav className="nav__links" aria-label="Navegação principal">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className="nav-link"
-              style={{ textDecoration: "none" }}
+              className={`nav__link${
+                location.pathname === "/" && location.hash === item.hash ? " nav__link--active" : ""
+              }`}
+              aria-current={
+                location.pathname === "/" && location.hash === item.hash ? "page" : undefined
+              }
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <a
-          href={waLink("Olá! Quero falar com a equipe da We Tech Hub.")}
-          target="_blank"
-          rel="noreferrer"
-          className="btn-accent"
-          style={{
-            textDecoration: "none",
-            background: "#C87D2F",
-            color: "#0F1B2D",
-            fontWeight: 600,
-            fontSize: 13.5,
-            padding: "9px 16px",
-            borderRadius: 7,
-          }}
+        <Link to="/#contato" className="btn btn--primary btn--sm nav__cta">
+          Iniciar projeto
+        </Link>
+
+        <button
+          className="nav__toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
         >
-          Entrar em contato
-        </a>
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      <nav
+        id="mobile-nav"
+        className={`nav__mobile${menuOpen ? " is-open" : ""}`}
+        aria-label="Navegação mobile"
+      >
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            to={item.href}
+            className={`nav__link${
+              location.pathname === "/" && location.hash === item.hash ? " nav__link--active" : ""
+            }`}
+            aria-current={
+              location.pathname === "/" && location.hash === item.hash ? "page" : undefined
+            }
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </Link>
+        ))}
+        <Link
+          to="/#contato"
+          className="btn btn--primary"
+          onClick={() => setMenuOpen(false)}
+          style={{ marginTop: "var(--space-5)", alignSelf: "flex-start" }}
+        >
+          Iniciar projeto
+        </Link>
+      </nav>
       </div>
     </header>
   );

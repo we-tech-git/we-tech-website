@@ -9,16 +9,15 @@ import ProjectDetail from "./pages/ProjectDetail.jsx";
 export default function App() {
   return (
     <BrowserRouter>
-      <div style={{ width: "100%", overflowX: "hidden" }}>
-        <ScrollToHash />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projetos" element={<ProjectsGallery />} />
-          <Route path="/projetos/:slug" element={<ProjectDetail />} />
-        </Routes>
-        <Footer />
-      </div>
+      <ScrollToHash />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projetos" element={<ProjectsGallery />} />
+        <Route path="/projetos/:slug" element={<ProjectDetail />} />
+        <Route path="*" element={<ProjectDetail />} />
+      </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

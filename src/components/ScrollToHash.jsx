@@ -8,16 +8,19 @@ export default function ScrollToHash() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior = reduceMotion ? "auto" : "smooth";
+
     if (hash) {
       const id = hash.slice(1);
       const scrollToTarget = () => {
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (el) el.scrollIntoView({ behavior, block: "start" });
       };
       const timer = setTimeout(scrollToTarget, 50);
       return () => clearTimeout(timer);
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" in window ? "instant" : "auto" });
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname, hash]);
 
   return null;

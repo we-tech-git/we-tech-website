@@ -1,130 +1,110 @@
-// Projetos que a We Tech desenvolveu — migrados do site antigo (Vue) para o
-// site novo em React. Textos em PT-BR, alinhados à identidade atual.
+// Projetos reais da We Tech Hub
+// Apenas informações verificáveis. Sem métricas inventadas.
 
 export const projetos = [
   {
     slug: "triper",
     nome: "Triper",
-    categoria: "Landing page · Viagens",
+    categoria: "Landing Page",
+    tipo: "Produto digital · Viagens",
     resumo:
-      "Experiência de viagem criada pela We Tech, conectando usuários a roteiros inspiradores.",
-    data: "Publicado em jan 2025",
-    capa: "/img/projects/tripper_web_site.png",
-    preview: "/img/projects/tripper_web_site.png",
+      "Landing page para plataforma de viagens — do conceito ao produto digital pronto para aquisição.",
+    data: "2025",
+    capa: "/img/projects/tripper_web_site.webp",
+    preview: "/img/projects/tripper_web_site.webp",
     link: "",
     intro:
-      "A We Tech foi responsável por idealizar e desenvolver a landing page da Triper, transformando o conceito da plataforma de viagens em um produto digital pronto para receber novos clientes.",
+      "A We Tech idealizou e desenvolveu a landing page da Triper, transformando o conceito da plataforma de viagens em um produto digital funcional.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "A Triper precisava de uma presença digital moderna que apresentasse sua proposta de valor de forma clara e atrativa, transformando uma ideia inicial em um site capaz de se comunicar com diferentes perfis de viajantes.",
+          "Criar uma presença digital que apresentasse a proposta de valor de forma clara para diferentes perfis de viajantes.",
       },
       {
-        titulo: "Soluções e aplicações",
+        titulo: "O que construímos",
         texto:
-          "Estruturamos o front-end com as melhores práticas atuais de performance, acessibilidade e organização de componentes, explorando animações e transições que reforçam a identidade da Triper e mantêm a navegação leve e intuitiva.",
+          "Front-end com foco em performance, acessibilidade e experiência imersiva — animações e transições que reforçam a identidade da marca.",
       },
     ],
-    preview_titulo: "Visualização",
-    preview_texto:
-      "A interface desenhada destaca a experiência de viagem com imagens imersivas e tipografia limpa.",
-    resultado_titulo: "Resultado",
-    resultado_texto:
-      "Uma landing page totalmente responsiva e envolvente pronta para o lançamento.",
   },
   {
     slug: "toro-token",
-    nome: "TORO token",
-    categoria: "Web3 · Cripto",
+    nome: "TORO Token",
+    categoria: "Web3",
+    tipo: "Plataforma · Cripto",
     resumo:
-      "Portfólio tokenizado com estratégias ativas e passivas automatizadas em um único ativo.",
-    data: "Publicado em jul 2022",
-    capa: "/img/projects/project_toro_banner_8.png",
-    preview: "/img/projects/toro_token_web_site.png",
+      "Site para token multi-estratégia com portfólio tokenizado de ativos digitais.",
+    data: "2022",
+    capa: "/img/projects/project_toro_banner_8.webp",
+    preview: "/img/projects/toro_token_web_site.webp",
     link: "https://torotoken.io/",
     intro:
-      "O TORO foi programado para executar estratégias ativas e passivas — como stop loss, stop buy, shorting e distribuições de rede — ajudando detentores a construir um portfólio de ativos digitais em um único token, mitigando riscos.",
+      "O TORO executa estratégias ativas e passivas — stop loss, stop buy, shorting e distribuições de rede — em um único token.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "Explicar um token multi-estratégia (stop loss / stop buy / short) de forma clara e confiável para investidores.",
+          "Comunicar um token multi-estratégia de forma clara e confiável para investidores.",
       },
       {
-        titulo: "Abordagem",
+        titulo: "O que construímos",
         texto:
-          "Estruturamos a narrativa e a experiência do site para apresentar estratégias automatizadas, controles de risco e benefícios em uma página concisa.",
+          "Narrativa e experiência do site para apresentar estratégias automatizadas, controles de risco e benefícios em uma página concisa.",
       },
     ],
-    preview_titulo: "Resultado",
-    preview_texto:
-      "Seções de destaque apresentam a história do token e o mix de estratégias, com visuais que reforçam o acompanhamento de performance.",
-    resultado_titulo: "Impacto",
-    resultado_texto:
-      "A comunicação clara aumentou a confiança e forneceu um ponto único de entrada para as estratégias tokenizadas do TORO.",
   },
   {
     slug: "blue-token",
     nome: "Blue Token",
-    categoria: "Web3 · Cripto",
+    categoria: "Web3",
+    tipo: "Plataforma · Cripto",
     resumo:
-      "Landing criada pela We Tech para apresentar o BLUE, token digital baseado em uma cesta de criptoativos.",
-    data: "Publicado em ago 2024",
-    capa: "/img/projects/project_bluetoken_banner_6.png",
-    preview: "/img/projects/blue_token_web_site.png",
+      "Landing page para token digital baseado em cesta de criptoativos na BSC.",
+    data: "2024",
+    capa: "/img/projects/project_bluetoken_banner_6.webp",
+    preview: "/img/projects/blue_token_web_site.webp",
     link: "https://bluetoken.io/homepage",
     intro:
-      "A We Tech desenvolveu o site da Blue Token para explicar o token como uma cesta de criptomoedas na BSC, oferecendo aos usuários um único token que representa vários ativos, com conveniência e diversificação.",
+      "Site da Blue Token para apresentar o token como uma cesta de criptomoedas, oferecendo diversificação em um único ativo.",
     secoes: [
       {
-        titulo: "Relatos da engenharia",
+        titulo: "O que construímos",
         texto:
-          "Reconstruímos o site do BLUE para renovar a marca e destacar as características do token, oferecendo uma visão ampla das funcionalidades e dos benefícios que os usuários têm ao adquirir BLUE.",
+          "Reconstrução do site para renovar a marca e destacar as funcionalidades do token com clareza.",
       },
       {
-        titulo: "BLUE token atualmente",
+        titulo: "Evolução",
         texto:
-          "Hoje o produto é mantido com referências de performance no mercado cripto; a We Tech usa o projeto como exemplo de clareza na apresentação do token e segue evoluindo a experiência.",
+          "Projeto mantido como referência de clareza na comunicação de produtos cripto. A experiência segue sendo iterada.",
       },
     ],
-    preview_titulo: "Visão do site",
-    preview_texto:
-      "A landing do BLUE criada pela We Tech apresenta a história do token, benefícios e visuais alinhados à nova direção de marca.",
-    resultado_titulo: "Resultados e próximos passos",
-    resultado_texto:
-      "Com o novo site, o BLUE comunica sua proposta de forma mais clara; a We Tech segue iterando para evidenciar performance e ampliar o roadmap para novos usuários e investidores.",
   },
   {
     slug: "genesis-bank",
     nome: "Genesis Bank",
-    categoria: "Institucional · Fintech",
+    categoria: "Institucional",
+    tipo: "Site · Fintech",
     resumo:
-      "Site institucional que traduz produtos bancários em uma experiência digital clara.",
-    data: "Publicado em out 2023",
-    capa: "/img/projects/project_genesis_banner_10.png",
-    preview: "/img/projects/genesis_bank_web_site.png",
+      "Site institucional que traduz produtos bancários em uma experiência digital clara e confiável.",
+    data: "2023",
+    capa: "/img/projects/project_genesis_banner_10.webp",
+    preview: "/img/projects/genesis_bank_web_site.webp",
     link: "https://www.genesisbank.com.br/",
     intro:
-      "A We Tech desenhou a experiência da Genesis Bank para apresentar serviços, credibilidade e caminhos de onboarding de forma simples.",
+      "Experiência digital para a Genesis Bank — serviços, credibilidade e caminhos de onboarding apresentados com simplicidade.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "Traduzir ofertas bancárias em uma narrativa digital que equilibre confiança, compliance e conversão.",
+          "Traduzir ofertas bancárias em uma narrativa digital clara, com tom compatível com o setor financeiro.",
       },
       {
-        titulo: "Abordagem",
+        titulo: "O que construímos",
         texto:
-          "Organizamos blocos de conteúdo para produtos, benefícios e chamadas para ação, usando linguagem visual alinhada a finanças.",
+          "Blocos de conteúdo organizados para produtos, benefícios e chamadas para ação, com linguagem visual alinhada ao setor financeiro.",
       },
     ],
-    preview_titulo: "Resultado",
-    preview_texto:
-      "A página destaca autoridade da marca e conduz usuários para contato e fluxos de serviço com CTAs claros.",
-    resultado_titulo: "Impacto",
-    resultado_texto:
-      "Maior clareza e confiança para prospects que exploram a presença digital da Genesis Bank.",
   },
 ];
 

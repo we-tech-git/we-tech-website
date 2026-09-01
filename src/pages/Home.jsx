@@ -1,19 +1,21 @@
 import Hero from "../components/Hero.jsx";
-import Diferencial from "../components/Diferencial.jsx";
-import Servicos from "../components/Servicos.jsx";
-import ProvaSocial from "../components/ProvaSocial.jsx";
-import Sobre from "../components/Sobre.jsx";
-import Contato from "../components/Contato.jsx";
+import SelectedWork from "../components/SelectedWork.jsx";
+import Capabilities from "../components/Capabilities.jsx";
+import EngagementModel from "../components/EngagementModel.jsx";
+import Process from "../components/Process.jsx";
+import WhyWeTech from "../components/WhyWeTech.jsx";
+import ClosingCta from "../components/ClosingCta.jsx";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <Hero />
-      <Diferencial />
-      <Servicos />
-      <ProvaSocial />
-      <Sobre />
-      <Contato />
-    </>
+      <WhyWeTech />
+      <Capabilities />
+      <Process />
+      <EngagementModel />
+      <SelectedWork />
+      <ClosingCta />
+    </main>
   );
 }
