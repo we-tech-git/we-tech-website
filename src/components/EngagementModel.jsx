@@ -1,10 +1,11 @@
 import { useState, useCallback } from "react";
 import useReveal from "../hooks/useReveal.js";
+import { FrontsActionBadge } from "./Icons.jsx";
 
 /* ---------------------------------------------------------------
    WE TECH HUB — FRENTES DE ATUAÇÃO
    Direction: Duas frentes / Um time só
-   Creative Direction: BALANCED SYMMETRIC DUALITY & UNIFIED FUSION
+   FASE I · SIGNATURE MOMENT 03: Symmetrical Rail Synchronization
    --------------------------------------------------------------- */
 
 const FRONTS = [
@@ -82,11 +83,13 @@ const SELECTOR_OPTIONS = [
 
 export default function EngagementModel() {
   const [state, setState] = useState("integrated");
-  const intro = useReveal({ variant: "mask" });
+  const [hoveredRow, setHoveredRow] = useState(null);
+  const intro = useReveal({ variant: "standard" });
   const activeIndex = SELECTOR_OPTIONS.findIndex((opt) => opt.key === state);
 
   const handleSelect = useCallback((key) => {
     setState(key);
+    setHoveredRow(null);
   }, []);
 
   const getPanelState = (key) => {
@@ -96,11 +99,11 @@ export default function EngagementModel() {
 
   return (
     <section id="fronts" className="section fronts-section" aria-label="Frentes de atuação">
-      <div className="container">
+      <div className="container container--wide">
         {/* Intro — Centralized */}
         <div ref={intro.ref} className={`${intro.className} fronts-intro`}>
           <div className="fronts-eyebrow-wrap">
-            <span className="mono eyebrow">Frentes</span>
+            <span className="eyebrow">Frentes</span>
           </div>
           <h2 className="heading-lg fronts-heading">
             Duas frentes. <span className="fronts-heading-highlight">Um time só.</span>
@@ -141,9 +144,9 @@ export default function EngagementModel() {
 
         {/* Dynamic Integration Status Message */}
         <div className="fronts-status-bar" aria-live="polite">
-          <span className="mono fronts-status-pill">
+          <span className="fronts-status-pill">
             {state === "integrated" && (
-              <>SINERGIA TOTAL ATIVADA: TECH &amp; PERFORMANCE TRABALHANDO EM SPRINT UNIFICADO</>
+              <>SINERGIA TOTAL: TECH &amp; PERFORMANCE EM SPRINT COORDENADO</>
             )}
             {state === "a" && (
               <>ENGENHARIA &amp; DESENVOLVIMENTO DEDICADO</>
@@ -170,7 +173,7 @@ export default function EngagementModel() {
             <div className="fronts-panel-header">
               <div className="fronts-panel-badge-row">
                 <div className="fronts-panel-index-wrap">
-                  <span className="mono fronts-panel-state-tag">
+                  <span className="fronts-panel-state-tag">
                     {state === "integrated" ? "SINERGIA" : state === "a" ? "FRENTE ATIVA" : "STANDBY"}
                   </span>
                 </div>
@@ -183,14 +186,26 @@ export default function EngagementModel() {
             <div className="fronts-panel-divider" aria-hidden="true" />
 
             <div className="fronts-panel-capabilities">
-              {FRONTS[0].capabilities.map((cap) => (
-                <div key={cap.code} className="fronts-cap-row">
-                  <div className="fronts-cap-content">
-                    <span className="fronts-cap-title">{cap.title}</span>
-                    <span className="fronts-cap-desc">{cap.desc}</span>
+              {FRONTS[0].capabilities.map((cap, idx) => {
+                const isSynergy = state === "integrated" && hoveredRow === idx;
+                return (
+                  <div
+                    key={cap.code}
+                    className={`fronts-cap-row ${isSynergy ? "is-synergy" : ""}`}
+                    onMouseEnter={() => state === "integrated" && setHoveredRow(idx)}
+                    onMouseLeave={() => state === "integrated" && setHoveredRow(null)}
+                    onFocus={() => state === "integrated" && setHoveredRow(idx)}
+                    onBlur={() => state === "integrated" && setHoveredRow(null)}
+                    tabIndex={state === "integrated" ? 0 : -1}
+                  >
+                    <span className="mono fronts-cap-code">{cap.code}</span>
+                    <div className="fronts-cap-content">
+                      <span className="fronts-cap-title">{cap.title}</span>
+                      <span className="fronts-cap-desc">{cap.desc}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="fronts-panel-footer">
@@ -201,7 +216,7 @@ export default function EngagementModel() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <span>{state === "integrated" ? FRONTS[0].ctaIntegrated : FRONTS[0].ctaText}</span>
-                <span className="fronts-cta-arrow" aria-hidden="true">→</span>
+                <FrontsActionBadge />
               </a>
             </div>
           </div>
@@ -237,7 +252,7 @@ export default function EngagementModel() {
             <div className="fronts-panel-header">
               <div className="fronts-panel-badge-row">
                 <div className="fronts-panel-index-wrap">
-                  <span className="mono fronts-panel-state-tag">
+                  <span className="fronts-panel-state-tag">
                     {state === "integrated" ? "SINERGIA" : state === "b" ? "FRENTE ATIVA" : "STANDBY"}
                   </span>
                 </div>
@@ -250,14 +265,26 @@ export default function EngagementModel() {
             <div className="fronts-panel-divider" aria-hidden="true" />
 
             <div className="fronts-panel-capabilities">
-              {FRONTS[1].capabilities.map((cap) => (
-                <div key={cap.code} className="fronts-cap-row">
-                  <div className="fronts-cap-content">
-                    <span className="fronts-cap-title">{cap.title}</span>
-                    <span className="fronts-cap-desc">{cap.desc}</span>
+              {FRONTS[1].capabilities.map((cap, idx) => {
+                const isSynergy = state === "integrated" && hoveredRow === idx;
+                return (
+                  <div
+                    key={cap.code}
+                    className={`fronts-cap-row ${isSynergy ? "is-synergy" : ""}`}
+                    onMouseEnter={() => state === "integrated" && setHoveredRow(idx)}
+                    onMouseLeave={() => state === "integrated" && setHoveredRow(null)}
+                    onFocus={() => state === "integrated" && setHoveredRow(idx)}
+                    onBlur={() => state === "integrated" && setHoveredRow(null)}
+                    tabIndex={state === "integrated" ? 0 : -1}
+                  >
+                    <span className="mono fronts-cap-code">{cap.code}</span>
+                    <div className="fronts-cap-content">
+                      <span className="fronts-cap-title">{cap.title}</span>
+                      <span className="fronts-cap-desc">{cap.desc}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="fronts-panel-footer">
@@ -268,7 +295,7 @@ export default function EngagementModel() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <span>{state === "integrated" ? FRONTS[1].ctaIntegrated : FRONTS[1].ctaText}</span>
-                <span className="fronts-cta-arrow" aria-hidden="true">→</span>
+                <FrontsActionBadge />
               </a>
             </div>
           </div>
@@ -279,12 +306,12 @@ export default function EngagementModel() {
           <div className="fronts-integrated-footer-cta">
             <div className="fronts-integrated-banner">
               <div className="fronts-integrated-info">
-                <span className="mono fronts-integrated-tag">TIME COMPLETO</span>
+                <span className="fronts-integrated-tag">Time completo</span>
                 <span className="fronts-integrated-text">Sem atrito entre quem desenvolve e quem otimiza conversão.</span>
               </div>
               <a href="#contato" className="fronts-integrated-action-btn">
                 <span>Contratar Tech + Performance Integrados</span>
-                <span className="fronts-cta-arrow" aria-hidden="true">→</span>
+                <FrontsActionBadge />
               </a>
             </div>
           </div>
@@ -293,4 +320,5 @@ export default function EngagementModel() {
     </section>
   );
 }
+
 

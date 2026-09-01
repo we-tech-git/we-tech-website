@@ -1,31 +1,32 @@
 /* ============================================================
    WE TECH HUB — MOTION TOKENS & UTILITIES
-   Fase F · Precision, Assembly, Reveal, Response, Continuity
+   Fase H · Motion Hierarchy & Microinteraction System
+
+   Two consolidated GSAP curves — mirroring the CSS --ease-out /
+   --ease-precision pair — drive every tween in the app instead of
+   a different bezier per component.
    ============================================================ */
 
 import gsap from "gsap";
 
-/* --- EASING TOKENS --- */
+/* --- EASING TOKENS ---
+   standard — snappy, directional out-curve. Hover/focus response,
+              content reveals, entrances (Level 1–3).
+   emphasis — smooth symmetric curve. Narrative/layer morphs, pointer
+              tracking, state transitions (Level 4). */
 export const EASINGS = {
-  // Precision snappy out for UI and entrances
-  precisionOut: "power3.out",
-  // Smooth symmetric ease for layer transitions and state morphs
-  precisionInOut: "power2.inOut",
-  // Gentle curve for editorial text and large surfaces
-  editorial: "power2.out",
-  // Magnetic spring curve for interactive cursor response
-  magnetic: "power4.out",
-  // Exponential snap for microinteractions
-  expoOut: "expo.out",
+  standard: "power3.out",
+  emphasis: "power2.inOut",
 };
 
-/* --- DURATION TOKENS (seconds for GSAP, ms for CSS) --- */
+/* --- DURATION TOKENS (seconds) ---
+   fast      — Level 1 micro response: hover, focus, small offsets (~160–240ms)
+   base      — Level 2/3 content & section-interaction transitions (~350–650ms)
+   editorial — Level 4 narrative reveals, section intros, layer settles (~700–850ms) */
 export const DURATIONS = {
-  fast: 0.22,      // 220ms — Hover, focus, small offsets
-  standard: 0.45,  // 450ms — Component transitions, tab switches
-  editorial: 0.75, // 750ms — Narrative reveals, section intros
-  layer: 0.52,     // 520ms — 2.5D strata transforms
-  settle: 0.65,    // 650ms — Image scale settlement
+  fast: 0.22,
+  base: 0.45,
+  editorial: 0.75,
 };
 
 /* --- MEDIA QUERY HELPERS --- */
@@ -68,7 +69,7 @@ export function initMagneticElement(element, strength = 0.2, maxOffset = 6) {
       x: clampedX,
       y: clampedY,
       duration: 0.35,
-      ease: EASINGS.magnetic,
+      ease: EASINGS.standard,
       overwrite: "auto",
     });
   };
@@ -78,7 +79,7 @@ export function initMagneticElement(element, strength = 0.2, maxOffset = 6) {
       x: 0,
       y: 0,
       duration: 0.45,
-      ease: EASINGS.precisionOut,
+      ease: EASINGS.standard,
       overwrite: "auto",
     });
   };

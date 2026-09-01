@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projetos } from "../projetos.js";
-import { EASINGS, DURATIONS, prefersReducedMotion, isPointerFine, initMagneticElement } from "../motion.js";
+import { EASINGS, DURATIONS, prefersReducedMotion, isPointerFine } from "../motion.js";
+import { ExploreIcon } from "./Icons.jsx";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -12,7 +13,7 @@ if (typeof window !== "undefined") {
 /* ---------------------------------------------------------------
    PRODUCT VIEWPORT — Hero component
    We Tech Hub · Engineered Artifacts
-   Fase F: Motion, Interaction, Depth & Seamless Continuity
+   FASE I · SIGNATURE MOMENT 01: Product Viewport Assembly
    --------------------------------------------------------------- */
 
 const heroProjects = projetos.map((p, i) => ({
@@ -32,7 +33,8 @@ export default function Hero() {
   const mediaContainerRef = useRef(null);
   const viewportHeaderRef = useRef(null);
   const viewportFooterRef = useRef(null);
-  const ctaBtnRef = useRef(null);
+  const calipersRef = useRef([]);
+  const sweepRef = useRef(null);
   const imagesRef = useRef([]);
   const hasAnimated = useRef(false);
   const isSwitchingRef = useRef(false);
@@ -48,17 +50,8 @@ export default function Hero() {
     });
   }, []);
 
-  /* ---- Magnetic CTA interaction (Desktop only) ---- */
+  /* ---- SIGNATURE 01: GSAP Product Viewport Assembly & Scroll Handover ---- */
   useEffect(() => {
-    const cleanup = initMagneticElement(ctaBtnRef.current, 0.22, 6);
-    return cleanup;
-  }, []);
-
-  /* ---- GSAP Entrance Timeline & Scroll Seam ---- */
-  useEffect(() => {
-    if (hasAnimated.current) return;
-    hasAnimated.current = true;
-
     const el = heroRef.current;
     if (!el) return;
 
@@ -68,50 +61,130 @@ export default function Hero() {
     }
 
     const ctx = gsap.context(() => {
-      // Initial state
+      // 1. Initial State Setup
       gsap.set(".hero__hairline", { scaleX: 0, transformOrigin: "left center" });
       gsap.set(".hero__eyebrow", { opacity: 0, y: 14 });
       gsap.set(".hero__headline-line", { opacity: 0, y: "100%" });
       gsap.set(".hero__body", { opacity: 0, y: 16 });
-      gsap.set(".hero__cta-wrap", { opacity: 0, y: 14 });
+
+      // Viewport multi-planar disassembly initial state
       gsap.set(viewportRef.current, {
         opacity: 0,
-        y: 28,
-        scale: 0.975,
-        rotateX: 2,
-        transformPerspective: 1000,
+        y: 32,
+        scale: 0.96,
+        transformPerspective: 1200,
       });
+      if (viewportHeaderRef.current) {
+        gsap.set(viewportHeaderRef.current, { y: -18, opacity: 0 });
+      }
+      if (mediaContainerRef.current) {
+        gsap.set(mediaContainerRef.current, {
+          rotateX: 4,
+          scale: 0.95,
+          opacity: 0,
+          transformPerspective: 1200,
+        });
+      }
+      if (viewportFooterRef.current) {
+        gsap.set(viewportFooterRef.current, { y: 18, opacity: 0 });
+      }
+      if (calipersRef.current.length > 0) {
+        gsap.set(calipersRef.current, { scale: 0, opacity: 0 });
+      }
+      if (sweepRef.current) {
+        gsap.set(sweepRef.current, { top: "0%", opacity: 0 });
+      }
 
+      // 2. Coordinated Architectural Assembly Timeline (900-1200ms)
       const tl = gsap.timeline({
-        defaults: { ease: EASINGS.precisionOut },
-        delay: 0.15,
+        defaults: { ease: EASINGS.standard },
+        delay: 0.1,
       });
 
+      // Editorial headline progression
       tl.to(".hero__hairline", { scaleX: 1, duration: 0.85 }, 0)
         .to(".hero__eyebrow", { opacity: 1, y: 0, duration: 0.5 }, 0.12)
         .to(
           ".hero__headline-line",
           { opacity: 1, y: "0%", duration: 0.7, stagger: 0.08 },
-          0.2
+          0.18
         )
-        .to(".hero__body", { opacity: 1, y: 0, duration: 0.55 }, 0.45)
-        .to(".hero__cta-wrap", { opacity: 1, y: 0, duration: 0.5 }, 0.55)
+        .to(".hero__body", { opacity: 1, y: 0, duration: 0.55 }, 0.42);
+
+      // Multi-Planar Viewport Assembly:
+      // Frame enters -> Header & Footer slide into position -> 2.5D Media tilts to flat -> Calipers lock -> Settle sweep
+      tl.to(
+        viewportRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: EASINGS.standard,
+        },
+        0.25
+      )
         .to(
-          viewportRef.current,
+          viewportHeaderRef.current,
           {
-            opacity: 1,
             y: 0,
-            scale: 1,
-            rotateX: 0,
-            duration: 0.85,
-            ease: EASINGS.precisionOut,
+            opacity: 1,
+            duration: 0.6,
+            ease: EASINGS.standard,
           },
-          0.3
+          0.38
+        )
+        .to(
+          mediaContainerRef.current,
+          {
+            rotateX: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: EASINGS.standard,
+          },
+          0.35
+        )
+        .to(
+          viewportFooterRef.current,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: EASINGS.standard,
+          },
+          0.45
+        )
+        .to(
+          calipersRef.current,
+          {
+            scale: 1,
+            opacity: 0.85,
+            duration: 0.45,
+            stagger: 0.05,
+            ease: EASINGS.standard,
+          },
+          0.55
         );
 
-      // Scroll Seam: subtle viewport depth displacement as user scrolls toward Selected Work
-      if (window.innerWidth >= 1025) {
-        ScrollTrigger.create({
+      if (sweepRef.current) {
+        tl.fromTo(
+          sweepRef.current,
+          { top: "0%", opacity: 0.8 },
+          {
+            top: "100%",
+            opacity: 0,
+            duration: 0.65,
+            ease: EASINGS.emphasis,
+          },
+          0.6
+        );
+      }
+
+      // 3. Scroll Seam Handover: subtle depth de-elevation as user scrolls toward Selected Work
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1025px)", () => {
+        const st = ScrollTrigger.create({
           trigger: el,
           start: "top top",
           end: "bottom top",
@@ -119,14 +192,37 @@ export default function Hero() {
           onUpdate: (self) => {
             if (viewportRef.current) {
               gsap.set(viewportRef.current, {
-                y: self.progress * 30,
-                scale: 1 - self.progress * 0.02,
+                y: self.progress * 34,
+                scale: 1 - self.progress * 0.025,
                 opacity: 1 - self.progress * 0.35,
               });
             }
           },
         });
-      }
+
+        return () => st.kill();
+      });
+
+      // 4. Hero Replay on Re-entry:
+      // Controlled replay when returning to top after scrolling significantly past Hero
+      let hasExitedHero = false;
+
+      const replayTrigger = ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom 20%",
+        onLeave: () => {
+          hasExitedHero = true;
+        },
+        onUpdate: (self) => {
+          if (hasExitedHero && self.progress < 0.1) {
+            hasExitedHero = false;
+            tl.restart();
+          }
+        },
+      });
+
+      return () => replayTrigger.kill();
     }, el);
 
     return () => ctx.revert();
@@ -155,12 +251,12 @@ export default function Hero() {
         img.style.zIndex = "2";
         gsap.fromTo(
           img,
-          { opacity: 0, scale: 1.03 },
+          { opacity: 0, scale: 1.025 },
           {
             opacity: 1,
             scale: 1,
-            duration: DURATIONS.standard,
-            ease: EASINGS.precisionOut,
+            duration: DURATIONS.base,
+            ease: EASINGS.standard,
             onComplete: () => {
               isSwitchingRef.current = false;
             },
@@ -172,7 +268,7 @@ export default function Hero() {
           opacity: 0,
           scale: 1,
           duration: DURATIONS.fast,
-          ease: EASINGS.precisionInOut,
+          ease: EASINGS.emphasis,
         });
       }
     });
@@ -191,22 +287,22 @@ export default function Hero() {
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
 
-    // Media layer shifts deeper (2-5px)
+    // Media layer shifts deeper (max 4.5px)
     gsap.to(mc, {
       x: x * 4.5,
       y: y * 3.5,
-      scale: 1.015,
+      scale: 1.012,
       duration: 0.8,
-      ease: EASINGS.editorial,
+      ease: EASINGS.emphasis,
       overwrite: "auto",
     });
 
-    // Chrome layers shift subtly in counter-plane (-1.5px) to heighten layer parallax
+    // Chrome layers shift subtly in counter-plane (-1.5px) for tactile spatial depth
     if (vh && vf) {
       gsap.to([vh, vf], {
         x: x * -1.5,
         duration: 0.8,
-        ease: EASINGS.editorial,
+        ease: EASINGS.emphasis,
         overwrite: "auto",
       });
     }
@@ -224,7 +320,7 @@ export default function Hero() {
       y: 0,
       scale: 1,
       duration: 0.55,
-      ease: EASINGS.precisionOut,
+      ease: EASINGS.standard,
       overwrite: "auto",
     });
 
@@ -232,7 +328,7 @@ export default function Hero() {
       gsap.to([vh, vf], {
         x: 0,
         duration: 0.55,
-        ease: EASINGS.precisionOut,
+        ease: EASINGS.standard,
         overwrite: "auto",
       });
     }
@@ -254,7 +350,7 @@ export default function Hero() {
       {/* Structural hairline */}
       <div className="hero__hairline" aria-hidden="true" />
 
-      <div className="container hero__grid">
+      <div className="container container--ultra hero__grid">
         {/* ---- Copy Column ---- */}
         <div className="hero__copy">
           <span className="eyebrow hero__eyebrow">
@@ -277,17 +373,6 @@ export default function Hero() {
             Produto, design e engenharia integrados em um único time — do
             conceito à infraestrutura que sustenta o crescimento.
           </p>
-
-          <div className="hero__cta-wrap">
-            <div ref={ctaBtnRef} className="hero__cta-magnetic-wrap">
-              <Link to="/#contato" className="btn btn--primary">
-                Iniciar projeto <span className="btn-arrow" aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <Link to="/#work" className="btn btn--text link-underline">
-              Ver projetos
-            </Link>
-          </div>
         </div>
 
         {/* ---- Product Viewport (Signature Motion Artifact) ---- */}
@@ -302,6 +387,28 @@ export default function Hero() {
           aria-label="Projetos em destaque"
           aria-roledescription="product viewport"
         >
+          {/* Architectural Registration Calipers (4 corners) */}
+          <span
+            ref={(el) => (calipersRef.current[0] = el)}
+            className="viewport__caliper viewport__caliper--tl"
+            aria-hidden="true"
+          />
+          <span
+            ref={(el) => (calipersRef.current[1] = el)}
+            className="viewport__caliper viewport__caliper--tr"
+            aria-hidden="true"
+          />
+          <span
+            ref={(el) => (calipersRef.current[2] = el)}
+            className="viewport__caliper viewport__caliper--bl"
+            aria-hidden="true"
+          />
+          <span
+            ref={(el) => (calipersRef.current[3] = el)}
+            className="viewport__caliper viewport__caliper--br"
+            aria-hidden="true"
+          />
+
           {/* Viewport header — metadata bar */}
           <div ref={viewportHeaderRef} className="viewport__header">
             <div className="viewport__meta">
@@ -312,6 +419,7 @@ export default function Hero() {
 
           {/* Media area — stacked images, crossfade + settle */}
           <div className="viewport__media">
+            <div className="viewport__assembly-sweep" ref={sweepRef} aria-hidden="true" />
             <div className="viewport__media-inner" ref={mediaContainerRef}>
               {heroProjects.map((p, i) => (
                 <img
@@ -357,7 +465,7 @@ export default function Hero() {
               to={`/projetos/${current.slug}`}
               className="viewport__link"
             >
-              Ver projeto <span className="btn-arrow" aria-hidden="true">→</span>
+              Ver projeto <ExploreIcon />
             </Link>
           </div>
         </div>
@@ -365,3 +473,4 @@ export default function Hero() {
     </section>
   );
 }
+

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import useReveal from "../hooks/useReveal.js";
 import { INSTAGRAM_URL } from "../data.js";
 import { initMagneticElement } from "../motion.js";
+import { ActionIcon } from "./Icons.jsx";
 
 /* ---------------------------------------------------------------
    WE TECH HUB — CLOSING CTA (FASE 8 & FASE F)
@@ -54,7 +54,7 @@ export default function ClosingCta() {
           className={`${introReveal.className} closing-cta-header`}
         >
           <div className="closing-cta-eyebrow-row">
-            <span className="mono eyebrow">Começar um projeto</span>
+            <span className="eyebrow">Começar um projeto</span>
           </div>
 
           <h2 id="cta-heading" className="heading-xl closing-cta-heading">
@@ -81,7 +81,7 @@ export default function ClosingCta() {
               role="listitem"
             >
               <div className="pillar-top">
-                <span className="mono pillar-label">{pillar.label}</span>
+                <span className="pillar-label">{pillar.label}</span>
               </div>
               <p className="pillar-detail">{pillar.detail}</p>
             </div>
@@ -102,22 +102,9 @@ export default function ClosingCta() {
                 className="btn btn--primary closing-cta-primary-btn"
                 aria-label="Abrir Instagram da We Tech Hub para falar sobre o projeto"
               >
-                Falar sobre o projeto <span className="btn-arrow" aria-hidden="true">→</span>
+                Falar sobre o projeto <ActionIcon />
               </a>
             </div>
-
-            <Link
-              to="/projetos"
-              className="btn btn--ghost closing-cta-secondary-btn"
-            >
-              Ver todos os projetos <span className="btn-arrow" aria-hidden="true">→</span>
-            </Link>
-          </div>
-
-          <div className="closing-cta-channel-meta">
-            <span className="mono channel-meta-text">
-              Instagram @wetech.h
-            </span>
           </div>
         </div>
       </div>

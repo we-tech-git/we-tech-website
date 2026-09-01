@@ -6,6 +6,7 @@ export const WHATSAPP_NUMBER = "";
 
 // Canais reais e confirmados da We Tech Hub
 export const INSTAGRAM_URL = "https://www.instagram.com/wetech.h/";
+export const LINKEDIN_URL = "https://www.linkedin.com/company/we-tech-hub/?viewAsMember=true";
 
 export function waLink(message) {
   if (!WHATSAPP_NUMBER) return "#contato";

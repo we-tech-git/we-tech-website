@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import useReveal from "../hooks/useReveal.js";
 import { EASINGS, DURATIONS, prefersReducedMotion } from "../motion.js";
+import { BridgeFlowIcon } from "./Icons.jsx";
 
 /* ---------------------------------------------------------------
    WE TECH HUB — CAPABILITIES: ANATOMICAL STRATA
@@ -78,9 +79,11 @@ const STRATA = [
 ];
 
 export default function Capabilities() {
-  const [activeStratum, setActiveStratum] = useState(1); // Default to Experiência (Design)
+  const [activeStratum, setActiveStratum] = useState(0); // Default to Produto (Product)
   const [hoveredCapability, setHoveredCapability] = useState(null);
-  const intro = useReveal({ variant: "mask" });
+  // Fase H: Capabilities = inspection. The real motion is the layer/artifact
+  // switch on the right; the intro stays discreet rather than a dramatic reveal.
+  const intro = useReveal({ variant: "standard" });
   const stageRef = useRef(null);
   const consolePanelRef = useRef(null);
   const planesRef = useRef([]);
@@ -99,39 +102,54 @@ export default function Capabilities() {
     setActiveStratum(index);
   }, []);
 
+  /* Fase H: tracks the 768px breakpoint via matchMedia (not just innerWidth
+     at effect-run time) so the 2.5D plane transforms below stay correct if
+     the viewport crosses it — resize, rotate, or devtools panel toggle. */
+  const [isMobileLayout, setIsMobileLayout] = useState(
+    () => typeof window !== "undefined" && window.innerWidth <= 768
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handleChange = (e) => setIsMobileLayout(e.matches);
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
+
   /* 2.5D visual planes animation via GSAP with dynamic zIndex and viewport boundary containment */
   useEffect(() => {
     const planes = planesRef.current;
     if (!planes || !planes.length) return;
 
     const reduced = prefersReducedMotion();
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = isMobileLayout;
 
     // Desktop 3D perspective tiering configs for all 4 strata
     const desktopTransforms = {
       0: [
-        { y: -25, z: 50, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
-        { y: 15, z: -15, opacity: 0.32, filter: "grayscale(70%) brightness(0.6)", zIndex: 3 },
-        { y: 45, z: -55, opacity: 0.2, filter: "grayscale(90%) brightness(0.4)", zIndex: 2 },
-        { y: 75, z: -90, opacity: 0.1, filter: "grayscale(100%) brightness(0.3)", zIndex: 1 },
+        { y: -16, z: 40, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
+        { y: 10, z: -15, opacity: 0.32, filter: "grayscale(70%) brightness(0.6)", zIndex: 3 },
+        { y: 28, z: -45, opacity: 0.2, filter: "grayscale(90%) brightness(0.4)", zIndex: 2 },
+        { y: 46, z: -70, opacity: 0.1, filter: "grayscale(100%) brightness(0.3)", zIndex: 1 },
       ],
       1: [
-        { y: -45, z: -40, opacity: 0.3, filter: "grayscale(70%) brightness(0.5)", zIndex: 2 },
-        { y: 0, z: 50, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
-        { y: 40, z: -30, opacity: 0.3, filter: "grayscale(75%) brightness(0.5)", zIndex: 3 },
-        { y: 75, z: -80, opacity: 0.15, filter: "grayscale(90%) brightness(0.35)", zIndex: 1 },
+        { y: -30, z: -35, opacity: 0.3, filter: "grayscale(70%) brightness(0.5)", zIndex: 2 },
+        { y: 0, z: 40, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
+        { y: 24, z: -25, opacity: 0.3, filter: "grayscale(75%) brightness(0.5)", zIndex: 3 },
+        { y: 46, z: -65, opacity: 0.15, filter: "grayscale(90%) brightness(0.35)", zIndex: 1 },
       ],
       2: [
-        { y: -65, z: -80, opacity: 0.15, filter: "grayscale(90%) brightness(0.35)", zIndex: 1 },
-        { y: -30, z: -30, opacity: 0.3, filter: "grayscale(75%) brightness(0.5)", zIndex: 2 },
-        { y: 10, z: 50, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
-        { y: 50, z: -25, opacity: 0.3, filter: "grayscale(70%) brightness(0.5)", zIndex: 3 },
+        { y: -44, z: -65, opacity: 0.15, filter: "grayscale(90%) brightness(0.35)", zIndex: 1 },
+        { y: -22, z: -25, opacity: 0.3, filter: "grayscale(75%) brightness(0.5)", zIndex: 2 },
+        { y: 6, z: 40, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
+        { y: 32, z: -20, opacity: 0.3, filter: "grayscale(70%) brightness(0.5)", zIndex: 3 },
       ],
       3: [
-        { y: -75, z: -90, opacity: 0.1, filter: "grayscale(100%) brightness(0.3)", zIndex: 1 },
-        { y: -50, z: -60, opacity: 0.2, filter: "grayscale(85%) brightness(0.4)", zIndex: 2 },
-        { y: -25, z: -20, opacity: 0.35, filter: "grayscale(70%) brightness(0.5)", zIndex: 3 },
-        { y: 10, z: 50, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
+        { y: -50, z: -70, opacity: 0.1, filter: "grayscale(100%) brightness(0.3)", zIndex: 1 },
+        { y: -34, z: -45, opacity: 0.2, filter: "grayscale(85%) brightness(0.4)", zIndex: 2 },
+        { y: -16, z: -15, opacity: 0.35, filter: "grayscale(70%) brightness(0.5)", zIndex: 3 },
+        { y: 6, z: 40, opacity: 1, filter: "brightness(1) contrast(1)", zIndex: 10 },
       ],
     };
 
@@ -164,7 +182,7 @@ export default function Capabilities() {
     };
 
     const transforms = isMobile ? mobileTransforms : desktopTransforms;
-    const config = transforms[activeStratum] || transforms[1];
+    const config = transforms[activeStratum] || transforms[0];
 
     if (reduced) {
       planes.forEach((plane, i) => {
@@ -193,31 +211,34 @@ export default function Capabilities() {
           z: config[i].z,
           opacity: config[i].opacity,
           filter: config[i].filter,
-          duration: DURATIONS.layer,
-          ease: EASINGS.precisionOut,
+          duration: DURATIONS.base,
+          ease: EASINGS.standard,
           overwrite: "auto",
         });
       });
 
       // Micro stagger on active stratum capability items
       if (consolePanelRef.current) {
-        gsap.fromTo(
-          ".strata-capability-item",
-          { opacity: 0, x: -6 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.35,
-            stagger: 0.04,
-            ease: EASINGS.precisionOut,
-            overwrite: "auto",
-          }
-        );
+        const items = consolePanelRef.current.querySelectorAll(".strata-capability-item");
+        if (items.length > 0) {
+          gsap.fromTo(
+            items,
+            { opacity: 0, x: -6 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.35,
+              stagger: 0.04,
+              ease: EASINGS.standard,
+              overwrite: "auto",
+            }
+          );
+        }
       }
     }, stageRef);
 
     return () => ctx.revert();
-  }, [activeStratum]);
+  }, [activeStratum, isMobileLayout]);
 
   // Keyboard navigation for desktop vertical tabs
   const handleKeyDownVertical = useCallback(
@@ -284,11 +305,11 @@ export default function Capabilities() {
       {/* Anchor alias for #capacidades */}
       <span id="capacidades" className="section-anchor-target" aria-hidden="true" />
 
-      <div className="container">
+      <div className="container container--wide">
         {/* Section Intro Header */}
         <div ref={intro.ref} className={`${intro.className} capabilities-intro`}>
           <div className="capabilities-eyebrow-wrap">
-            <span className="mono eyebrow">Capacidades</span>
+            <span className="eyebrow">Capacidades</span>
           </div>
           <h2 className="heading-lg capabilities-heading">
             Um produto digital não é uma soma de entregas isoladas.
@@ -334,8 +355,8 @@ export default function Capabilities() {
           <div className="strata-console">
             <div className="strata-console-inner">
               <div className="strata-console-meta">
-                <span className="mono strata-console-label">Camadas do produto</span>
-                <span className="mono strata-console-coord">Visão integrada</span>
+                <span className="strata-console-label">Camadas do produto</span>
+                <span className="strata-console-coord">Visão integrada</span>
               </div>
 
               {/* Vertical Interactive Selector */}
@@ -380,7 +401,7 @@ export default function Capabilities() {
                 aria-labelledby={`strata-tab-${current.id}`}
               >
                 <div className="strata-active-header">
-                  <span className="mono strata-active-status">
+                  <span className="strata-active-status">
                     {current.statusBadge}
                   </span>
                   <span className="mono strata-active-count">
@@ -416,7 +437,6 @@ export default function Capabilities() {
                         }}
                       >
                         <span className="strata-cap-name">{cap.name}</span>
-                        <span className="strata-cap-arrow" aria-hidden="true">→</span>
                       </li>
                     );
                   })}
@@ -431,12 +451,12 @@ export default function Capabilities() {
               {/* Inspection Header Bar */}
               <div className="strata-stage-topbar">
                 <div className="strata-stage-meta-left">
-                  <span className="mono strata-topbar-title">
+                  <span className="strata-topbar-title">
                     Visualização do artefato · {current.label}
                   </span>
                 </div>
                 <div className="strata-stage-meta-right">
-                  <span className="mono strata-topbar-stratum">
+                  <span className="strata-topbar-stratum">
                     Visão da camada
                   </span>
                 </div>
@@ -460,38 +480,38 @@ export default function Capabilities() {
                 >
                   <div className="stratum-plane-inner blueprint-grid">
                     <div className="stratum-plane-header">
-                      <span className="mono plane-badge">Estrutura &amp; Escopo</span>
-                      <span className="mono plane-coords">Mapeamento de requisitos</span>
+                      <span className="plane-badge">Estrutura &amp; Escopo</span>
+                      <span className="plane-coords">Mapeamento de requisitos</span>
                     </div>
 
                     <div className="blueprint-schematic">
                       <div
                         className={`blueprint-zone blueprint-zone--header ${hoveredCapability === "zone-scope" ? "zone-highlight" : ""}`}
                       >
-                        <span className="mono zone-tag">Posicionamento de produto</span>
+                        <span className="zone-tag">Posicionamento de produto</span>
                         <div className="blueprint-wire-line" />
                       </div>
 
                       <div className="blueprint-body">
                         <div className="blueprint-zone blueprint-zone--main">
-                          <span className="mono zone-tag">Hierarquia de informação</span>
+                          <span className="zone-tag">Hierarquia de informação</span>
                           <div
                             className={`blueprint-box-placeholder ${hoveredCapability === "zone-ux" ? "zone-highlight" : ""}`}
                           />
                           <div
                             className={`blueprint-vector-arrow ${hoveredCapability === "zone-flow" ? "zone-highlight" : ""}`}
                           >
-                            <span className="mono vector-label">Fluxo do usuário ──►</span>
+                            <span className="vector-label">Fluxo do usuário ──►</span>
                           </div>
                         </div>
 
                         <div
                           className={`blueprint-zone blueprint-zone--sidebar ${hoveredCapability === "zone-proto" ? "zone-highlight" : ""}`}
                         >
-                          <span className="mono zone-tag">Prioridades de entrega</span>
+                          <span className="zone-tag">Prioridades de entrega</span>
                           <div className="blueprint-wire-metric">
-                            <span className="mono metric-calc">4 frentes de escopo</span>
-                            <span className="mono metric-calc">Critérios validados</span>
+                            <span className="metric-calc">Escopo priorizado</span>
+                            <span className="metric-calc">Critérios de decisão</span>
                           </div>
                         </div>
                       </div>
@@ -507,37 +527,17 @@ export default function Capabilities() {
                 >
                   <div className="stratum-plane-inner design-grid">
                     <div className="stratum-plane-header">
-                      <span className="mono plane-badge">Interface &amp; Sistema Visual</span>
-                      <span className="mono plane-coords">Instrument Sans · Grade 8px</span>
+                      <span className="plane-badge">Interface &amp; Sistema Visual</span>
+                      <span className="plane-coords">Referência de alta fidelidade</span>
                     </div>
 
                     <div className="design-interface-viewport">
                       <img
                         src="/img/projects/toro_token_web_site.webp"
                         alt="Interface do projeto TORO Platform usada como referência visual de alta fidelidade"
-                        className={`strata-real-img ${hoveredCapability === "zone-ui" ? "zone-highlight" : ""}`}
+                        className={`strata-real-img ${["zone-tokens", "zone-ui", "zone-hifi", "zone-micro"].includes(hoveredCapability) ? "zone-highlight" : ""}`}
                         loading="lazy"
                       />
-
-                      {/* Design System Guides */}
-                      <div className="design-system-guides" aria-hidden="true">
-                        <div
-                          className={`ds-token-tag ds-token-tag--accent ${hoveredCapability === "zone-tokens" ? "zone-highlight" : ""}`}
-                        >
-                          <span className="ds-token-swatch" />
-                          <span className="mono">Token: #FF4000</span>
-                        </div>
-                        <div
-                          className={`ds-token-tag ds-token-tag--type ${hoveredCapability === "zone-hifi" ? "zone-highlight" : ""}`}
-                        >
-                          <span className="mono">Fonte: Instrument Sans</span>
-                        </div>
-                        <div
-                          className={`ds-token-tag ds-token-tag--radius ${hoveredCapability === "zone-micro" ? "zone-highlight" : ""}`}
-                        >
-                          <span className="mono">Raio: 2px</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -550,8 +550,8 @@ export default function Capabilities() {
                 >
                   <div className="stratum-plane-inner engineering-grid">
                     <div className="stratum-plane-header">
-                      <span className="mono plane-badge">Engenharia &amp; Componentes</span>
-                      <span className="mono plane-coords">React · Arquitetura estruturada</span>
+                      <span className="plane-badge">Engenharia &amp; Componentes</span>
+                      <span className="plane-coords">Arquitetura estruturada</span>
                     </div>
 
                     <div className="engineering-schematic">
@@ -559,36 +559,31 @@ export default function Capabilities() {
                       <div
                         className={`eng-node eng-node--header ${hoveredCapability === "zone-apps" ? "zone-highlight" : ""}`}
                       >
-                        <span className="mono eng-node-tag">&lt;ExperienceShell /&gt;</span>
-                        <span className="mono eng-node-status">Estrutura base</span>
+                        <span className="eng-node-tag">Estrutura base da aplicação</span>
                       </div>
 
                       <div className="eng-node-split">
                         <div
                           className={`eng-node eng-node--component ${hoveredCapability === "zone-frontend" ? "zone-highlight" : ""}`}
                         >
-                          <span className="mono eng-node-tag">&lt;ContentModules /&gt;</span>
-                          <span className="mono eng-metric">Módulos de conteúdo</span>
-                          <div className="eng-data-pipeline">
-                            <span className="mono pipe-text">Fluxo de dados</span>
-                          </div>
+                          <span className="eng-node-tag">Módulos de conteúdo</span>
+                          <span className="eng-metric">Fluxo de dados</span>
                         </div>
 
                         <div
                           className={`eng-node eng-node--component ${hoveredCapability === "zone-api" ? "zone-highlight" : ""}`}
                         >
-                          <span className="mono eng-node-tag">&lt;InterfaceState /&gt;</span>
-                          <span className="mono eng-metric">Estado da interface</span>
-                          <span className="mono eng-node-status eng-node-status--ok">Integração de APIs</span>
+                          <span className="eng-node-tag">Estado da interface</span>
+                          <span className="eng-metric">Integração de APIs</span>
                         </div>
                       </div>
 
                       <div
                         className={`eng-footer-notes ${hoveredCapability === "zone-perf" ? "zone-highlight" : ""}`}
                       >
-                        <span className="mono">Acessibilidade</span>
-                        <span className="mono">Performance</span>
-                        <span className="mono">Responsivo</span>
+                        <span>Acessibilidade</span>
+                        <span>Performance</span>
+                        <span>Responsivo</span>
                       </div>
                     </div>
                   </div>
@@ -602,54 +597,41 @@ export default function Capabilities() {
                 >
                   <div className="stratum-plane-inner evolution-grid">
                     <div className="stratum-plane-header">
-                      <span className="mono plane-badge">Ciclo Contínuo &amp; Evolução</span>
-                      <span className="mono plane-coords">Deploy Ativo · Telemetria v1.0</span>
+                      <span className="plane-badge">Ciclo Contínuo &amp; Evolução</span>
+                      <span className="plane-coords">Continuidade do produto</span>
                     </div>
 
                     <div className="evolution-schematic">
-                      {/* Top runtime status bar */}
-                      <div
-                        className={`evo-telemetry-bar ${hoveredCapability === "zone-scale" ? "zone-highlight" : ""}`}
-                      >
-                        <div className="evo-telemetry-status">
-                          <span className="mono evo-live-label">&lt;EvolucaoContinua /&gt;</span>
-                        </div>
-                        <span className="mono evo-live-env">Ambiente de produção</span>
-                        <span className="mono evo-live-uptime">Estabilidade e evolução</span>
-                      </div>
-
                       {/* Split Metric Nodes */}
                       <div className="evo-node-split">
                         <div className={`evo-node ${hoveredCapability === "zone-deploy" ? "zone-highlight" : ""}`}>
                           <div className="evo-node-head">
-                            <span className="mono evo-node-tag">Pipeline CI/CD</span>
-                            <span className="mono evo-badge-ok">Validado</span>
+                            <span className="evo-node-tag">Entrega assistida</span>
                           </div>
-                          <p className="evo-node-desc">Regressão visual &amp; contratos verificados</p>
+                          <p className="evo-node-desc">Documentação e acompanhamento pós-entrega</p>
                           <div className="evo-metric-row">
-                            <span className="mono evo-metric-item">Build estruturado</span>
-                            <span className="mono evo-metric-item">Validação contínua</span>
+                            <span className="evo-metric-item">Build estruturado</span>
+                            <span className="evo-metric-item">Revisão contínua</span>
                           </div>
                         </div>
 
                         <div className={`evo-node ${hoveredCapability === "zone-monitor" ? "zone-highlight" : ""}`}>
                           <div className="evo-node-head">
-                            <span className="mono evo-node-tag">Core Web Vitals</span>
-                            <span className="mono evo-badge-ok">Monitorado</span>
+                            <span className="evo-node-tag">Revisão de performance</span>
                           </div>
-                          <p className="evo-node-desc">Monitoramento contínuo de experiência</p>
+                          <p className="evo-node-desc">Revisão de experiência e Core Web Vitals</p>
                           <div className="evo-metric-row">
-                            <span className="mono evo-metric-item">Performance</span>
-                            <span className="mono evo-metric-item">Acessibilidade</span>
+                            <span className="evo-metric-item">Performance</span>
+                            <span className="evo-metric-item">Acessibilidade</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Convergence Banner Card */}
                       <div
-                        className={`evolution-convergence-card ${hoveredCapability === "zone-qa" ? "zone-highlight" : ""}`}
+                        className={`evolution-convergence-card ${["zone-scale", "zone-qa"].includes(hoveredCapability) ? "zone-highlight" : ""}`}
                       >
-                        <span className="mono convergence-text">Disciplinas alinhadas do conceito ao deploy</span>
+                        <span className="convergence-text">Disciplinas alinhadas do conceito à evolução</span>
                       </div>
                     </div>
                   </div>
@@ -658,10 +640,10 @@ export default function Capabilities() {
 
               {/* Stage footer */}
               <div className="strata-stage-footer">
-                <span className="mono strata-footer-text">
+                <span className="strata-footer-text">
                   Produto · Design · Engenharia
                 </span>
-                <span className="mono strata-footer-status">
+                <span className="strata-footer-status">
                   Visão do artefato
                 </span>
               </div>
@@ -672,14 +654,14 @@ export default function Capabilities() {
         {/* Narrative Bridge to Section 03: Frentes */}
         <div className="strata-transition-bridge">
           <div className="strata-bridge-content">
-            <span className="mono strata-bridge-eyebrow">Do conceito à execução</span>
+            <span className="strata-bridge-eyebrow">Do conceito à execução</span>
             <p className="strata-bridge-text">
               Você conheceu as disciplinas fundamentais. Descubra agora como estruturamos nossas frentes de atuação.
             </p>
           </div>
           <a href="#fronts" className="strata-bridge-link" aria-label="Ver frentes de atuação da We Tech">
             <span>Conhecer as frentes</span>
-            <span className="strata-bridge-arrow" aria-hidden="true">↓</span>
+            <BridgeFlowIcon />
           </a>
         </div>
       </div>

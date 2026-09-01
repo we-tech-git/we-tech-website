@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projetos } from "../projetos.js";
 import useReveal from "../hooks/useReveal.js";
 import { EASINGS, DURATIONS, prefersReducedMotion, isPointerFine } from "../motion.js";
+import { ExploreIcon } from "./Icons.jsx";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -97,18 +98,12 @@ function ProjectRow({ projeto, index }) {
     if (!el || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const isDesktop = window.innerWidth >= 1025;
+      let tl = null;
+      let startPos = "top 80%";
 
       if (projeto.slug === "toro-token") {
-        // TORO TOKEN: Image mask expands from left + subtle scale settle, metadata enters with stagger
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        });
-
+        startPos = "top 88%";
+        tl = gsap.timeline({ paused: true });
         tl.fromTo(
           imgFrameRef.current,
           { clipPath: "inset(0 100% 0 0)", opacity: 0 },
@@ -116,79 +111,60 @@ function ProjectRow({ projeto, index }) {
             clipPath: "inset(0 0% 0 0)",
             opacity: 1,
             duration: 0.85,
-            ease: EASINGS.precisionOut,
+            ease: EASINGS.standard,
           },
           0
         )
           .fromTo(
             imgElementRef.current,
             { scale: 1.04 },
-            { scale: 1, duration: 0.95, ease: EASINGS.precisionOut },
+            { scale: 1, duration: 0.95, ease: EASINGS.standard },
             0.05
           )
           .fromTo(
             metaRef.current,
             { opacity: 0, x: -16 },
-            { opacity: 1, x: 0, duration: 0.65, ease: EASINGS.precisionOut },
+            { opacity: 1, x: 0, duration: 0.65, ease: EASINGS.standard },
             0.25
           );
       } else if (projeto.slug === "genesis-bank") {
-        // GENESIS BANK: Browser Chrome appears first, UI screenshot reveals inside, metadata completes
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        });
-
+        startPos = "top 88%";
+        tl = gsap.timeline({ paused: true });
         if (chromeRef.current) {
           tl.fromTo(
             chromeRef.current,
             { opacity: 0, y: -8 },
-            { opacity: 1, y: 0, duration: 0.45, ease: EASINGS.precisionOut },
+            { opacity: 1, y: 0, duration: 0.45, ease: EASINGS.standard },
             0
           );
         }
-
         tl.fromTo(
           imgFrameRef.current,
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, ease: EASINGS.precisionOut },
+          { opacity: 1, y: 0, duration: 0.7, ease: EASINGS.standard },
           0.1
         ).fromTo(
           metaRef.current,
           { opacity: 0, x: 16 },
-          { opacity: 1, x: 0, duration: 0.6, ease: EASINGS.precisionOut },
+          { opacity: 1, x: 0, duration: 0.6, ease: EASINGS.standard },
           0.25
         );
       } else if (projeto.slug === "triper") {
-        // TRIPER: Editorial pause — minimal, calm fade with short translate
-        gsap.fromTo(
+        startPos = "top 88%";
+        tl = gsap.timeline({ paused: true });
+        tl.fromTo(
           el,
           { opacity: 0, y: 18 },
           {
             opacity: 1,
             y: 0,
             duration: 0.75,
-            ease: EASINGS.editorial,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 82%",
-              toggleActions: "play none none none",
-            },
+            ease: EASINGS.emphasis,
           }
         );
       } else if (projeto.slug === "blue-token") {
-        // BLUE TOKEN: Monumental Close — Wide masked expansion
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: "top 78%",
-            toggleActions: "play none none none",
-          },
-        });
-
+        startPos = "top 85%";
+        tl = gsap.timeline({ paused: true });
         tl.fromTo(
           imgFrameRef.current,
           { clipPath: "inset(0 0 100% 0)", opacity: 0 },
@@ -196,15 +172,34 @@ function ProjectRow({ projeto, index }) {
             clipPath: "inset(0 0 0% 0)",
             opacity: 1,
             duration: 0.9,
-            ease: EASINGS.precisionOut,
+            ease: EASINGS.standard,
           },
           0
         ).fromTo(
           metaRef.current,
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.65, ease: EASINGS.precisionOut },
+          { opacity: 1, y: 0, duration: 0.65, ease: EASINGS.standard },
           0.3
         );
+      }
+
+      if (tl) {
+        // Trigger 1: Controlled entrance (down & up) + silent reset when completely above viewport
+        ScrollTrigger.create({
+          trigger: el,
+          start: startPos,
+          end: "bottom top",
+          onEnter: () => tl.restart(),
+          onEnterBack: () => tl.restart(),
+          onLeave: () => tl.pause(0),
+        });
+
+        // Trigger 2: Silent reset when completely below viewport (leaves going back up)
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top bottom",
+          onLeaveBack: () => tl.pause(0),
+        });
       }
     }, el);
 
@@ -216,16 +211,16 @@ function ProjectRow({ projeto, index }) {
     if (prefersReducedMotion() || !isPointerFine()) return;
     const img = imgElementRef.current;
     const meta = metaRef.current;
-    if (img) gsap.to(img, { scale: 1.015, duration: 0.5, ease: EASINGS.precisionOut, overwrite: "auto" });
-    if (meta) gsap.to(meta, { x: 4, duration: 0.45, ease: EASINGS.precisionOut, overwrite: "auto" });
+    if (img) gsap.to(img, { scale: 1.015, duration: 0.5, ease: EASINGS.standard, overwrite: "auto" });
+    if (meta) gsap.to(meta, { x: 4, duration: 0.45, ease: EASINGS.standard, overwrite: "auto" });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (prefersReducedMotion() || !isPointerFine()) return;
     const img = imgElementRef.current;
     const meta = metaRef.current;
-    if (img) gsap.to(img, { scale: 1, duration: 0.45, ease: EASINGS.precisionOut, overwrite: "auto" });
-    if (meta) gsap.to(meta, { x: 0, duration: 0.4, ease: EASINGS.precisionOut, overwrite: "auto" });
+    if (img) gsap.to(img, { scale: 1, duration: 0.45, ease: EASINGS.standard, overwrite: "auto" });
+    if (meta) gsap.to(meta, { x: 0, duration: 0.4, ease: EASINGS.standard, overwrite: "auto" });
   }, []);
 
   return (
@@ -270,7 +265,7 @@ function ProjectRow({ projeto, index }) {
           )}
 
           <span className="sw-row__cta">
-            Ver projeto <span className="btn-arrow" aria-hidden="true">→</span>
+            Ver projeto <ExploreIcon />
           </span>
         </div>
 
@@ -321,18 +316,20 @@ function ProjectRow({ projeto, index }) {
    SELECTED WORK SECTION
    --------------------------------------------------------------- */
 export default function SelectedWork() {
-  const introReveal = useReveal({ variant: "mask" });
+  // Fase H: section motion lives in the image (mask/clip reveal per row, below).
+  // The intro header stays a plain reveal so it doesn't compete with that.
+  const introReveal = useReveal({ variant: "standard" });
 
   return (
     <section id="work" className="sw" aria-labelledby="sw-heading">
-      <div className="container">
+      <div className="container container--ultra">
         {/* Section intro */}
         <div
           className={`sw-intro ${introReveal.className}`}
           ref={introReveal.ref}
         >
           <div className="sw-intro__top">
-            <span className="mono eyebrow">Projetos</span>
+            <span className="eyebrow">Projetos</span>
             <span className="mono sw-intro__count">{ordered.length} projetos</span>
           </div>
 
@@ -362,7 +359,7 @@ export default function SelectedWork() {
         {/* Section close — link to full index */}
         <div className="sw-close">
           <Link to="/projetos" className="btn btn--ghost sw-close__btn">
-            Ver todos os projetos <span className="btn-arrow" aria-hidden="true">→</span>
+            Ver todos os projetos <ExploreIcon />
           </Link>
         </div>
       </div>

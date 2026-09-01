@@ -74,7 +74,7 @@ export default function ProjectsGallery() {
         <div className="container">
           <div ref={intro.ref} className={`pg__intro ${intro.className}`}>
             <div style={{ marginBottom: "var(--space-4)" }}>
-              <span className="mono eyebrow">Projetos selecionados</span>
+              <span className="eyebrow">Projetos selecionados</span>
             </div>
             <h1 className="pg__heading">Projetos</h1>
             <p className="pg__sub">

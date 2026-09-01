@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useReveal from "../hooks/useReveal.js";
 import { getProjeto, projetos } from "../projetos.js";
+import { StepArrowIcon, ExploreIcon } from "../components/Icons.jsx";
 
 /* ---------------------------------------------------------------
    PROJECT DETAIL — Premium single-project page
@@ -62,7 +63,7 @@ function ProjectNav({ currentSlug }) {
         className="pd__nav-item pd__nav-item--next"
         aria-label={`Próximo projeto: ${next.nome}`}
       >
-        <span className="pd__nav-label">Próximo →</span>
+        <span className="pd__nav-label">Próximo <StepArrowIcon /></span>
         <span className="pd__nav-name">{next.nome}</span>
       </Link>
     </nav>
@@ -173,7 +174,7 @@ export default function ProjectDetail() {
                 rel="noopener noreferrer"
                 className="btn btn--primary"
               >
-                Visitar site <span className="btn-arrow">→</span>
+                Visitar site <ExploreIcon />
               </a>
             )}
             <Link to="/projetos" className="btn btn--ghost">

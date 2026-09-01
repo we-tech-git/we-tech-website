@@ -11,10 +11,12 @@ export default function useReveal(options = {}) {
     threshold = 0.12,
     rootMargin = "0px 0px -8% 0px",
     delay = 0,
+    once = false,
   } = options;
 
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+  const delayTimerRef = useRef(null);
 
   useEffect(() => {
     const node = ref.current;
@@ -30,32 +32,52 @@ export default function useReveal(options = {}) {
       return;
     }
 
+    const effectiveThreshold =
+      variant === "mask" || variant === "clip"
+        ? 0
+        : typeof threshold === "number"
+          ? threshold
+          : 0.12;
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
             if (delay > 0) {
-              setTimeout(() => setVisible(true), delay);
+              delayTimerRef.current = setTimeout(() => setVisible(true), delay);
             } else {
               setVisible(true);
             }
-            io.unobserve(entry.target);
+            if (once) {
+              io.unobserve(entry.target);
+            }
+          } else {
+            // Replay mode: reset only when the element has truly exited the physical viewport
+            // (prevents micro-scroll jitter and never disappears while visible)
+            if (!once) {
+              const rect = entry.boundingClientRect;
+              const isCompletelyOffscreen =
+                rect.top >= window.innerHeight || rect.bottom <= 0;
+
+              if (isCompletelyOffscreen) {
+                if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+                setVisible(false);
+              }
+            }
           }
         });
       },
-      { threshold, rootMargin }
+      { threshold: effectiveThreshold, rootMargin }
     );
 
     io.observe(node);
 
-    // Safety fallback
-    const fallback = setTimeout(() => setVisible(true), 2600);
-
     return () => {
       io.disconnect();
-      clearTimeout(fallback);
+      if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
     };
-  }, [threshold, rootMargin, delay]);
+  }, [threshold, rootMargin, delay, once]);
 
   const variantClass = variant !== "standard" ? `reveal--${variant}` : "";
   const className = `reveal ${variantClass}${visible ? " visible" : ""}`.trim();

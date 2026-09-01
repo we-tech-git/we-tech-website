@@ -49,7 +49,7 @@ function PrincipleItem({ principle, index }) {
     >
       <div className="why-principle-header">
         <div className="why-principle-meta">
-          <span className="mono why-principle-cat">
+          <span className="why-principle-cat">
             {principle.category}
           </span>
         </div>
@@ -68,7 +68,9 @@ function PrincipleItem({ principle, index }) {
 }
 
 export default function WhyWeTech() {
-  const introReveal = useReveal({ variant: "mask" });
+  // Fase H: Why We Tech is the decompression pause — minimum motion,
+  // no clip/mask reveal here (that's reserved for Process and the CTA).
+  const introReveal = useReveal({ variant: "standard" });
 
   return (
     <section
@@ -81,7 +83,7 @@ export default function WhyWeTech() {
           {/* LEFT COLUMN: Narrative Positioning & Bridge (Cols 1–5) */}
           <div ref={introReveal.ref} className={`${introReveal.className} why-sticky-col`}>
             <div className="why-eyebrow-wrap">
-              <span className="mono eyebrow">Princípios</span>
+              <span className="eyebrow">Princípios</span>
             </div>
 
             <h2 id="why-heading" className="heading-lg why-heading">
@@ -99,7 +101,7 @@ export default function WhyWeTech() {
 
             {/* Editorial Bridge to Final Contact */}
             <div className="why-bridge">
-              <span className="mono why-bridge-label">Próximo passo</span>
+              <span className="why-bridge-label">Próximo passo</span>
               <p className="why-bridge-text">
                 Se é esse nível de continuidade e rigor que o seu produto exige, o próximo passo é estruturar o desafio.
               </p>

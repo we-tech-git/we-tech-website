@@ -11,7 +11,40 @@ const navItems = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isFloating, setIsFloating] = useState(false);
   const location = useLocation();
+
+  // Activate floating navbar when user scrolls past the hero section
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const heroEl = document.querySelector(".hero");
+          if (heroEl) {
+            const heroRect = heroEl.getBoundingClientRect();
+            // When the bottom of the hero section reaches or passes the top of the viewport
+            setIsFloating(heroRect.bottom <= 60);
+          } else {
+            // Fallback for pages without a hero section
+            setIsFloating(window.scrollY > 80);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [location.pathname]);
 
   // Close mobile menu on navigation
   useEffect(() => {
@@ -40,9 +73,28 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="nav" role="banner">
-      <div className="container nav__inner">
-        <Link to="/" className="nav__brand" aria-label="We Tech Hub — página inicial">
+    <header className="nav-wrapper" role="banner">
+      <div
+        className={`nav${isFloating ? " nav--floating" : ""}${
+          menuOpen ? " is-menu-open" : ""
+        }`}
+      >
+        <div className="container container--ultra nav__inner">
+          <Link
+            to="/"
+            className="nav__brand"
+            aria-label="We Tech Hub — página inicial"
+          onClick={(e) => {
+            if (location.pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              if (window.location.hash) {
+                window.history.pushState(null, "", "/");
+              }
+            }
+            setMenuOpen(false);
+          }}
+        >
           <Logo />
           <span>We Tech</span>
         </Link>
@@ -110,6 +162,7 @@ export default function Header() {
           Iniciar projeto
         </Link>
       </nav>
+      </div>
     </header>
   );
 }

@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useReveal from "../hooks/useReveal.js";
 import ProtocolArtifact from "./ProtocolArtifact.jsx";
 import { EASINGS, prefersReducedMotion } from "../motion.js";
+import { StepArrowIcon } from "./Icons.jsx";
 
 // Register ScrollTrigger safely
 if (typeof window !== "undefined") {
@@ -92,6 +93,8 @@ export default function Process() {
   const narrativeRef = useRef(null);
   const triggerInstanceRef = useRef(null);
   const activeStepRef = useRef(0);
+  // Fase H: Process is one of two sections (with the CTA) allowed the mask/clip
+  // reveal — it precedes the pinned progression, so a heavier entrance is earned.
   const intro = useReveal({ variant: "mask" });
 
   const current = PROTOCOL_STEPS[activeStep] || PROTOCOL_STEPS[0];
@@ -102,26 +105,24 @@ export default function Process() {
      and without prefers-reduced-motion.
      --------------------------------------------------------------- */
   useEffect(() => {
-    const isClient = typeof window !== "undefined";
-    if (!isClient) return;
+    if (typeof window === "undefined" || prefersReducedMotion()) return;
 
-    const mediaReduced = prefersReducedMotion();
-    const mediaDesktop = window.matchMedia("(min-width: 1025px) and (min-height: 700px)").matches;
+    const totalSteps = PROTOCOL_STEPS.length;
+    // Fase H: gsap.matchMedia() (not a one-time innerWidth check) so the pin
+    // is created/torn down cleanly if the viewport crosses the desktop
+    // breakpoint after mount — resize/rotate no longer leaves a stuck pin
+    // or a desktop that never got one.
+    const mm = gsap.matchMedia();
 
-    if (mediaReduced || !mediaDesktop) {
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      const totalSteps = PROTOCOL_STEPS.length;
-
+    mm.add("(min-width: 1024px) and (min-height: 700px)", () => {
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
-        pin: pinnedRef.current,
-        start: "top top",
-        end: "+=180%", // 180vh duration for optimal scroll comfort
+        pin: sectionRef.current,
+        start: "top 64px",
+        end: "+=120%",
         scrub: 0.35,
         anticipatePin: 1,
+        pinSpacing: true,
         onUpdate: (self) => {
           // Map progress 0..1 to step index 0..5
           const rawIndex = Math.floor(self.progress * totalSteps);
@@ -134,11 +135,13 @@ export default function Process() {
       });
 
       triggerInstanceRef.current = st;
-    }, sectionRef);
 
-    return () => {
-      ctx.revert();
-    };
+      return () => {
+        triggerInstanceRef.current = null;
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   /* Micro narrative transition on step change */
@@ -153,7 +156,7 @@ export default function Process() {
         y: 0,
         duration: 0.35,
         stagger: 0.04,
-        ease: EASINGS.precisionOut,
+        ease: EASINGS.standard,
         overwrite: "auto",
       }
     );
@@ -183,6 +186,31 @@ export default function Process() {
     if (activeStep < PROTOCOL_STEPS.length - 1) handleStepClick(activeStep + 1);
   };
 
+  /* Keyboard navigation for protocol stage ladder */
+  const handleLadderKeyDown = useCallback(
+    (e, index) => {
+      let nextIndex = null;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        e.preventDefault();
+        nextIndex = (index + 1) % PROTOCOL_STEPS.length;
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        nextIndex = (index - 1 + PROTOCOL_STEPS.length) % PROTOCOL_STEPS.length;
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        nextIndex = 0;
+      } else if (e.key === "End") {
+        e.preventDefault();
+        nextIndex = PROTOCOL_STEPS.length - 1;
+      }
+
+      if (nextIndex !== null) {
+        handleStepClick(nextIndex);
+      }
+    },
+    [handleStepClick]
+  );
+
   return (
     <section
       id="process"
@@ -190,11 +218,11 @@ export default function Process() {
       className="section protocol-section"
       aria-labelledby="protocol-heading"
     >
-      <div className="container">
+      <div className="container container--wide">
         {/* Section Intro (revealed on scroll) */}
         <div ref={intro.ref} className={`${intro.className} protocol-intro`}>
           <div className="protocol-eyebrow-wrap">
-            <span className="mono eyebrow">Processo</span>
+            <span className="eyebrow">Processo</span>
           </div>
           <h2 id="protocol-heading" className="heading-lg protocol-heading">
             Menos incerteza antes do código.
@@ -217,7 +245,7 @@ export default function Process() {
                 {/* Deck Top Bar */}
                 <div className="protocol-deck-topbar">
                   <div className="protocol-deck-header-left">
-                    <span className="mono protocol-deck-title">PROTOCOL // ETAPAS</span>
+                    <span className="protocol-deck-title">Etapas do processo</span>
                   </div>
                   <div className="protocol-deck-meter" aria-hidden="true">
                     {PROTOCOL_STEPS.map((_, i) => (
@@ -241,6 +269,7 @@ export default function Process() {
                             type="button"
                             className={`protocol-stage-btn ${isActive ? "active" : ""} ${isPassed ? "passed" : ""}`}
                             onClick={() => handleStepClick(idx)}
+                            onKeyDown={(e) => handleLadderKeyDown(e, idx)}
                             aria-current={isActive ? "step" : undefined}
                             aria-label={`Etapa ${step.num}: ${step.label} (${step.discipline}) - ${step.question}`}
                           >
@@ -263,10 +292,10 @@ export default function Process() {
               <div ref={narrativeRef} className="protocol-dossier-card">
                 <div className="protocol-dossier-header">
                   <div className="protocol-dossier-focus">
-                    <span className="mono protocol-focus-tag">{current.focus}</span>
+                    <span className="protocol-focus-tag">{current.focus}</span>
                   </div>
                   <div className="protocol-dossier-status">
-                    <span className="mono protocol-status-pill">
+                    <span className="protocol-status-pill">
                       {current.stateBadge}
                     </span>
                   </div>
@@ -279,7 +308,7 @@ export default function Process() {
 
                 {/* Deliverables / Key Criteria Chips */}
                 <div className="protocol-deliverables-wrap">
-                  <span className="mono protocol-deliverables-label">CRITÉRIOS DA ETAPA</span>
+                  <span className="protocol-deliverables-label">Critérios da etapa</span>
                   <ul className="protocol-deliverables-list" role="list">
                     {current.deliverables.map((item, i) => (
                       <li key={i} className="protocol-deliverable-chip">
@@ -310,7 +339,7 @@ export default function Process() {
                     disabled={activeStep === PROTOCOL_STEPS.length - 1}
                     aria-label="Próxima etapa"
                   >
-                    Próxima etapa →
+                    Próxima etapa <StepArrowIcon />
                   </button>
                 </div>
               </div>
@@ -322,7 +351,7 @@ export default function Process() {
                 {/* Viewport Top Bar */}
                 <div className="protocol-viewport-topbar">
                   <div className="protocol-viewport-meta-left">
-                    <span className="mono protocol-viewport-title">
+                    <span className="protocol-viewport-title">
                       Visão da etapa · {current.label}
                     </span>
                   </div>
@@ -366,8 +395,8 @@ export default function Process() {
               </div>
 
               <div className="protocol-mobile-focus-bar">
-                <span className="mono protocol-mobile-focus">{step.focus}</span>
-                <span className="mono protocol-mobile-status">{step.stateBadge}</span>
+                <span className="protocol-mobile-focus">{step.focus}</span>
+                <span className="protocol-mobile-status">{step.stateBadge}</span>
               </div>
 
               <h3 className="protocol-mobile-question">{step.question}</h3>
@@ -385,7 +414,7 @@ export default function Process() {
               {/* Inline Mini-Viewport for each state */}
               <div className="protocol-mobile-preview" aria-hidden="true">
                 <div className="protocol-mobile-preview-top">
-                  <span className="mono">{step.stateBadge}</span>
+                  <span>{step.stateBadge}</span>
                 </div>
                 <ProtocolArtifact isMini={true} miniStep={idx} />
               </div>
