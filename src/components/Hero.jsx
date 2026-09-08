@@ -400,33 +400,58 @@ export default function Hero() {
                     </div>
 
                     <div className="ea-evo-timeline">
-                      <div className="ea-evo-track" style={{ background: "linear-gradient(180deg, rgba(34,197,94,0.3), rgba(16,185,129,0.5))" }} />
-
                       <div className="ea-evo-card ea-evo-card--base">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot" style={{ background: "#22C55E" }} />
                           <span>COMMIT #7F39B2</span>
+                          <span className="ea-evo-status-tag" style={{ color: "#22C55E" }}>PASS</span>
                         </div>
                         <h5 className="ea-evo-card-title">Automated Tests · Pass</h5>
                         <p className="ea-evo-card-desc">412/412 testes de integração validados com sucesso.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">412 Tests</span>
+                          <span className="ea-evo-chip">CI Green</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow" style={{ color: "#22C55E" }}>↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--scale">
                         <div className="ea-evo-card-badge ea-evo-card-badge--infra">
                           <span className="ea-evo-milestone-dot active" style={{ background: "#22C55E" }} />
                           <span>TERRAFORM CLOUD</span>
+                          <span className="ea-evo-status-tag" style={{ color: "#22C55E", borderColor: "rgba(34,197,94,0.3)" }}>APPLIED</span>
                         </div>
                         <h5 className="ea-evo-card-title">Infra-as-Code · Synced</h5>
                         <p className="ea-evo-card-desc">0 to add, 0 to change, 0 to destroy em produção.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">K8s v1.30</span>
+                          <span className="ea-evo-chip">GitOps</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow" style={{ color: "#22C55E" }}>↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--extend">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot ghost" style={{ borderColor: "#22C55E" }} />
                           <span>ROLLING UPDATE</span>
+                          <span className="ea-evo-status-tag" style={{ color: "rgba(255,255,255,0.4)" }}>LIVE</span>
                         </div>
                         <h5 className="ea-evo-card-title">Zero-Downtime Rollout</h5>
                         <p className="ea-evo-card-desc">100% tráfego roteado para a nova versão estável.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">Canary 100%</span>
+                          <span className="ea-evo-chip">0 Drop</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -642,33 +667,58 @@ export default function Hero() {
                     </div>
 
                     <div className="ea-evo-timeline">
-                      <div className="ea-evo-track" style={{ background: "linear-gradient(180deg, rgba(56,189,248,0.3), rgba(129,140,248,0.5))" }} />
-
                       <div className="ea-evo-card ea-evo-card--base">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot" style={{ background: "#38BDF8" }} />
                           <span>NODE 01 · PROVIDER</span>
+                          <span className="ea-evo-status-tag" style={{ color: "#38BDF8" }}>INIT</span>
                         </div>
                         <h5 className="ea-evo-card-title">&lt;RootContext /&gt;</h5>
                         <p className="ea-evo-card-desc">Injeção de dependências, auth tokens e telemetria.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">Context API</span>
+                          <span className="ea-evo-chip">DI Container</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow" style={{ color: "#38BDF8" }}>↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--scale">
                         <div className="ea-evo-card-badge ea-evo-card-badge--logic">
                           <span className="ea-evo-milestone-dot active" style={{ background: "#38BDF8" }} />
                           <span>NODE 02 · PIPELINE</span>
+                          <span className="ea-evo-status-tag" style={{ color: "#38BDF8", borderColor: "rgba(56,189,248,0.3)" }}>SYNC</span>
                         </div>
                         <h5 className="ea-evo-card-title">&lt;StateOrchestrator /&gt;</h5>
                         <p className="ea-evo-card-desc">Processamento reativo, batching e sync assíncrono.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">Zustand Store</span>
+                          <span className="ea-evo-chip">Immer Patch</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow" style={{ color: "#38BDF8" }}>↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--extend">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot ghost" style={{ borderColor: "#38BDF8" }} />
                           <span>NODE 03 · BRIDGE</span>
+                          <span className="ea-evo-status-tag" style={{ color: "rgba(255,255,255,0.4)" }}>DUPLEX</span>
                         </div>
                         <h5 className="ea-evo-card-title">&lt;WebSocketBridge /&gt;</h5>
                         <p className="ea-evo-card-desc">Streaming duplex de eventos com fallback SSE.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">SSE Stream</span>
+                          <span className="ea-evo-chip">WS Heartbeat</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -890,33 +940,58 @@ export default function Hero() {
                     </div>
 
                     <div className="ea-evo-timeline">
-                      <div className="ea-evo-track" />
-
                       <div className="ea-evo-card ea-evo-card--base">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot" />
                           <span>FASE 01 · BASE</span>
+                          <span className="ea-evo-status-tag">CONCLUÍDO</span>
                         </div>
                         <h5 className="ea-evo-card-title">Estrutura Core &amp; Tokens</h5>
                         <p className="ea-evo-card-desc">Arquitetura base, componentes de UI e runtime configurado.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">Design System</span>
+                          <span className="ea-evo-chip">Tokens v1</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow">↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--scale">
                         <div className="ea-evo-card-badge ea-evo-card-badge--accent">
                           <span className="ea-evo-milestone-dot active" />
                           <span>FASE 02 · ESCALA ATIVA</span>
+                          <span className="ea-evo-status-tag ea-evo-status-tag--active">PRODUÇÃO</span>
                         </div>
                         <h5 className="ea-evo-card-title">Módulos &amp; Performance</h5>
                         <p className="ea-evo-card-desc">Caching distribuído, novas rotas e +300% de capacidade.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip ea-evo-chip--active">Edge Caching</span>
+                          <span className="ea-evo-chip ea-evo-chip--active">+300% Cap</span>
+                        </div>
+                      </div>
+
+                      <div className="ea-evo-link">
+                        <span className="ea-evo-link-line" />
+                        <span className="ea-evo-link-arrow">↓</span>
+                        <span className="ea-evo-link-line" />
                       </div>
 
                       <div className="ea-evo-card ea-evo-card--extend">
                         <div className="ea-evo-card-badge">
                           <span className="ea-evo-milestone-dot ghost" />
                           <span>FASE 03 · EXPANSÃO</span>
+                          <span className="ea-evo-status-tag">ROADMAP</span>
                         </div>
                         <h5 className="ea-evo-card-title">Ecossistema &amp; IA</h5>
                         <p className="ea-evo-card-desc">Automações avançadas e expansão multi-regional contínua.</p>
+                        <div className="ea-evo-chips">
+                          <span className="ea-evo-chip">AI Ops</span>
+                          <span className="ea-evo-chip">Multi-Region</span>
+                        </div>
                       </div>
                     </div>
                   </div>
