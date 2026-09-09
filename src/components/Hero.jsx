@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EASINGS, prefersReducedMotion, isPointerFine, initMagneticElement } from "../motion.js";
@@ -22,6 +22,186 @@ export default function Hero() {
   const heroRef = useRef(null);
   const stageRef = useRef(null);
   const ctaBtnRef = useRef(null);
+
+  /* ---- Idea 1: Live Interactive Pipeline Simulation State ---- */
+  const [simState, setSimState] = useState("idle"); // "idle" | "running" | "completed"
+  const [metricCounter, setMetricCounter] = useState("+142.8%");
+  const [reqsMetric, setReqsMetric] = useState("4.2k req/s");
+  const [latencyMetric, setLatencyMetric] = useState("14ms");
+  const [cacheMetric, setCacheMetric] = useState("Cache 98.4%");
+
+  const handleRunSimulation = (e) => {
+    e.stopPropagation();
+    if (simState === "running") return;
+
+    setFocusedLayer("top");
+    setSimState("running");
+    setMetricCounter("+178.5%");
+    setLatencyMetric("11.8ms");
+
+    setTimeout(() => {
+      setMetricCounter("+224.0%");
+      setReqsMetric("18.4k req/s");
+    }, 500);
+
+    setTimeout(() => {
+      setMetricCounter("+265.8%");
+      setLatencyMetric("2.1ms");
+    }, 1100);
+
+    setTimeout(() => {
+      setMetricCounter("+294.2%");
+      setCacheMetric("Cache 99.9%");
+    }, 1700);
+
+    setTimeout(() => {
+      setSimState("completed");
+    }, 2300);
+
+    setTimeout(() => {
+      setSimState((curr) => {
+        if (curr === "completed") {
+          setMetricCounter("+142.8%");
+          setReqsMetric("4.2k req/s");
+          setLatencyMetric("14ms");
+          setCacheMetric("Cache 98.4%");
+          return "idle";
+        }
+        return curr;
+      });
+    }, 8500);
+  };
+
+  const handleResetSimulation = (e) => {
+    e.stopPropagation();
+    setSimState("idle");
+    setMetricCounter("+142.8%");
+    setReqsMetric("4.2k req/s");
+    setLatencyMetric("14ms");
+    setCacheMetric("Cache 98.4%");
+  };
+
+  /* ---- Idea 1: Logic / Schema Simulation State (Middle Layer) ---- */
+  const [logicSimState, setLogicSimState] = useState("idle"); // "idle" | "running" | "completed"
+  const [logicOpsMetric, setLogicOpsMetric] = useState("28.4k");
+  const [logicAuthMetric, setLogicAuthMetric] = useState("1.2ms");
+  const [logicResolveMetric, setLogicResolveMetric] = useState("3.8ms");
+  const [logicSyncMetric, setLogicSyncMetric] = useState("94% Sincronizado");
+
+  const handleRunLogicSimulation = (e) => {
+    e.stopPropagation();
+    if (logicSimState === "running") return;
+
+    setFocusedLayer("middle");
+    setLogicSimState("running");
+    setLogicOpsMetric("42.1k");
+    setLogicAuthMetric("0.8ms");
+
+    setTimeout(() => {
+      setLogicOpsMetric("68.5k");
+      setLogicResolveMetric("1.9ms");
+      setLogicSyncMetric("98% Sincronizado");
+    }, 500);
+
+    setTimeout(() => {
+      setLogicOpsMetric("94.2k");
+      setLogicAuthMetric("0.4ms");
+      setLogicResolveMetric("0.6ms");
+    }, 1100);
+
+    setTimeout(() => {
+      setLogicSyncMetric("100% Sincronizado");
+    }, 1700);
+
+    setTimeout(() => {
+      setLogicSimState("completed");
+    }, 2300);
+
+    setTimeout(() => {
+      setLogicSimState((curr) => {
+        if (curr === "completed") {
+          setLogicOpsMetric("28.4k");
+          setLogicAuthMetric("1.2ms");
+          setLogicResolveMetric("3.8ms");
+          setLogicSyncMetric("94% Sincronizado");
+          return "idle";
+        }
+        return curr;
+      });
+    }, 8500);
+  };
+
+  const handleResetLogicSimulation = (e) => {
+    e.stopPropagation();
+    setLogicSimState("idle");
+    setLogicOpsMetric("28.4k");
+    setLogicAuthMetric("1.2ms");
+    setLogicResolveMetric("3.8ms");
+    setLogicSyncMetric("94% Sincronizado");
+  };
+
+  /* ---- Idea 1: Infra / Cluster Telemetry Simulation State (Bottom Layer) ---- */
+  const [infraSimState, setInfraSimState] = useState("idle"); // "idle" | "running" | "completed"
+  const [infraCpuMetric, setInfraCpuMetric] = useState("14%");
+  const [infraBgpMetric, setInfraBgpMetric] = useState("8.4ms");
+  const [infraEnvoyMetric, setInfraEnvoyMetric] = useState("0.8ms");
+  const [infraLatMetric, setInfraLatMetric] = useState("0.02ms Latência");
+
+  const handleRunInfraSimulation = (e) => {
+    e.stopPropagation();
+    if (infraSimState === "running") return;
+
+    setFocusedLayer("bottom");
+    setInfraSimState("running");
+    setInfraCpuMetric("48%");
+    setInfraBgpMetric("5.1ms");
+
+    setTimeout(() => {
+      setInfraCpuMetric("78%");
+      setInfraEnvoyMetric("0.4ms");
+      setInfraLatMetric("0.01ms Latência");
+    }, 500);
+
+    setTimeout(() => {
+      setInfraCpuMetric("32%");
+      setInfraBgpMetric("2.2ms");
+      setInfraEnvoyMetric("0.15ms");
+    }, 1100);
+
+    setTimeout(() => {
+      setInfraCpuMetric("18%");
+      setInfraLatMetric("0.008ms Latência");
+    }, 1700);
+
+    setTimeout(() => {
+      setInfraSimState("completed");
+    }, 2300);
+
+    setTimeout(() => {
+      setInfraSimState((curr) => {
+        if (curr === "completed") {
+          setInfraCpuMetric("14%");
+          setInfraBgpMetric("8.4ms");
+          setInfraEnvoyMetric("0.8ms");
+          setInfraLatMetric("0.02ms Latência");
+          return "idle";
+        }
+        return curr;
+      });
+    }, 8500);
+  };
+
+  const handleResetInfraSimulation = (e) => {
+    e.stopPropagation();
+    setInfraSimState("idle");
+    setInfraCpuMetric("14%");
+    setInfraBgpMetric("8.4ms");
+    setInfraEnvoyMetric("0.8ms");
+    setInfraLatMetric("0.02ms Latência");
+  };
+
+  /* Layer focus for interactive 3D elevation */
+  const [focusedLayer, setFocusedLayer] = useState("idle"); // "idle" | "top" | "middle" | "bottom"
 
   /* ---- Coordinated GSAP Editorial Entry Sequence ---- */
   useEffect(() => {
@@ -186,16 +366,54 @@ export default function Hero() {
           {/* Subtle connection datum line bridging tension between text and object */}
           <div className="hero__datum-line" aria-hidden="true" />
 
-          {/* 3D Perspective Wrapper: perspective: 1400px */}
-          <div className="hero-exploded-wrapper">
-            {/* 3D Container: transform-style: preserve-3d; hover: rotateX(52deg) rotate(38deg) scale(0.72) */}
+          {/* 3D Perspective Wrapper: perspective: 1400px with Cursor Spotlight */}
+          <div
+            className="hero-exploded-wrapper"
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+              e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.removeProperty("--mouse-x");
+              e.currentTarget.style.removeProperty("--mouse-y");
+              setFocusedLayer("idle");
+            }}
+          >
+            {/* Sombra de Solo Dinâmica (Ambient Contact Shadow) */}
+            <div className="exploded-ground-shadow" aria-hidden="true" />
+
+            {/* 3D Container: transform-style: preserve-3d */}
             <div className="hero-exploded-stage">
+
+              {/* Feixes de Dados Verticais (Data Conduits entre as camadas) */}
+              <div className="exploded-conduit exploded-conduit--left" aria-hidden="true">
+                <span className="exploded-conduit-pulse" />
+              </div>
+              <div className="exploded-conduit exploded-conduit--center" aria-hidden="true">
+                <span className="exploded-conduit-pulse" />
+              </div>
+              <div className="exploded-conduit exploded-conduit--right" aria-hidden="true">
+                <span className="exploded-conduit-pulse" />
+              </div>
 
               {/* =========================================================
                   CAMADA INFERIOR: Infra / Deploy (translateZ(0))
                   ========================================================= */}
-              <div className="exploded-layer exploded-layer--bottom" aria-hidden="true">
-                <div className="exploded-badge exploded-badge--infra">
+              <div
+                className={`exploded-layer exploded-layer--bottom ${focusedLayer === "bottom" || infraSimState !== "idle" ? "exploded-layer--elevated" : ""}`}
+                onClick={() => setFocusedLayer("bottom")}
+              >
+                <div className="ea-spotlight-glow" aria-hidden="true" />
+                <div
+                  className="exploded-badge exploded-badge--infra"
+                  onMouseEnter={() => setFocusedLayer("bottom")}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFocusedLayer("bottom");
+                  }}
+                  title="Clique para focar na camada de Infra"
+                >
                   <span className="exploded-badge__dot exploded-badge__dot--infra" />
                   <span>Infra / Deploy</span>
                 </div>
@@ -242,8 +460,8 @@ export default function Hero() {
                                   <h4 className="ea-prod-stage-title">Bare-Metal Node Pool</h4>
                                   <p className="ea-prod-stage-sub">AMD EPYC 9654 · 96 Cores / 192 Threads</p>
                                 </div>
-                                <div className="ea-prod-metric-badge ea-prod-metric-badge--infra">
-                                  <span className="ea-prod-metric-val ea-prod-metric-val--infra">14%</span>
+                                <div className={`ea-prod-metric-badge ea-prod-metric-badge--infra ${infraSimState !== "idle" ? "ea-prod-metric-badge--sim-boost-infra" : ""}`}>
+                                  <span className="ea-prod-metric-val ea-prod-metric-val--infra">{infraCpuMetric}</span>
                                   <span className="ea-prod-metric-lbl">CPU LOAD</span>
                                 </div>
                               </div>
@@ -259,17 +477,37 @@ export default function Hero() {
                                   <line x1="0" y1="18" x2="320" y2="18" stroke="rgba(34,197,94,0.12)" strokeDasharray="3 3" />
                                   <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(34,197,94,0.12)" strokeDasharray="3 3" />
                                   <path d="M 0 50 Q 70 42 140 28 T 240 18 T 320 14 L 320 64 L 0 64 Z" fill="url(#eaInfraChartGrad)" />
-                                  <path d="M 0 50 Q 70 42 140 28 T 240 18 T 320 14" stroke="#22C55E" strokeWidth="2" fill="none" />
+                                  <path className={`ea-chart-infra-curve ${infraSimState !== "idle" ? "ea-chart-base-curve--sim-infra" : ""}`} d="M 0 50 Q 70 42 140 28 T 240 18 T 320 14" stroke="#22C55E" strokeWidth="2" fill="none" />
                                   <circle cx="140" cy="28" r="3" fill="#FFFFFF" stroke="#22C55E" strokeWidth="1.5" />
                                   <circle cx="240" cy="18" r="3" fill="#FFFFFF" stroke="#22C55E" strokeWidth="1.5" />
                                 </svg>
                               </div>
 
                               <div className="ea-prod-action-unit">
-                                <span className="ea-prod-action-btn ea-prod-action-btn--infra">
-                                  <span>Cluster Telemetry</span>
-                                  <ActionIcon className="ea-prod-action-icon" />
-                                </span>
+                                <button
+                                  type="button"
+                                  id="btn-cluster-telemetry"
+                                  className={`ea-prod-action-btn ea-prod-action-btn--infra ${infraSimState === "running" ? "ea-prod-action-btn--running" : ""} ${infraSimState === "completed" ? "ea-prod-action-btn--completed" : ""}`}
+                                  onClick={handleRunInfraSimulation}
+                                  title="Clique para executar a telemetria do cluster em tempo real"
+                                >
+                                  {infraSimState === "running" ? (
+                                    <>
+                                      <span className="ea-sim-spinner" />
+                                      <span>Analisando Cluster...</span>
+                                    </>
+                                  ) : infraSimState === "completed" ? (
+                                    <>
+                                      <span className="ea-sim-check">✓</span>
+                                      <span>Telemetria Sincronizada</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span>Cluster Telemetry</span>
+                                      <ActionIcon className="ea-prod-action-icon" />
+                                    </>
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -299,7 +537,7 @@ export default function Hero() {
                                 <div className="ea-prod-meter-track">
                                   <div className="ea-prod-meter-fill" style={{ width: "98%", background: "linear-gradient(90deg, #22C55E, #10B981)" }} />
                                 </div>
-                                <span className="ea-prod-meter-text">0.02ms Latência</span>
+                                <span className={`ea-prod-meter-text ${infraSimState !== "idle" ? "ea-sys-metric--sim-infra" : ""}`}>{infraLatMetric}</span>
                               </div>
                             </div>
                           </div>
@@ -328,7 +566,7 @@ export default function Hero() {
                             <div className="ea-sys-node-body">
                               <span className="ea-sys-chip">280+ PoPs</span>
                               <span className="ea-sys-chip">TLS 1.3 0-RTT</span>
-                              <span className="ea-sys-metric">8.4ms</span>
+                              <span className={`ea-sys-metric ${infraSimState !== "idle" ? "ea-sys-metric--sim-infra" : ""}`}>{infraBgpMetric}</span>
                             </div>
                           </div>
 
@@ -351,7 +589,7 @@ export default function Hero() {
                                 <span className="ea-sys-service-dot active" style={{ background: "#22C55E" }} />
                               </div>
                               <span className="ea-sys-engine-text">Zero-Trust Routing</span>
-                              <span className="ea-sys-metric">0.8ms</span>
+                              <span className={`ea-sys-metric ${infraSimState !== "idle" ? "ea-sys-metric--sim-infra" : ""}`}>{infraEnvoyMetric}</span>
                             </div>
                           </div>
 
@@ -375,17 +613,46 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    <div className="ea-datum-strip ea-datum-strip--infra" aria-hidden="true">
-                      <div className="ea-datum-meta">
-                        <span className="ea-datum-key">INFRASTRUCTURE:</span>
-                        <span className="ea-datum-val" style={{ color: "#22C55E" }}>OPTIMAL · GLOBAL LATENCY P50: 16ms</span>
-                      </div>
-                      <div className="ea-datum-ticks">
-                        <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
-                      </div>
+                    <div className={`ea-datum-strip ea-datum-strip--infra ${infraSimState !== "idle" ? "ea-datum-strip--sim ea-datum-strip--sim-infra" : ""}`} aria-hidden="true">
+                      {infraSimState === "idle" ? (
+                        <>
+                          <div className="ea-datum-meta">
+                            <span className="ea-datum-key">INFRASTRUCTURE:</span>
+                            <span className="ea-datum-val" style={{ color: "#22C55E" }}>OPTIMAL · GLOBAL LATENCY P50: 16ms</span>
+                          </div>
+                          <div className="ea-datum-ticks">
+                            <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(34,197,94,0.3)" }} />
+                          </div>
+                        </>
+                      ) : (
+                        <div className="ea-sim-banner-content">
+                          <span
+                            className={`ea-sim-banner-dot ${infraSimState === "completed" ? "ea-sim-banner-dot--success" : ""}`}
+                            style={{
+                              background: infraSimState === "completed" ? "#00E575" : "#22C55E",
+                              boxShadow: infraSimState === "completed" ? "0 0 8px #00E575" : "0 0 8px #22C55E"
+                            }}
+                          />
+                          <span className="ea-sim-banner-text">
+                            {infraSimState === "running"
+                              ? "TELEMETRIA EM TEMPO REAL · REBALANCEANDO 192 THREADS & MESH DE ENVOY..."
+                              : "✓ K8S CLUSTER SAUDÁVEL · 0 PACKET DROP · LATÊNCIA P99: 0.15MS · 18% LOAD"}
+                          </span>
+                          {infraSimState === "completed" && (
+                            <button
+                              type="button"
+                              className="ea-sim-replay-btn ea-sim-replay-btn--infra"
+                              onClick={handleResetInfraSimulation}
+                              title="Reiniciar telemetria de cluster"
+                            >
+                              ↺ Reset
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -461,8 +728,20 @@ export default function Hero() {
               {/* =========================================================
                   CAMADA DO MEIO: Lógica / Componentes (translateZ(70px))
                   ========================================================= */}
-              <div className="exploded-layer exploded-layer--middle" aria-hidden="true">
-                <div className="exploded-badge exploded-badge--logic">
+              <div
+                className={`exploded-layer exploded-layer--middle ${focusedLayer === "middle" || logicSimState !== "idle" ? "exploded-layer--elevated" : ""}`}
+                onClick={() => setFocusedLayer("middle")}
+              >
+                <div className="ea-spotlight-glow" aria-hidden="true" />
+                <div
+                  className="exploded-badge exploded-badge--logic"
+                  onMouseEnter={() => setFocusedLayer("middle")}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFocusedLayer("middle");
+                  }}
+                  title="Clique para focar na camada de Lógica"
+                >
                   <span className="exploded-badge__dot exploded-badge__dot--logic" />
                   <span>Lógica / Componentes</span>
                 </div>
@@ -509,8 +788,8 @@ export default function Hero() {
                                   <h4 className="ea-prod-stage-title">State Graph &amp; Event Delta</h4>
                                   <p className="ea-prod-stage-sub">Zero-Latency Hydration · Async Bus</p>
                                 </div>
-                                <div className="ea-prod-metric-badge ea-prod-metric-badge--logic">
-                                  <span className="ea-prod-metric-val ea-prod-metric-val--logic">28.4k</span>
+                                <div className={`ea-prod-metric-badge ea-prod-metric-badge--logic ${logicSimState !== "idle" ? "ea-prod-metric-badge--sim-boost-logic" : ""}`}>
+                                  <span className="ea-prod-metric-val ea-prod-metric-val--logic">{logicOpsMetric}</span>
                                   <span className="ea-prod-metric-lbl">OPS/SEC</span>
                                 </div>
                               </div>
@@ -526,17 +805,37 @@ export default function Hero() {
                                   <line x1="0" y1="18" x2="320" y2="18" stroke="rgba(56,189,248,0.12)" strokeDasharray="3 3" />
                                   <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(56,189,248,0.12)" strokeDasharray="3 3" />
                                   <path d="M 0 45 L 50 32 L 100 48 L 150 18 L 210 28 L 260 12 L 320 8 L 320 64 L 0 64 Z" fill="url(#eaLogicChartGrad)" />
-                                  <path d="M 0 45 L 50 32 L 100 48 L 150 18 L 210 28 L 260 12 L 320 8" stroke="#38BDF8" strokeWidth="2" fill="none" />
+                                  <path className={`ea-chart-logic-curve ${logicSimState !== "idle" ? "ea-chart-base-curve--sim-logic" : ""}`} d="M 0 45 L 50 32 L 100 48 L 150 18 L 210 28 L 260 12 L 320 8" stroke="#38BDF8" strokeWidth="2" fill="none" />
                                   <circle cx="150" cy="18" r="3" fill="#FFFFFF" stroke="#38BDF8" strokeWidth="1.5" />
                                   <circle cx="260" cy="12" r="3" fill="#FFFFFF" stroke="#38BDF8" strokeWidth="1.5" />
                                 </svg>
                               </div>
 
                               <div className="ea-prod-action-unit">
-                                <span className="ea-prod-action-btn ea-prod-action-btn--logic">
-                                  <span>Inspect Schema</span>
-                                  <ActionIcon className="ea-prod-action-icon" />
-                                </span>
+                                <button
+                                  type="button"
+                                  id="btn-inspect-schema"
+                                  className={`ea-prod-action-btn ea-prod-action-btn--logic ${logicSimState === "running" ? "ea-prod-action-btn--running" : ""} ${logicSimState === "completed" ? "ea-prod-action-btn--completed" : ""}`}
+                                  onClick={handleRunLogicSimulation}
+                                  title="Clique para inspecionar e validar os schemas em tempo real"
+                                >
+                                  {logicSimState === "running" ? (
+                                    <>
+                                      <span className="ea-sim-spinner" />
+                                      <span>Validando Schemas...</span>
+                                    </>
+                                  ) : logicSimState === "completed" ? (
+                                    <>
+                                      <span className="ea-sim-check">✓</span>
+                                      <span>Schema Validado</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span>Inspect Schema</span>
+                                      <ActionIcon className="ea-prod-action-icon" />
+                                    </>
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -566,7 +865,7 @@ export default function Hero() {
                                 <div className="ea-prod-meter-track">
                                   <div className="ea-prod-meter-fill" style={{ width: "94%", background: "linear-gradient(90deg, #38BDF8, #818CF8)" }} />
                                 </div>
-                                <span className="ea-prod-meter-text">94% Sincronizado</span>
+                                <span className={`ea-prod-meter-text ${logicSimState !== "idle" ? "ea-sys-metric--sim-logic" : ""}`}>{logicSyncMetric}</span>
                               </div>
                             </div>
                           </div>
@@ -595,7 +894,7 @@ export default function Hero() {
                             <div className="ea-sys-node-body">
                               <span className="ea-sys-chip">OAuth 2.1</span>
                               <span className="ea-sys-chip">Ed25519</span>
-                              <span className="ea-sys-metric">1.2ms</span>
+                              <span className={`ea-sys-metric ${logicSimState !== "idle" ? "ea-sys-metric--sim-logic" : ""}`}>{logicAuthMetric}</span>
                             </div>
                           </div>
 
@@ -618,7 +917,7 @@ export default function Hero() {
                                 <span className="ea-sys-service-dot active" style={{ background: "#38BDF8" }} />
                               </div>
                               <span className="ea-sys-engine-text">Federated Subgraphs</span>
-                              <span className="ea-sys-metric">3.8ms</span>
+                              <span className={`ea-sys-metric ${logicSimState !== "idle" ? "ea-sys-metric--sim-logic" : ""}`}>{logicResolveMetric}</span>
                             </div>
                           </div>
 
@@ -642,17 +941,46 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    <div className="ea-datum-strip ea-datum-strip--logic" aria-hidden="true">
-                      <div className="ea-datum-meta">
-                        <span className="ea-datum-key">LOGIC KERNEL:</span>
-                        <span className="ea-datum-val" style={{ color: "#38BDF8" }}>ALL 32 SERVICES HEALTHY · 0 EXCEPTIONS</span>
-                      </div>
-                      <div className="ea-datum-ticks">
-                        <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
-                        <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
-                      </div>
+                    <div className={`ea-datum-strip ea-datum-strip--logic ${logicSimState !== "idle" ? "ea-datum-strip--sim ea-datum-strip--sim-logic" : ""}`} aria-hidden="true">
+                      {logicSimState === "idle" ? (
+                        <>
+                          <div className="ea-datum-meta">
+                            <span className="ea-datum-key">LOGIC KERNEL:</span>
+                            <span className="ea-datum-val" style={{ color: "#38BDF8" }}>ALL 32 SERVICES HEALTHY · 0 EXCEPTIONS</span>
+                          </div>
+                          <div className="ea-datum-ticks">
+                            <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
+                            <span className="ea-datum-tick" style={{ background: "rgba(56,189,248,0.3)" }} />
+                          </div>
+                        </>
+                      ) : (
+                        <div className="ea-sim-banner-content">
+                          <span
+                            className={`ea-sim-banner-dot ${logicSimState === "completed" ? "ea-sim-banner-dot--success" : ""}`}
+                            style={{
+                              background: logicSimState === "completed" ? "#00E575" : "#38BDF8",
+                              boxShadow: logicSimState === "completed" ? "0 0 8px #00E575" : "0 0 8px #38BDF8"
+                            }}
+                          />
+                          <span className="ea-sim-banner-text">
+                            {logicSimState === "running"
+                              ? "VALIDANDO SCHEMAS · COMPILANDO AST & RESOLVENDO SUBGRAFOS FEDERADOS..."
+                              : "✓ SCHEMA VALIDADO · ZERO CONFLITOS · 94.2K OPS/SEC · GRAFO RESIDUAL 0.6MS"}
+                          </span>
+                          {logicSimState === "completed" && (
+                            <button
+                              type="button"
+                              className="ea-sim-replay-btn"
+                              onClick={handleResetLogicSimulation}
+                              title="Reiniciar inspeção de schema"
+                            >
+                              ↺ Reset
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -729,8 +1057,21 @@ export default function Hero() {
                   CAMADA SUPERIOR: UI / Interface (translateZ(140px))
                   Exatamente o Dashboard Real de image_0.png
                   ========================================================= */}
-              <div className="exploded-layer exploded-layer--top">
-                <div className="exploded-badge exploded-badge--ui">
+              <div
+                className={`exploded-layer exploded-layer--top ${focusedLayer === "top" || simState !== "idle" ? "exploded-layer--elevated" : ""}`}
+                onClick={() => setFocusedLayer("top")}
+              >
+                <div className="ea-spotlight-glow" aria-hidden="true" />
+                <div className="exploded-glass-sheen" aria-hidden="true" />
+                <div
+                  className="exploded-badge exploded-badge--ui"
+                  onMouseEnter={() => setFocusedLayer("top")}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFocusedLayer("top");
+                  }}
+                  title="Clique para focar na camada de UI"
+                >
                   <span className="exploded-badge__dot exploded-badge__dot--ui" />
                   <span>UI / Interface</span>
                 </div>
@@ -769,7 +1110,10 @@ export default function Hero() {
                               <span className="ea-prod-route-icon" />
                               <span className="ea-prod-route-path">/app/growth-engine</span>
                             </div>
-                            <span className="ea-prod-badge-active">● 99.98% UPTIME</span>
+                            <span className="ea-prod-badge-active">
+                              <span className="ea-uptime-pulse-dot" />
+                              <span>99.98% UPTIME</span>
+                            </span>
                           </div>
 
                           <div className="ea-prod-hero-stage">
@@ -777,10 +1121,10 @@ export default function Hero() {
                               <div className="ea-prod-stage-header">
                                 <div>
                                   <h4 className="ea-prod-stage-title">Engine de Conversão</h4>
-                                  <p className="ea-prod-stage-sub">Fluxo unificado · Latência: 14ms</p>
+                                  <p className="ea-prod-stage-sub">Fluxo unificado · Latência: {latencyMetric}</p>
                                 </div>
-                                <div className="ea-prod-metric-badge">
-                                  <span className="ea-prod-metric-val">+142.8%</span>
+                                <div className={`ea-prod-metric-badge ${simState !== "idle" ? "ea-prod-metric-badge--sim-boost" : ""}`}>
+                                  <span className="ea-prod-metric-val">{metricCounter}</span>
                                   <span className="ea-prod-metric-lbl">CRESCIMENTO</span>
                                 </div>
                               </div>
@@ -792,21 +1136,48 @@ export default function Hero() {
                                       <stop offset="0%" stopColor="#FF5A00" stopOpacity="0.25" />
                                       <stop offset="100%" stopColor="#FF5A00" stopOpacity="0.0" />
                                     </linearGradient>
+                                    <linearGradient id="eaChartBeamGrad" x1="0" y1="0" x2="1" y2="0">
+                                      <stop offset="0%" stopColor="#FF5A00" stopOpacity="0" />
+                                      <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.9" />
+                                      <stop offset="100%" stopColor="#FF5A00" stopOpacity="0" />
+                                    </linearGradient>
                                   </defs>
                                   <line x1="0" y1="18" x2="320" y2="18" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
                                   <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
                                   <path d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4 L 320 64 L 0 64 Z" fill="url(#eaChartGrad)" />
-                                  <path d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="#FF5A00" strokeWidth="2" fill="none" />
+                                  <path className={`ea-chart-base-curve ${simState !== "idle" ? "ea-chart-base-curve--sim" : ""}`} d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="#FF5A00" strokeWidth="2" fill="none" />
+                                  <path className="ea-chart-beam-curve" d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="url(#eaChartBeamGrad)" strokeWidth="2.5" fill="none" />
                                   <circle cx="210" cy="20" r="3" fill="#FFFFFF" stroke="#FF5A00" strokeWidth="1.5" />
-                                  <circle cx="280" cy="8" r="3" fill="#FFFFFF" stroke="#FF5A00" strokeWidth="1.5" />
+                                  <circle cx="280" cy="8" r="8" className="ea-chart-ping-ring" fill="rgba(255, 90, 0, 0.3)" />
+                                  <circle cx="280" cy="8" r="3.5" className="ea-chart-active-dot" fill="#FFFFFF" stroke="#FF5A00" strokeWidth="1.8" />
                                 </svg>
                               </div>
 
                               <div className="ea-prod-action-unit">
-                                <span className="ea-prod-action-btn">
-                                  <span>Explorar Fluxo</span>
-                                  <ActionIcon className="ea-prod-action-icon" />
-                                </span>
+                                <button
+                                  type="button"
+                                  id="btn-explorar-fluxo"
+                                  className={`ea-prod-action-btn ea-prod-action-btn--primary ${simState === "running" ? "ea-prod-action-btn--running" : ""} ${simState === "completed" ? "ea-prod-action-btn--completed" : ""}`}
+                                  onClick={handleRunSimulation}
+                                  title="Clique para simular o pipeline em tempo real"
+                                >
+                                  {simState === "running" ? (
+                                    <>
+                                      <span className="ea-sim-spinner" />
+                                      <span>Otimizando Pipeline...</span>
+                                    </>
+                                  ) : simState === "completed" ? (
+                                    <>
+                                      <span className="ea-sim-check">✓</span>
+                                      <span>Fluxo Otimizado</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span>Explorar Fluxo</span>
+                                      <ActionIcon className="ea-prod-action-icon" />
+                                    </>
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -867,7 +1238,7 @@ export default function Hero() {
                               <span className="ea-sys-chip">REST API</span>
                               <span className="ea-sys-chip">GraphQL</span>
                               <span className="ea-sys-chip">Events</span>
-                              <span className="ea-sys-metric">4.2k req/s</span>
+                              <span className={`ea-sys-metric ${simState !== "idle" ? "ea-sys-metric--sim" : ""}`}>{reqsMetric}</span>
                             </div>
                           </div>
 
@@ -890,7 +1261,7 @@ export default function Hero() {
                                 <span className="ea-sys-service-dot active" title="Compute" />
                               </div>
                               <span className="ea-sys-engine-text">Processamento Paralelo</span>
-                              <span className="ea-sys-metric">14ms</span>
+                              <span className={`ea-sys-metric ${simState !== "idle" ? "ea-sys-metric--sim" : ""}`}>{latencyMetric}</span>
                             </div>
                           </div>
 
@@ -907,25 +1278,48 @@ export default function Hero() {
                             </div>
                             <div className="ea-sys-node-body">
                               <span className="ea-sys-chip">12 Regiões CDN</span>
-                              <span className="ea-sys-chip ea-sys-chip--accent">Cache 98.4%</span>
+                              <span className={`ea-sys-chip ea-sys-chip--accent ${simState !== "idle" ? "ea-sys-chip--sim" : ""}`}>{cacheMetric}</span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Structural rhythm strip */}
-                    <div className="ea-datum-strip" aria-hidden="true">
-                      <div className="ea-datum-meta">
-                        <span className="ea-datum-key">STATUS GERAL:</span>
-                        <span className="ea-datum-val">PRODUÇÃO ESTÁVEL</span>
-                      </div>
-                      <div className="ea-datum-ticks">
-                        <span className="ea-datum-tick" />
-                        <span className="ea-datum-tick" />
-                        <span className="ea-datum-tick" />
-                        <span className="ea-datum-tick" />
-                      </div>
+                    {/* Structural rhythm strip / Live Simulation Diagnostic */}
+                    <div className={`ea-datum-strip ${simState !== "idle" ? "ea-datum-strip--sim" : ""}`} aria-hidden="true">
+                      {simState === "idle" ? (
+                        <>
+                          <div className="ea-datum-meta">
+                            <span className="ea-datum-key">STATUS GERAL:</span>
+                            <span className="ea-datum-val">PRODUÇÃO ESTÁVEL</span>
+                          </div>
+                          <div className="ea-datum-ticks">
+                            <span className="ea-datum-tick" />
+                            <span className="ea-datum-tick" />
+                            <span className="ea-datum-tick" />
+                            <span className="ea-datum-tick" />
+                          </div>
+                        </>
+                      ) : (
+                        <div className="ea-sim-banner-content">
+                          <span className={`ea-sim-banner-dot ${simState === "completed" ? "ea-sim-banner-dot--success" : ""}`} />
+                          <span className="ea-sim-banner-text">
+                            {simState === "running"
+                              ? "SIMULANDO FLUXO · DISPARANDO REQUISIÇÕES & OTIMIZANDO LATÊNCIA..."
+                              : "✓ PIPELINE OTIMIZADO · LATÊNCIA 2.1MS · 0 FALHAS · PRONTO PARA ESCALA"}
+                          </span>
+                          {simState === "completed" && (
+                            <button
+                              type="button"
+                              className="ea-sim-replay-btn"
+                              onClick={handleResetSimulation}
+                              title="Reiniciar simulação"
+                            >
+                              ↺ Reset
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 

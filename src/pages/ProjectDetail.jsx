@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useReveal from "../hooks/useReveal.js";
 import { getProjeto, projetos } from "../projetos.js";
-import { StepArrowIcon, ExploreIcon } from "../components/Icons.jsx";
+import { StepArrowIcon, ExploreIcon, ActionIcon } from "../components/Icons.jsx";
 
 /* ---------------------------------------------------------------
    PROJECT DETAIL — Premium single-project page
@@ -174,7 +174,7 @@ export default function ProjectDetail() {
                 rel="noopener noreferrer"
                 className="btn btn--primary"
               >
-                Visitar site <ExploreIcon />
+                Visitar site <ActionIcon />
               </a>
             )}
             <Link to="/projetos" className="btn btn--ghost">

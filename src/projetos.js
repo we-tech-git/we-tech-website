@@ -3,54 +3,54 @@
 
 export const projetos = [
   {
-    slug: "triper",
-    nome: "Triper",
-    categoria: "Landing Page",
-    tipo: "Produto digital · Viagens",
+    slug: "maria-mariana",
+    nome: "Ateliê Maria Mariana",
+    categoria: "E-commerce",
+    tipo: "Loja virtual · Têxteis artesanais",
     resumo:
-      "Landing page para plataforma de viagens — do conceito ao produto digital pronto para aquisição.",
-    data: "2025",
-    capa: "/img/projects/tripper_web_site.webp",
-    preview: "/img/projects/tripper_web_site.webp",
-    link: "",
+      "Loja virtual para têxteis artesanais de mesa, com catálogo de produtos e experiência de compra elegante.",
+    data: "2026",
+    capa: "/img/projects/marianaprojeto2.png",
+    preview: "/img/projects/mariaprojeto.png",
+    link: "https://ateliemariamariana.com.br",
     intro:
-      "A We Tech idealizou e desenvolveu a landing page da Triper, transformando o conceito da plataforma de viagens em um produto digital funcional.",
+      "E-commerce para o Ateliê Maria Mariana — têxteis feitos à mão para a mesa, apresentados com uma vitrine digital que traduz o cuidado artesanal da marca.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "Criar uma presença digital que apresentasse a proposta de valor de forma clara para diferentes perfis de viajantes.",
+          "Criar uma loja virtual que transmitisse a sofisticação artesanal da marca, com navegação clara por categorias de produto.",
       },
       {
         titulo: "O que construímos",
         texto:
-          "Front-end com foco em performance, acessibilidade e experiência imersiva — animações e transições que reforçam a identidade da marca.",
+          "E-commerce completo com catálogo, filtros por categoria e disponibilidade, e identidade visual editorial alinhada ao universo têxtil da marca.",
       },
     ],
   },
   {
-    slug: "toro-token",
-    nome: "TORO Token",
-    categoria: "Web3",
-    tipo: "Plataforma · Cripto",
+    slug: "we-party",
+    nome: "We Party",
+    categoria: "Social",
+    tipo: "Plataforma · Eventos",
     resumo:
-      "Site para token multi-estratégia com portfólio tokenizado de ativos digitais.",
-    data: "2022",
-    capa: "/img/projects/project_toro_banner_8.webp",
-    preview: "/img/projects/toro_token_web_site.webp",
-    link: "https://torotoken.io/",
+      "Rede social para descobrir eventos e se conectar com pessoas que também vão.",
+    data: "2026",
+    capa: "/img/projects/wepartyprojeto2.png",
+    preview: "/img/projects/wepartyprojeto.png",
+    link: "https://www.wepartyapp.com",
     intro:
-      "O TORO executa estratégias ativas e passivas — stop loss, stop buy, shorting e distribuições de rede — em um único token.",
+      "A We Party conecta quem ama sair de casa — descoberta de eventos próximos, integração com ticketing e uma comunidade em torno de cada show.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "Comunicar um token multi-estratégia de forma clara e confiável para investidores.",
+          "Criar uma experiência social em torno de eventos, unindo descoberta, curtidas e conexão entre pessoas que vão ao mesmo lugar.",
       },
       {
         titulo: "O que construímos",
         texto:
-          "Narrativa e experiência do site para apresentar estratégias automatizadas, controles de risco e benefícios em uma página concisa.",
+          "Plataforma com feed de eventos, integração com Ticketmaster e perfis sociais, com identidade visual vibrante alinhada ao universo de shows e festas.",
       },
     ],
   },
@@ -81,34 +81,33 @@ export const projetos = [
     ],
   },
   {
-    slug: "genesis-bank",
-    nome: "Genesis Bank",
+    slug: "lelume",
+    nome: "Lelume",
     categoria: "Institucional",
-    tipo: "Site · Fintech",
+    tipo: "Site · Edtech",
     resumo:
-      "Site institucional que traduz produtos bancários em uma experiência digital clara e confiável.",
-    data: "2023",
-    capa: "/img/projects/project_genesis_banner_10.webp",
-    preview: "/img/projects/genesis_bank_web_site.webp",
-    link: "https://www.genesisbank.com.br/",
+      "Biblioteca digital por assinatura, com experiência clara para acesso a livros, audiolivros e conteúdos educacionais.",
+    data: "2026",
+    capa: "/img/projects/lelumeprojeto2.png",
+    preview: "/img/projects/lelumeprojeto.png",
+    link: "https://lelume.com.br/",
     intro:
-      "Experiência digital para a Genesis Bank — serviços, credibilidade e caminhos de onboarding apresentados com simplicidade.",
+      "Experiência digital para a Lelume — biblioteca digital que reúne livros, audiolivros e conteúdos educacionais em uma única assinatura.",
     secoes: [
       {
         titulo: "O desafio",
         texto:
-          "Traduzir ofertas bancárias em uma narrativa digital clara, com tom compatível com o setor financeiro.",
+          "Apresentar um catálogo amplo e em crescimento de forma organizada, comunicando confiança para estudantes e profissionais.",
       },
       {
         titulo: "O que construímos",
         texto:
-          "Blocos de conteúdo organizados para produtos, benefícios e chamadas para ação, com linguagem visual alinhada ao setor financeiro.",
+          "Estrutura de conteúdo com destaque para o catálogo, benefícios da assinatura e indicadores de resultado, com linguagem visual clara e moderna.",
       },
     ],
   },
 ];
 
 export function getProjeto(slug) {
-  const normalizado = slug === "tripper" ? "triper" : slug;
-  return projetos.find((p) => p.slug === normalizado);
+  return projetos.find((p) => p.slug === slug);
 }
