@@ -8,17 +8,18 @@ import { projetos } from "../projetos.js";
    Shares the editorial language of SelectedWork
    --------------------------------------------------------------- */
 
-function imgSrc(path) {
-  return path;
-}
-
-function fallbackImgSrc(path) {
-  return path.replace(".webp", ".png");
+function getImgSources(path) {
+  if (!path) return { webp: null, src: "" };
+  if (path.endsWith(".webp")) {
+    return { webp: path, src: path.replace(/\.webp$/, ".png") };
+  }
+  return { webp: null, src: path };
 }
 
 function ProjectItem({ projeto, index }) {
   const { ref, className } = useReveal();
   const num = String(index + 1).padStart(2, "0");
+  const { webp, src } = getImgSources(projeto.preview || projeto.capa);
 
   return (
     <article className="pg__item">
@@ -44,9 +45,9 @@ function ProjectItem({ projeto, index }) {
         {/* Image */}
         <div className="pg__item-img-wrap">
           <picture>
-            <source srcSet={imgSrc(projeto.preview || projeto.capa)} type="image/webp" />
+            {webp && <source srcSet={webp} type="image/webp" />}
             <img
-              src={fallbackImgSrc(projeto.preview || projeto.capa)}
+              src={src}
               alt={`Interface do projeto ${projeto.nome}`}
               loading={index === 0 ? "eager" : "lazy"}
               width={1400}

@@ -9,12 +9,12 @@ import { StepArrowIcon, ExploreIcon, ActionIcon } from "../components/Icons.jsx"
    Factual content only. No invented metrics.
    --------------------------------------------------------------- */
 
-function imgSrc(path) {
-  return path;
-}
-
-function fallbackImgSrc(path) {
-  return path.replace(".webp", ".png");
+function getImgSources(path) {
+  if (!path) return { webp: null, src: "" };
+  if (path.endsWith(".webp")) {
+    return { webp: path, src: path.replace(/\.webp$/, ".png") };
+  }
+  return { webp: null, src: path };
 }
 
 function NotFound() {
@@ -122,16 +122,21 @@ export default function ProjectDetail() {
 
           {/* Cover image */}
           <div ref={coverReveal.ref} className={`pd__cover ${coverReveal.className}`}>
-            <picture>
-              <source srcSet={imgSrc(coverImg)} type="image/webp" />
-              <img
-                src={fallbackImgSrc(coverImg)}
-                alt={`Interface do projeto ${projeto.nome}`}
-                width={1400}
-                height={740}
-                loading="eager"
-              />
-            </picture>
+            {(() => {
+              const { webp, src } = getImgSources(coverImg);
+              return (
+                <picture>
+                  {webp && <source srcSet={webp} type="image/webp" />}
+                  <img
+                    src={src}
+                    alt={`Interface do projeto ${projeto.nome}`}
+                    width={1400}
+                    height={740}
+                    loading="eager"
+                  />
+                </picture>
+              );
+            })()}
           </div>
 
           {/* Content sections */}
@@ -152,16 +157,21 @@ export default function ProjectDetail() {
           {/* Preview image — only if different from cover */}
           {hasBanner && previewImg && (
             <div className="pd__preview">
-              <picture>
-                <source srcSet={imgSrc(previewImg)} type="image/webp" />
-                <img
-                  src={fallbackImgSrc(previewImg)}
-                  alt={`Preview da interface ${projeto.nome}`}
-                  width={1400}
-                  height={740}
-                  loading="lazy"
-                />
-              </picture>
+              {(() => {
+                const { webp, src } = getImgSources(previewImg);
+                return (
+                  <picture>
+                    {webp && <source srcSet={webp} type="image/webp" />}
+                    <img
+                      src={src}
+                      alt={`Preview da interface ${projeto.nome}`}
+                      width={1400}
+                      height={740}
+                      loading="lazy"
+                    />
+                  </picture>
+                );
+              })()}
             </div>
           )}
 

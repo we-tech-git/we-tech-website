@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 export default function useReveal(options = {}) {
   const {
     variant = "standard", // "standard" | "mask" | "clip" | "scale" | "line"
-    threshold = 0.12,
-    rootMargin = "0px 0px -8% 0px",
+    threshold = 0.08,
+    rootMargin = "0px 0px -40px 0px",
     delay = 0,
     once = false,
   } = options;
@@ -33,7 +33,7 @@ export default function useReveal(options = {}) {
         ? 0
         : typeof threshold === "number"
           ? threshold
-          : 0.12;
+          : 0.08;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -49,14 +49,14 @@ export default function useReveal(options = {}) {
               io.unobserve(entry.target);
             }
           } else {
-            // Replay mode: reset only when the element has truly exited the physical viewport
-            // (prevents micro-scroll jitter and never disappears while visible)
+            // Replay mode: reset only when the element is below the viewport
+            // (so when scrolling down again, entrance triggers cleanly, but content above doesn't vanish)
             if (!once) {
               const rect = entry.boundingClientRect;
-              const isCompletelyOffscreen =
-                rect.top >= window.innerHeight || rect.bottom <= 0;
+              const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+              const isBelowViewport = rect.top >= vh;
 
-              if (isCompletelyOffscreen) {
+              if (isBelowViewport) {
                 if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
                 setVisible(false);
               }
@@ -73,7 +73,7 @@ export default function useReveal(options = {}) {
       io.disconnect();
       if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
     };
-  }, [threshold, rootMargin, delay, once]);
+  }, [threshold, rootMargin, delay, once, variant]);
 
   const variantClass = variant !== "standard" ? `reveal--${variant}` : "";
   const className = `reveal ${variantClass}${visible ? " visible" : ""}`.trim();

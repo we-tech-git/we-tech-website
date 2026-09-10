@@ -23,6 +23,16 @@ export default function Hero() {
   const stageRef = useRef(null);
   const ctaBtnRef = useRef(null);
   const explodedWrapperRef = useRef(null);
+  const timersRef = useRef([]);
+
+  const clearAllTimers = () => {
+    timersRef.current.forEach((t) => clearTimeout(t));
+    timersRef.current = [];
+  };
+
+  useEffect(() => {
+    return () => clearAllTimers();
+  }, []);
 
   /* ---- Idea 1: Live Interactive Pipeline Simulation State ---- */
   const [simState, setSimState] = useState("idle"); // "idle" | "running" | "completed"
@@ -35,31 +45,32 @@ export default function Hero() {
     e.stopPropagation();
     if (simState === "running") return;
 
+    clearAllTimers();
     setFocusedLayer("top");
     setSimState("running");
     setMetricCounter("+178.5%");
     setLatencyMetric("11.8ms");
 
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setMetricCounter("+224.0%");
       setReqsMetric("18.4k req/s");
     }, 500);
 
-    setTimeout(() => {
+    const t2 = setTimeout(() => {
       setMetricCounter("+265.8%");
       setLatencyMetric("2.1ms");
     }, 1100);
 
-    setTimeout(() => {
+    const t3 = setTimeout(() => {
       setMetricCounter("+294.2%");
       setCacheMetric("Cache 99.9%");
     }, 1700);
 
-    setTimeout(() => {
+    const t4 = setTimeout(() => {
       setSimState("completed");
     }, 2300);
 
-    setTimeout(() => {
+    const t5 = setTimeout(() => {
       setSimState((curr) => {
         if (curr === "completed") {
           setMetricCounter("+142.8%");
@@ -71,10 +82,13 @@ export default function Hero() {
         return curr;
       });
     }, 8500);
+
+    timersRef.current.push(t1, t2, t3, t4, t5);
   };
 
   const handleResetSimulation = (e) => {
     e.stopPropagation();
+    clearAllTimers();
     setSimState("idle");
     setMetricCounter("+142.8%");
     setReqsMetric("4.2k req/s");
@@ -93,32 +107,33 @@ export default function Hero() {
     e.stopPropagation();
     if (logicSimState === "running") return;
 
+    clearAllTimers();
     setFocusedLayer("middle");
     setLogicSimState("running");
     setLogicOpsMetric("42.1k");
     setLogicAuthMetric("0.8ms");
 
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setLogicOpsMetric("68.5k");
       setLogicResolveMetric("1.9ms");
       setLogicSyncMetric("98% Sincronizado");
     }, 500);
 
-    setTimeout(() => {
+    const t2 = setTimeout(() => {
       setLogicOpsMetric("94.2k");
       setLogicAuthMetric("0.4ms");
       setLogicResolveMetric("0.6ms");
     }, 1100);
 
-    setTimeout(() => {
+    const t3 = setTimeout(() => {
       setLogicSyncMetric("100% Sincronizado");
     }, 1700);
 
-    setTimeout(() => {
+    const t4 = setTimeout(() => {
       setLogicSimState("completed");
     }, 2300);
 
-    setTimeout(() => {
+    const t5 = setTimeout(() => {
       setLogicSimState((curr) => {
         if (curr === "completed") {
           setLogicOpsMetric("28.4k");
@@ -130,10 +145,13 @@ export default function Hero() {
         return curr;
       });
     }, 8500);
+
+    timersRef.current.push(t1, t2, t3, t4, t5);
   };
 
   const handleResetLogicSimulation = (e) => {
     e.stopPropagation();
+    clearAllTimers();
     setLogicSimState("idle");
     setLogicOpsMetric("28.4k");
     setLogicAuthMetric("1.2ms");
@@ -152,33 +170,34 @@ export default function Hero() {
     e.stopPropagation();
     if (infraSimState === "running") return;
 
+    clearAllTimers();
     setFocusedLayer("bottom");
     setInfraSimState("running");
     setInfraCpuMetric("48%");
     setInfraBgpMetric("5.1ms");
 
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setInfraCpuMetric("78%");
       setInfraEnvoyMetric("0.4ms");
       setInfraLatMetric("0.01ms Latência");
     }, 500);
 
-    setTimeout(() => {
+    const t2 = setTimeout(() => {
       setInfraCpuMetric("32%");
       setInfraBgpMetric("2.2ms");
       setInfraEnvoyMetric("0.15ms");
     }, 1100);
 
-    setTimeout(() => {
+    const t3 = setTimeout(() => {
       setInfraCpuMetric("18%");
       setInfraLatMetric("0.008ms Latência");
     }, 1700);
 
-    setTimeout(() => {
+    const t4 = setTimeout(() => {
       setInfraSimState("completed");
     }, 2300);
 
-    setTimeout(() => {
+    const t5 = setTimeout(() => {
       setInfraSimState((curr) => {
         if (curr === "completed") {
           setInfraCpuMetric("14%");
@@ -190,10 +209,34 @@ export default function Hero() {
         return curr;
       });
     }, 8500);
+
+    timersRef.current.push(t1, t2, t3, t4, t5);
   };
 
   const handleResetInfraSimulation = (e) => {
     e.stopPropagation();
+    clearAllTimers();
+    setInfraSimState("idle");
+    setInfraCpuMetric("14%");
+    setInfraBgpMetric("8.4ms");
+    setInfraEnvoyMetric("0.8ms");
+    setInfraLatMetric("0.02ms Latência");
+  };
+
+  const handleResetAllSimulations = () => {
+    clearAllTimers();
+    setSimState("idle");
+    setMetricCounter("+142.8%");
+    setReqsMetric("4.2k req/s");
+    setLatencyMetric("14ms");
+    setCacheMetric("Cache 98.4%");
+
+    setLogicSimState("idle");
+    setLogicOpsMetric("28.4k");
+    setLogicAuthMetric("1.2ms");
+    setLogicResolveMetric("3.8ms");
+    setLogicSyncMetric("94% Sincronizado");
+
     setInfraSimState("idle");
     setInfraCpuMetric("14%");
     setInfraBgpMetric("8.4ms");
@@ -203,6 +246,63 @@ export default function Hero() {
 
   /* Layer focus for interactive 3D elevation */
   const [focusedLayer, setFocusedLayer] = useState("idle"); // "idle" | "top" | "middle" | "bottom"
+  const rafCoordRef = useRef(null);
+
+  const resetHeroToNormal = () => {
+    if (rafCoordRef.current) cancelAnimationFrame(rafCoordRef.current);
+    if (explodedWrapperRef.current) {
+      explodedWrapperRef.current.style.removeProperty("--mouse-x");
+      explodedWrapperRef.current.style.removeProperty("--mouse-y");
+      explodedWrapperRef.current.classList.remove("is-scroll-explode");
+    }
+    setFocusedLayer("idle");
+    handleResetAllSimulations();
+  };
+
+  const toggleLayerFocus = (layerName) => {
+    setFocusedLayer((prev) => (prev === layerName ? "idle" : layerName));
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isPointerFine()) return;
+    const target = e.currentTarget;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    if (rafCoordRef.current) cancelAnimationFrame(rafCoordRef.current);
+    rafCoordRef.current = requestAnimationFrame(() => {
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      target.style.setProperty("--mouse-x", `${clientX - rect.left}px`);
+      target.style.setProperty("--mouse-y", `${clientY - rect.top}px`);
+    });
+  };
+
+  const handleMouseLeave = (e) => {
+    if (rafCoordRef.current) cancelAnimationFrame(rafCoordRef.current);
+    if (e?.currentTarget) {
+      e.currentTarget.style.removeProperty("--mouse-x");
+      e.currentTarget.style.removeProperty("--mouse-y");
+    }
+    resetHeroToNormal();
+  };
+
+  /* ---- Outside click to reset card to normal ---- */
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (
+        explodedWrapperRef.current &&
+        !explodedWrapperRef.current.contains(e.target) &&
+        !e.target.closest(".ea-mobile-layer-tabs")
+      ) {
+        resetHeroToNormal();
+      }
+    };
+    document.addEventListener("pointerdown", handleDocumentClick);
+    return () => {
+      document.removeEventListener("pointerdown", handleDocumentClick);
+    };
+  }, []);
 
   /* ---- Coordinated GSAP Editorial Entry Sequence ---- */
   useEffect(() => {
@@ -212,9 +312,25 @@ export default function Hero() {
     // Magnetic CTA initialization
     const cleanupMagnetic = initMagneticElement(ctaBtnRef.current, 0.2, 5);
 
+    // Viewport exit observer: completely reset when hero is off-screen
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            resetHeroToNormal();
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    io.observe(el);
+
     if (prefersReducedMotion()) {
       el.classList.add("hero--visible");
-      return () => cleanupMagnetic();
+      return () => {
+        cleanupMagnetic();
+        io.disconnect();
+      };
     }
 
     const ctx = gsap.context(() => {
@@ -230,7 +346,7 @@ export default function Hero() {
         gsap.set(stageRef.current, { opacity: 0, scale: 0.98 });
       }
 
-      // 2. Coordinated Editorial Assembly Timeline
+      // 2. Coordinated Editorial Assembly Timeline (runs once on mount)
       const tl = gsap.timeline({
         defaults: { ease: EASINGS.standard },
         delay: 0.08,
@@ -261,7 +377,7 @@ export default function Hero() {
         );
       }
 
-      // 3. Scroll Seam Handover
+      // 3. Desktop Parallax & Scroll Explode Handover
       const mm = gsap.matchMedia();
       mm.add("(min-width: 1025px)", () => {
         const st = ScrollTrigger.create({
@@ -279,53 +395,44 @@ export default function Hero() {
           },
         });
 
-        return () => st.kill();
+        const explodeTrigger = ScrollTrigger.create({
+          trigger: el,
+          start: "top top",
+          end: "bottom top",
+          onUpdate: (self) => {
+            const wrapper = explodedWrapperRef.current;
+            if (!wrapper) return;
+            const isInside = self.progress > 0.04 && self.progress < 0.75;
+            wrapper.classList.toggle("is-scroll-explode", isInside);
+            if (self.progress >= 0.75) {
+              resetHeroToNormal();
+            }
+          },
+          onLeave: () => {
+            resetHeroToNormal();
+          },
+          onLeaveBack: () => {
+            resetHeroToNormal();
+          },
+        });
+
+        return () => {
+          st.kill();
+          explodeTrigger.kill();
+        };
       });
 
-      // 4. Hero Lifecycle Replay on Re-entry
-      let hasExitedHero = false;
-      const replayTrigger = ScrollTrigger.create({
-        trigger: el,
-        start: "top top",
-        end: "bottom 20%",
-        onLeave: () => {
-          hasExitedHero = true;
-        },
-        onUpdate: (self) => {
-          if (hasExitedHero && self.progress < 0.08) {
-            hasExitedHero = false;
-            tl.restart();
-          }
-        },
-      });
-
-      // 5. Scroll-Driven Explode — layers separate as the user scrolls
-      // (no hover/click required; makes the effect visible on touch devices too)
-      const explodeTrigger = ScrollTrigger.create({
-        trigger: el,
-        start: "top top",
-        end: "bottom top",
-        onUpdate: (self) => {
-          const wrapper = explodedWrapperRef.current;
-          if (!wrapper) return;
-          wrapper.classList.toggle("is-scroll-explode", self.progress > 0.04);
-        },
-      });
-
-      return () => {
-        replayTrigger.kill();
-        explodeTrigger.kill();
-      };
     }, el);
 
     return () => {
       ctx.revert();
       cleanupMagnetic();
+      io.disconnect();
     };
   }, []);
 
   return (
-    <section id="top" className="hero" ref={heroRef}>
+    <section id="top" className="hero" ref={heroRef} onMouseLeave={resetHeroToNormal}>
       {/* Structural top hairline */}
       <div className="hero__hairline" aria-hidden="true" />
 
@@ -383,20 +490,47 @@ export default function Hero() {
           {/* Subtle connection datum line bridging tension between text and object */}
           <div className="hero__datum-line" aria-hidden="true" />
 
+          {/* Mobile Layer Selector Tabs (visible on mobile / small screens) */}
+          <div className="ea-mobile-layer-tabs" role="tablist" aria-label="Camadas do Sistema">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={focusedLayer === "top" || focusedLayer === "idle"}
+              className={`ea-mobile-tab ea-mobile-tab--ui ${focusedLayer === "top" || focusedLayer === "idle" ? "is-active" : ""}`}
+              onClick={() => setFocusedLayer("top")}
+            >
+              <span className="ea-mobile-tab__dot ea-mobile-tab__dot--ui" />
+              <span>UI / Produto</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={focusedLayer === "middle"}
+              className={`ea-mobile-tab ea-mobile-tab--logic ${focusedLayer === "middle" ? "is-active" : ""}`}
+              onClick={() => setFocusedLayer("middle")}
+            >
+              <span className="ea-mobile-tab__dot ea-mobile-tab__dot--logic" />
+              <span>Lógica</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={focusedLayer === "bottom"}
+              className={`ea-mobile-tab ea-mobile-tab--infra ${focusedLayer === "bottom" ? "is-active" : ""}`}
+              onClick={() => setFocusedLayer("bottom")}
+            >
+              <span className="ea-mobile-tab__dot ea-mobile-tab__dot--infra" />
+              <span>Infra / Cloud</span>
+            </button>
+          </div>
+
           {/* 3D Perspective Wrapper: perspective: 1400px with Cursor Spotlight */}
           <div
             ref={explodedWrapperRef}
             className="hero-exploded-wrapper"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.removeProperty("--mouse-x");
-              e.currentTarget.style.removeProperty("--mouse-y");
-              setFocusedLayer("idle");
-            }}
+            data-focused-layer={focusedLayer}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             {/* Sombra de Solo Dinâmica (Ambient Contact Shadow) */}
             <div className="exploded-ground-shadow" aria-hidden="true" />
@@ -420,15 +554,14 @@ export default function Hero() {
                   ========================================================= */}
               <div
                 className={`exploded-layer exploded-layer--bottom ${focusedLayer === "bottom" || infraSimState !== "idle" ? "exploded-layer--elevated" : ""}`}
-                onClick={() => setFocusedLayer("bottom")}
+                onClick={() => toggleLayerFocus("bottom")}
               >
                 <div className="ea-spotlight-glow" aria-hidden="true" />
                 <div
                   className="exploded-badge exploded-badge--infra"
-                  onMouseEnter={() => setFocusedLayer("bottom")}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setFocusedLayer("bottom");
+                    toggleLayerFocus("bottom");
                   }}
                   title="Clique para focar na camada de Infra"
                 >
@@ -748,15 +881,14 @@ export default function Hero() {
                   ========================================================= */}
               <div
                 className={`exploded-layer exploded-layer--middle ${focusedLayer === "middle" || logicSimState !== "idle" ? "exploded-layer--elevated" : ""}`}
-                onClick={() => setFocusedLayer("middle")}
+                onClick={() => toggleLayerFocus("middle")}
               >
                 <div className="ea-spotlight-glow" aria-hidden="true" />
                 <div
                   className="exploded-badge exploded-badge--logic"
-                  onMouseEnter={() => setFocusedLayer("middle")}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setFocusedLayer("middle");
+                    toggleLayerFocus("middle");
                   }}
                   title="Clique para focar na camada de Lógica"
                 >
@@ -1077,16 +1209,15 @@ export default function Hero() {
                   ========================================================= */}
               <div
                 className={`exploded-layer exploded-layer--top ${focusedLayer === "top" || simState !== "idle" ? "exploded-layer--elevated" : ""}`}
-                onClick={() => setFocusedLayer("top")}
+                onClick={() => toggleLayerFocus("top")}
               >
                 <div className="ea-spotlight-glow" aria-hidden="true" />
                 <div className="exploded-glass-sheen" aria-hidden="true" />
                 <div
                   className="exploded-badge exploded-badge--ui"
-                  onMouseEnter={() => setFocusedLayer("top")}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setFocusedLayer("top");
+                    toggleLayerFocus("top");
                   }}
                   title="Clique para focar na camada de UI"
                 >

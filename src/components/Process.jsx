@@ -114,7 +114,7 @@ export default function Process() {
     // or a desktop that never got one.
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px) and (min-height: 700px)", () => {
+    mm.add("(min-width: 1024px) and (min-height: 550px)", () => {
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
         pin: sectionRef.current,

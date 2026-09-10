@@ -12,7 +12,7 @@ const FOOTER_NAV = [
   { href: "/#work", label: "Projetos" },
   { href: "/#expertise", label: "Capacidades" },
   { href: "/#process", label: "Processo" },
-  { href: "/#about", label: "Princípios" },
+  { href: "/#about", label: "Sobre" },
   { href: "/projetos", label: "Todos os Projetos" },
 ];
 
@@ -130,6 +130,13 @@ export default function Footer() {
                 to="/#top"
                 className="footer__back-to-top"
                 aria-label="Voltar ao topo da página"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  if (window.location.hash) {
+                    window.history.pushState(null, "", "/");
+                  }
+                }}
               >
                 <span>Voltar ao topo</span>
               </Link>
