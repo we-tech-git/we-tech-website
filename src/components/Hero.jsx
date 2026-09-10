@@ -22,6 +22,7 @@ export default function Hero() {
   const heroRef = useRef(null);
   const stageRef = useRef(null);
   const ctaBtnRef = useRef(null);
+  const explodedWrapperRef = useRef(null);
 
   /* ---- Idea 1: Live Interactive Pipeline Simulation State ---- */
   const [simState, setSimState] = useState("idle"); // "idle" | "running" | "completed"
@@ -298,7 +299,23 @@ export default function Hero() {
         },
       });
 
-      return () => replayTrigger.kill();
+      // 5. Scroll-Driven Explode — layers separate as the user scrolls
+      // (no hover/click required; makes the effect visible on touch devices too)
+      const explodeTrigger = ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom top",
+        onUpdate: (self) => {
+          const wrapper = explodedWrapperRef.current;
+          if (!wrapper) return;
+          wrapper.classList.toggle("is-scroll-explode", self.progress > 0.04);
+        },
+      });
+
+      return () => {
+        replayTrigger.kill();
+        explodeTrigger.kill();
+      };
     }, el);
 
     return () => {
@@ -368,6 +385,7 @@ export default function Hero() {
 
           {/* 3D Perspective Wrapper: perspective: 1400px with Cursor Spotlight */}
           <div
+            ref={explodedWrapperRef}
             className="hero-exploded-wrapper"
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();

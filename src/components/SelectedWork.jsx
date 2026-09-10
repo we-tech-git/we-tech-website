@@ -15,10 +15,9 @@ if (typeof window !== "undefined") {
    PROJECT ORDER — curated for visual strength & sector variety
    1. We Party       — strongest screenshot, social/events, live link
    2. Lelume         — edtech/institutional, credibility
-   3. Maria Mariana  — e-commerce, different sector
-   4. Blue Token     — Web3, live link, monumental close
+   3. Maria Mariana  — e-commerce, monumental close
    --------------------------------------------------------------- */
-const projectOrder = ["we-party", "lelume", "maria-mariana", "blue-token"];
+const projectOrder = ["we-party", "lelume", "maria-mariana"];
 const ordered = projectOrder
   .map((slug) => projetos.find((p) => p.slug === slug))
   .filter(Boolean);
@@ -37,7 +36,6 @@ function fallbackImgSrc(path) {
    - we-party:     LARGE / Opening case / Full-Bleed Right / Mask Reveal
    - lelume:       MEDIUM / Institutional Precision / Reversed / Chrome-First
    - maria-mariana: COMPACT / Editorial Pause / Negative Space / Minimal Settle
-   - blue-token:   LARGE / Monumental Close / Panoramic Masked Expansion
    --------------------------------------------------------------- */
 const projectConfigs = {
   "we-party": {
@@ -61,13 +59,6 @@ const projectConfigs = {
     hasChrome: false,
     aspectRatio: "16 / 7.1",
     revealVariant: "standard",
-  },
-  "blue-token": {
-    scale: "large",
-    variant: "monumental-close",
-    hasChrome: false,
-    aspectRatio: "16 / 8.2",
-    revealVariant: "clip",
   },
 };
 
@@ -161,25 +152,6 @@ function ProjectRow({ projeto, index }) {
             duration: 0.75,
             ease: EASINGS.emphasis,
           }
-        );
-      } else if (projeto.slug === "blue-token") {
-        startPos = "top 85%";
-        tl = gsap.timeline({ paused: true });
-        tl.fromTo(
-          imgFrameRef.current,
-          { clipPath: "inset(0 0 100% 0)", opacity: 0 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            opacity: 1,
-            duration: 0.9,
-            ease: EASINGS.standard,
-          },
-          0
-        ).fromTo(
-          metaRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.65, ease: EASINGS.standard },
-          0.3
         );
       }
 

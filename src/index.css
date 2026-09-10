@@ -2181,7 +2181,8 @@ img, svg, video {
               filter 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero-exploded-wrapper:hover .exploded-ground-shadow {
+.hero-exploded-wrapper:hover .exploded-ground-shadow,
+.hero-exploded-wrapper.is-scroll-explode .exploded-ground-shadow {
   opacity: 0.85;
   filter: blur(36px);
   transform: translate3d(50px, 45px, -60px) scale(1.06);
@@ -2198,6 +2199,7 @@ img, svg, video {
 
 /* Hover Tilt: Ângulo isométrico ergonômico e suave */
 .hero-exploded-wrapper:hover .hero-exploded-stage,
+.hero-exploded-wrapper.is-scroll-explode .hero-exploded-stage,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .hero-exploded-stage {
   transform: rotateX(20deg) rotate(10deg) scale(0.92);
 }
@@ -2214,7 +2216,8 @@ img, svg, video {
   transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero-exploded-wrapper:hover .exploded-conduit {
+.hero-exploded-wrapper:hover .exploded-conduit,
+.hero-exploded-wrapper.is-scroll-explode .exploded-conduit {
   opacity: 0.75;
 }
 
@@ -2323,7 +2326,8 @@ img, svg, video {
               opacity 600ms ease;
 }
 
-.hero-exploded-wrapper:hover .exploded-glass-sheen::after {
+.hero-exploded-wrapper:hover .exploded-glass-sheen::after,
+.hero-exploded-wrapper.is-scroll-explode .exploded-glass-sheen::after {
   opacity: 1;
   transform: translateX(450%) rotate(25deg);
 }
@@ -2354,6 +2358,7 @@ img, svg, video {
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--bottom,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--bottom,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--bottom {
   transform: translate3d(40px, 35px, 0px);
   opacity: 1;
@@ -2371,6 +2376,7 @@ img, svg, video {
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--middle,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--middle,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--middle {
   transform: translate3d(0px, 0px, 65px);
   opacity: 1;
@@ -2388,6 +2394,7 @@ img, svg, video {
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--top,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--top,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--top {
   transform: translate3d(-40px, -35px, 130px);
   opacity: 1;
@@ -2461,7 +2468,8 @@ img, svg, video {
   user-select: none;
 }
 
-.hero-exploded-wrapper:hover .exploded-badge {
+.hero-exploded-wrapper:hover .exploded-badge,
+.hero-exploded-wrapper.is-scroll-explode .exploded-badge {
   pointer-events: auto;
 }
 
@@ -2550,22 +2558,26 @@ img, svg, video {
 
 /* On hover or elevated: badges reveal with staggered delay (delay-300) */
 .hero-exploded-wrapper:hover .exploded-badge,
+.hero-exploded-wrapper.is-scroll-explode .exploded-badge,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-badge {
   opacity: 1;
   pointer-events: auto;
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--top .exploded-badge,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--top .exploded-badge,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--top .exploded-badge {
   transition-delay: 300ms;
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--middle .exploded-badge,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--middle .exploded-badge,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--middle .exploded-badge {
   transition-delay: 360ms;
 }
 
 .hero-exploded-wrapper:hover .exploded-layer--bottom .exploded-badge,
+.hero-exploded-wrapper.is-scroll-explode .exploded-layer--bottom .exploded-badge,
 .hero-exploded-wrapper:has(.exploded-layer--elevated) .exploded-layer--bottom .exploded-badge {
   transition-delay: 420ms;
 }
@@ -3481,17 +3493,6 @@ img, svg, video {
   border-radius: var(--radius-sm);
 }
 
-/* 4. BLUE TOKEN — LARGE / Monumental Close / Panoramic Field */
-.sw-row--monumental-close .sw-row__link {
-  grid-template-columns: 0.85fr 1.65fr;
-  gap: var(--grid-gutter);
-  padding: var(--space-10) 0;
-}
-
-.sw-row--monumental-close .sw-row__img {
-  aspect-ratio: 16 / 8.2;
-}
-
 /* ---- Metadata Columns ---- */
 .sw-row__meta {
   display: flex;
@@ -3708,8 +3709,7 @@ img, svg, video {
 @media (max-width: 1024px) {
   .sw-row--bleed-right .sw-row__link,
   .sw-row--reversed-chrome .sw-row__link,
-  .sw-row--compact-editorial .sw-row__link,
-  .sw-row--monumental-close .sw-row__link {
+  .sw-row--compact-editorial .sw-row__link {
     grid-template-columns: 1fr 1.2fr;
     gap: var(--space-6);
   }
@@ -3752,8 +3752,7 @@ img, svg, video {
 
   .sw-row--bleed-right .sw-row__link,
   .sw-row--reversed-chrome .sw-row__link,
-  .sw-row--compact-editorial .sw-row__link,
-  .sw-row--monumental-close .sw-row__link {
+  .sw-row--compact-editorial .sw-row__link {
     grid-template-columns: 1fr;
     gap: var(--space-5);
     padding: var(--space-7) 0;
@@ -3793,8 +3792,7 @@ img, svg, video {
 
   .sw-row--bleed-right .sw-row__link,
   .sw-row--reversed-chrome .sw-row__link,
-  .sw-row--compact-editorial .sw-row__link,
-  .sw-row--monumental-close .sw-row__link {
+  .sw-row--compact-editorial .sw-row__link {
     padding: var(--space-6) 0;
   }
 

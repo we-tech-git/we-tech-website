@@ -55,32 +55,6 @@ export const projetos = [
     ],
   },
   {
-    slug: "blue-token",
-    nome: "Blue Token",
-    categoria: "Web3",
-    tipo: "Plataforma · Cripto",
-    resumo:
-      "Landing page para token digital baseado em cesta de criptoativos na BSC.",
-    data: "2024",
-    capa: "/img/projects/project_bluetoken_banner_6.webp",
-    preview: "/img/projects/blue_token_web_site.webp",
-    link: "https://bluetoken.io/homepage",
-    intro:
-      "Site da Blue Token para apresentar o token como uma cesta de criptomoedas, oferecendo diversificação em um único ativo.",
-    secoes: [
-      {
-        titulo: "O que construímos",
-        texto:
-          "Reconstrução do site para renovar a marca e destacar as funcionalidades do token com clareza.",
-      },
-      {
-        titulo: "Evolução",
-        texto:
-          "Projeto mantido como referência de clareza na comunicação de produtos cripto. A experiência segue sendo iterada.",
-      },
-    ],
-  },
-  {
     slug: "lelume",
     nome: "Lelume",
     categoria: "Institucional",
