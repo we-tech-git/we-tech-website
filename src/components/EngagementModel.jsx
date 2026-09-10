@@ -77,7 +77,7 @@ const FRONTS = [
 
 const SELECTOR_OPTIONS = [
   { key: "a", label: "Só Tech", shortLabel: "Tech" },
-  { key: "integrated", label: "Ambos · integrado", shortLabel: "Ambos Integrados", highlight: true },
+  { key: "integrated", label: "Ambos · integrado", shortLabel: "Ambos", highlight: true },
   { key: "b", label: "Só Performance", shortLabel: "Performance" },
 ];
 
@@ -136,7 +136,8 @@ export default function EngagementModel() {
                 aria-pressed={state === opt.key}
                 onClick={() => handleSelect(opt.key)}
               >
-                <span className="fronts-control-label">{opt.label}</span>
+                <span className="fronts-control-label fronts-control-label--desktop">{opt.label}</span>
+                <span className="fronts-control-label fronts-control-label--mobile">{opt.shortLabel}</span>
               </button>
             ))}
           </div>
