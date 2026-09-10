@@ -22,13 +22,12 @@ const ordered = projectOrder
   .map((slug) => projetos.find((p) => p.slug === slug))
   .filter(Boolean);
 
-/* Resolve WebP with PNG fallback */
-function imgSrc(path) {
-  return path;
-}
-
-function fallbackImgSrc(path) {
-  return path.replace(".webp", ".png");
+function getImgSources(path) {
+  if (!path) return { webp: null, src: "" };
+  if (path.endsWith(".webp")) {
+    return { webp: path, src: path.replace(/\.webp$/, ".png") };
+  }
+  return { webp: null, src: path };
 }
 
 /* ---------------------------------------------------------------
@@ -89,12 +88,17 @@ function ProjectRow({ projeto, index }) {
     if (!el || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      let tl = null;
-      let startPos = "top 80%";
+      const startPos = "top 88%";
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: startPos,
+          toggleActions: "restart none none reset",
+        },
+      });
 
       if (projeto.slug === "we-party") {
-        startPos = "top 88%";
-        tl = gsap.timeline({ paused: true });
         tl.fromTo(
           imgFrameRef.current,
           { clipPath: "inset(0 100% 0 0)", opacity: 0 },
@@ -119,8 +123,6 @@ function ProjectRow({ projeto, index }) {
             0.25
           );
       } else if (projeto.slug === "lelume") {
-        startPos = "top 88%";
-        tl = gsap.timeline({ paused: true });
         if (chromeRef.current) {
           tl.fromTo(
             chromeRef.current,
@@ -141,8 +143,6 @@ function ProjectRow({ projeto, index }) {
           0.25
         );
       } else if (projeto.slug === "maria-mariana") {
-        startPos = "top 88%";
-        tl = gsap.timeline({ paused: true });
         tl.fromTo(
           el,
           { opacity: 0, y: 18 },
@@ -153,25 +153,6 @@ function ProjectRow({ projeto, index }) {
             ease: EASINGS.emphasis,
           }
         );
-      }
-
-      if (tl) {
-        // Trigger 1: Controlled entrance (down & up) + silent reset when completely above viewport
-        ScrollTrigger.create({
-          trigger: el,
-          start: startPos,
-          end: "bottom top",
-          onEnter: () => tl.restart(),
-          onEnterBack: () => tl.restart(),
-          onLeave: () => tl.pause(0),
-        });
-
-        // Trigger 2: Silent reset when completely below viewport (leaves going back up)
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top bottom",
-          onLeaveBack: () => tl.pause(0),
-        });
       }
     }, el);
 
@@ -262,21 +243,23 @@ function ProjectRow({ projeto, index }) {
               </div>
             )}
 
-            <picture>
-              <source
-                srcSet={imgSrc(projeto.preview || projeto.capa)}
-                type="image/webp"
-              />
-              <img
-                ref={imgElementRef}
-                src={fallbackImgSrc(projeto.preview || projeto.capa)}
-                alt={`Interface do projeto ${projeto.nome}`}
-                loading={index === 0 ? "eager" : "lazy"}
-                width={1400}
-                height={740}
-                className="sw-row__img"
-              />
-            </picture>
+            {(() => {
+              const { webp, src } = getImgSources(projeto.preview || projeto.capa);
+              return (
+                <picture>
+                  {webp && <source srcSet={webp} type="image/webp" />}
+                  <img
+                    ref={imgElementRef}
+                    src={src}
+                    alt={`Interface do projeto ${projeto.nome}`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    width={1400}
+                    height={740}
+                    className="sw-row__img"
+                  />
+                </picture>
+              );
+            })()}
           </div>
         </div>
       </Link>
@@ -288,9 +271,14 @@ function ProjectRow({ projeto, index }) {
    SELECTED WORK SECTION
    --------------------------------------------------------------- */
 export default function SelectedWork() {
-  // Fase H: section motion lives in the image (mask/clip reveal per row, below).
-  // The intro header stays a plain reveal so it doesn't compete with that.
   const introReveal = useReveal({ variant: "standard" });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section id="work" className="sw" aria-labelledby="sw-heading">

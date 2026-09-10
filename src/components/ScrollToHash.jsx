@@ -8,19 +8,37 @@ export default function ScrollToHash() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const behavior = reduceMotion ? "auto" : "smooth";
 
     if (hash) {
       const id = hash.slice(1);
+      if (id === "top") {
+        window.scrollTo({ top: 0, left: 0, behavior });
+        return;
+      }
+
       const scrollToTarget = () => {
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior, block: "start" });
+        if (el) {
+          el.scrollIntoView({ behavior, block: "start" });
+        }
       };
-      const timer = setTimeout(scrollToTarget, 50);
-      return () => clearTimeout(timer);
+
+      // Try immediately, then at 60ms and 150ms for smooth transitions between pages
+      scrollToTarget();
+      const t1 = setTimeout(scrollToTarget, 60);
+      const t2 = setTimeout(scrollToTarget, 180);
+
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname, hash]);
 
   return null;

@@ -31,8 +31,8 @@ const INITIATION_PILLARS = [
 
 export default function ClosingCta() {
   const introReveal = useReveal({ variant: "mask" });
-  const pillarsReveal = useReveal({ variant: "standard", threshold: 0.2 });
-  const cardReveal = useReveal({ variant: "standard", threshold: 0.2 });
+  const pillarsReveal = useReveal({ variant: "standard", threshold: 0.08 });
+  const cardReveal = useReveal({ variant: "standard", threshold: 0.08 });
   const primaryBtnRef = useRef(null);
 
   /* ---- Magnetic CTA interaction (Desktop only) ---- */
