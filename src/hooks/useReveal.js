@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-/**
- * useReveal — IntersectionObserver-based reveal with support for custom variants
- * (standard, mask, clip, scale, line).
- * Automatically honors prefers-reduced-motion.
- */
+
 export default function useReveal(options = {}) {
   const {
     variant = "standard", // "standard" | "mask" | "clip" | "scale" | "line"

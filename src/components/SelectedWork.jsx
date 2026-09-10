@@ -13,12 +13,11 @@ if (typeof window !== "undefined") {
 
 /* ---------------------------------------------------------------
    PROJECT ORDER — curated for visual strength & sector variety
-   1. TORO Token   — strongest screenshot, Web3, live link
-   2. Genesis Bank — fintech/institutional, credibility
-   3. Triper       — travel, different sector
-   4. Blue Token   — Web3, live link, monumental close
+   1. We Party       — strongest screenshot, social/events, live link
+   2. Lelume         — edtech/institutional, credibility
+   3. Maria Mariana  — e-commerce, monumental close
    --------------------------------------------------------------- */
-const projectOrder = ["toro-token", "genesis-bank", "triper", "blue-token"];
+const projectOrder = ["we-party", "lelume", "maria-mariana"];
 const ordered = projectOrder
   .map((slug) => projetos.find((p) => p.slug === slug))
   .filter(Boolean);
@@ -34,40 +33,32 @@ function fallbackImgSrc(path) {
 
 /* ---------------------------------------------------------------
    PROJECT CONFIGURATIONS — 3 Scales, Asymmetric Signatures & Rhythm
-   - toro-token:   LARGE / Opening case / Full-Bleed Right / Mask Reveal
-   - genesis-bank: MEDIUM / Institutional Precision / Reversed / Chrome-First
-   - triper:       COMPACT / Editorial Pause / Negative Space / Minimal Settle
-   - blue-token:   LARGE / Monumental Close / Panoramic Masked Expansion
+   - we-party:     LARGE / Opening case / Full-Bleed Right / Mask Reveal
+   - lelume:       MEDIUM / Institutional Precision / Reversed / Chrome-First
+   - maria-mariana: COMPACT / Editorial Pause / Negative Space / Minimal Settle
    --------------------------------------------------------------- */
 const projectConfigs = {
-  "toro-token": {
+  "we-party": {
     scale: "large",
     variant: "bleed-right",
     hasChrome: false,
     aspectRatio: "16 / 8.5",
     revealVariant: "mask",
   },
-  "genesis-bank": {
+  "lelume": {
     scale: "medium",
     variant: "reversed-chrome",
     hasChrome: true,
-    chromeDomain: "genesisbank.com.br",
+    chromeDomain: "lelume.com.br",
     aspectRatio: "16 / 10",
     revealVariant: "standard",
   },
-  "triper": {
+  "maria-mariana": {
     scale: "compact",
     variant: "compact-editorial",
     hasChrome: false,
-    aspectRatio: "16 / 11",
+    aspectRatio: "16 / 7.1",
     revealVariant: "standard",
-  },
-  "blue-token": {
-    scale: "large",
-    variant: "monumental-close",
-    hasChrome: false,
-    aspectRatio: "16 / 8.2",
-    revealVariant: "clip",
   },
 };
 
@@ -101,7 +92,7 @@ function ProjectRow({ projeto, index }) {
       let tl = null;
       let startPos = "top 80%";
 
-      if (projeto.slug === "toro-token") {
+      if (projeto.slug === "we-party") {
         startPos = "top 88%";
         tl = gsap.timeline({ paused: true });
         tl.fromTo(
@@ -127,7 +118,7 @@ function ProjectRow({ projeto, index }) {
             { opacity: 1, x: 0, duration: 0.65, ease: EASINGS.standard },
             0.25
           );
-      } else if (projeto.slug === "genesis-bank") {
+      } else if (projeto.slug === "lelume") {
         startPos = "top 88%";
         tl = gsap.timeline({ paused: true });
         if (chromeRef.current) {
@@ -149,7 +140,7 @@ function ProjectRow({ projeto, index }) {
           { opacity: 1, x: 0, duration: 0.6, ease: EASINGS.standard },
           0.25
         );
-      } else if (projeto.slug === "triper") {
+      } else if (projeto.slug === "maria-mariana") {
         startPos = "top 88%";
         tl = gsap.timeline({ paused: true });
         tl.fromTo(
@@ -161,25 +152,6 @@ function ProjectRow({ projeto, index }) {
             duration: 0.75,
             ease: EASINGS.emphasis,
           }
-        );
-      } else if (projeto.slug === "blue-token") {
-        startPos = "top 85%";
-        tl = gsap.timeline({ paused: true });
-        tl.fromTo(
-          imgFrameRef.current,
-          { clipPath: "inset(0 0 100% 0)", opacity: 0 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            opacity: 1,
-            duration: 0.9,
-            ease: EASINGS.standard,
-          },
-          0
-        ).fromTo(
-          metaRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.65, ease: EASINGS.standard },
-          0.3
         );
       }
 
@@ -274,7 +246,7 @@ function ProjectRow({ projeto, index }) {
           className={`sw-row__media ${isReversed ? "sw-row__media--left" : ""}`}
         >
           <div className="sw-row__media-frame" ref={imgFrameRef}>
-            {/* Optional Browser Chrome (Genesis Bank) */}
+            {/* Optional Browser Chrome (Lelume) */}
             {config.hasChrome && (
               <div ref={chromeRef} className="sw-chrome" aria-hidden="true">
                 <div className="sw-chrome__dots">
