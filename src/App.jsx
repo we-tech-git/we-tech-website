@@ -5,6 +5,7 @@ import ScrollToHash from "./components/ScrollToHash.jsx";
 import Home from "./pages/Home.jsx";
 import ProjectsGallery from "./pages/ProjectsGallery.jsx";
 import ProjectDetail from "./pages/ProjectDetail.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
@@ -15,7 +16,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projetos" element={<ProjectsGallery />} />
         <Route path="/projetos/:slug" element={<ProjectDetail />} />
-        <Route path="*" element={<ProjectDetail />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

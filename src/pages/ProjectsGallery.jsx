@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import Seo from "../components/Seo.jsx";
 import useReveal from "../hooks/useReveal.js";
 import { projetos } from "../projetos.js";
 
@@ -71,6 +72,7 @@ export default function ProjectsGallery() {
 
   return (
     <main>
+      <Seo />
       <section className="pg">
         <div className="container">
           <div ref={intro.ref} className={`pg__intro ${intro.className}`}>

@@ -1,3 +1,4 @@
+import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
 import SelectedWork from "../components/SelectedWork.jsx";
 import Capabilities from "../components/Capabilities.jsx";
@@ -9,6 +10,7 @@ import ClosingCta from "../components/ClosingCta.jsx";
 export default function Home() {
   return (
     <main>
+      <Seo />
       <Hero />
       <WhyWeTech />
       <Capabilities />

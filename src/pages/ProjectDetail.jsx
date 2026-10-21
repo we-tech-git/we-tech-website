@@ -2,6 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useReveal from "../hooks/useReveal.js";
 import { getProjeto, projetos } from "../projetos.js";
+import Seo from "../components/Seo.jsx";
+import NotFound from "./NotFound.jsx";
 import { StepArrowIcon, ExploreIcon, ActionIcon } from "../components/Icons.jsx";
 
 /* ---------------------------------------------------------------
@@ -15,29 +17,6 @@ function getImgSources(path) {
     return { webp: path, src: path.replace(/\.webp$/, ".png") };
   }
   return { webp: null, src: path };
-}
-
-function NotFound() {
-  return (
-    <main>
-      <section className="pd pd__404">
-        <div className="container" style={{ maxWidth: 640 }}>
-          <span className="eyebrow" style={{ marginBottom: "var(--space-4)", display: "block" }}>
-            404
-          </span>
-          <h1 className="heading-lg" style={{ marginBottom: "var(--space-4)" }}>
-            Projeto não encontrado
-          </h1>
-          <p className="body-lg" style={{ marginBottom: "var(--space-7)" }}>
-            O link acessado não está disponível.
-          </p>
-          <Link to="/projetos" className="btn btn--ghost">
-            ← Voltar para projetos
-          </Link>
-        </div>
-      </section>
-    </main>
-  );
 }
 
 /* Prev/Next navigation */
@@ -94,6 +73,7 @@ export default function ProjectDetail() {
 
   return (
     <main>
+      <Seo />
       <section className="pd">
         <div className="container" style={{ maxWidth: 960 }}>
           {/* Back link */}
