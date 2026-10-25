@@ -27,6 +27,26 @@ export const projetos = [
           "E-commerce completo com catálogo, filtros por categoria e disponibilidade, e identidade visual editorial alinhada ao universo têxtil da marca.",
       },
     ],
+    en: {
+      categoria: "E-commerce",
+      tipo: "Online store · Handmade textiles",
+      resumo:
+        "Online store for handmade table textiles, with a product catalog and an elegant buying experience.",
+      intro:
+        "E-commerce for Ateliê Maria Mariana — handmade table textiles presented in a digital storefront that conveys the brand's craftsmanship.",
+      secoes: [
+        {
+          titulo: "The challenge",
+          texto:
+            "Create an online store that conveyed the brand's handcrafted sophistication, with clear navigation by product category.",
+        },
+        {
+          titulo: "What we built",
+          texto:
+            "A complete e-commerce with catalog, category and availability filters, and an editorial visual identity aligned with the brand's textile universe.",
+        },
+      ],
+    },
   },
   {
     slug: "we-party",
@@ -53,6 +73,26 @@ export const projetos = [
           "Plataforma com feed de eventos, integração com Ticketmaster e perfis sociais, com identidade visual vibrante alinhada ao universo de shows e festas.",
       },
     ],
+    en: {
+      categoria: "Social",
+      tipo: "Platform · Events",
+      resumo:
+        "A social network to discover events and connect with people who are going too.",
+      intro:
+        "We Party connects people who love going out — nearby event discovery, ticketing integration and a community around every show.",
+      secoes: [
+        {
+          titulo: "The challenge",
+          texto:
+            "Create a social experience around events, combining discovery, likes and connection between people going to the same place.",
+        },
+        {
+          titulo: "What we built",
+          texto:
+            "A platform with an event feed, Ticketmaster integration and social profiles, with a vibrant visual identity aligned with the world of shows and parties.",
+        },
+      ],
+    },
   },
   {
     slug: "lelume",
@@ -79,9 +119,36 @@ export const projetos = [
           "Estrutura de conteúdo com destaque para o catálogo, benefícios da assinatura e indicadores de resultado, com linguagem visual clara e moderna.",
       },
     ],
+    en: {
+      categoria: "Institutional",
+      tipo: "Website · Edtech",
+      resumo:
+        "A subscription digital library with a clear experience for accessing books, audiobooks and educational content.",
+      intro:
+        "A digital experience for Lelume — a digital library that brings books, audiobooks and educational content together in a single subscription.",
+      secoes: [
+        {
+          titulo: "The challenge",
+          texto:
+            "Present a broad, growing catalog in an organized way, conveying trust to students and professionals.",
+        },
+        {
+          titulo: "What we built",
+          texto:
+            "A content structure highlighting the catalog, the subscription benefits and result indicators, with a clear, modern visual language.",
+        },
+      ],
+    },
   },
 ];
 
 export function getProjeto(slug) {
   return projetos.find((p) => p.slug === slug);
+}
+
+// Returns the project with text fields resolved for the given language.
+// Portuguese is the source of truth; `en` overrides the text fields.
+export function localizeProjeto(projeto, lang) {
+  if (!projeto || lang === "pt") return projeto;
+  return { ...projeto, ...projeto.en };
 }

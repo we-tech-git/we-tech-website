@@ -1,0 +1,52 @@
+/* ============================================================
+   LIGHT THEME — token overrides only.
+   Dark is the default (see :root in index.css). The pre-paint
+   script in index.html sets data-theme on <html>.
+   Contrast targets (WCAG AA): text >= 4.5:1, large text >= 3:1.
+   ============================================================ */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Canvas & surfaces */
+  --tone-deep: #f6f5f1;
+  --tone-05: #efede7;
+  --tone-10: #ffffff;
+  --tone-15: #f1efe9;
+  --tone-20: #ebe8e0;
+  --tone-30: #e6e3da;
+  --tone-40: #e6e3da;
+  --tone-50: #efede7;
+
+  /* Typography */
+  --text-primary: #14171c;
+  --text-secondary: #444b56;
+  --text-muted: #565e6b;
+  --text-faint: #5d6572;
+
+  /* Accent: the brand orange stays for fills; text uses a darker shade */
+  --accent: #ff4d00;
+  --accent-hover: #e64500;
+  --accent-subtle: rgba(255, 77, 0, 0.1);
+  --accent-text: #b43800;
+  --on-accent: #0b0d10;
+
+  /* Hairlines */
+  --hairline: rgba(20, 23, 28, 0.1);
+  --hairline-strong: rgba(20, 23, 28, 0.2);
+  --border: rgba(20, 23, 28, 0.12);
+
+  /* Chrome */
+  --nav-bg: rgba(246, 245, 241, 0.88);
+  --nav-bg-floating: rgba(255, 255, 255, 0.86);
+  --nav-bg-solid: #f6f5f1;
+}
+
+:root[data-theme="light"] .nav--floating {
+  box-shadow: 0 12px 32px -12px rgba(20, 23, 28, 0.18), 0 2px 8px rgba(20, 23, 28, 0.06);
+  border-color: var(--hairline-strong);
+}
+
+:root[data-theme="light"] .h-hero::before {
+  opacity: 0.9;
+}

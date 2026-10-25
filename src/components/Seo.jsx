@@ -19,8 +19,16 @@ function setHeadTag(selector, create, attrs) {
 // and update it on every navigation. Pages that shouldn't be indexed (404)
 // pass `noindex` and get a robots meta; unknown URLs are served with HTTP 200
 // by the SPA rewrite, so this is how we keep them out of the index.
-export default function Seo({ noindex = false }) {
+export default function Seo({ noindex = false, title, description }) {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (title) document.title = title;
+    if (description) {
+      const meta = document.head.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", description);
+    }
+  }, [title, description]);
 
   useEffect(() => {
     const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : "/";

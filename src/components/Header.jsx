@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo.jsx";
+import { useI18n } from "../i18n/I18nContext.jsx";
+import { ThemeToggle, LangToggle } from "./Toggles.jsx";
 
-const navItems = [
-  { href: "/#work", hash: "#work", label: "Projetos" },
-  { href: "/#expertise", hash: "#expertise", label: "Capacidades" },
-  { href: "/#process", hash: "#process", label: "Processo" },
-  { href: "/#about", hash: "#about", label: "Sobre" },
+const NAV_ITEMS = [
+  { href: "/#solucoes", hash: "#solucoes", key: "nav.solutions" },
+  { href: "/#processo", hash: "#processo", key: "nav.process" },
+  { href: "/#cases", hash: "#cases", key: "nav.cases" },
+  { href: "/#sobre", hash: "#sobre", key: "nav.about" },
 ];
 
 export default function Header() {
+  const { t } = useI18n();
+  const navItems = NAV_ITEMS.map((item) => ({ ...item, label: t(item.key) }));
   const [menuOpen, setMenuOpen] = useState(false);
   const [isFloating, setIsFloating] = useState(false);
   const location = useLocation();
@@ -83,7 +87,7 @@ export default function Header() {
           <Link
             to="/"
             className="nav__brand"
-            aria-label="We Tech Hub — página inicial"
+            aria-label={t("a11y.homeLink")}
           onClick={(e) => {
             if (location.pathname === "/") {
               e.preventDefault();
@@ -99,7 +103,7 @@ export default function Header() {
           <span>We Tech</span>
         </Link>
 
-        <nav className="nav__links" aria-label="Navegação principal">
+        <nav className="nav__links" aria-label={t("a11y.mainNav")}>
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -116,8 +120,13 @@ export default function Header() {
           ))}
         </nav>
 
+        <div className="nav__tools">
+          <LangToggle />
+          <ThemeToggle />
+        </div>
+
         <Link to="/#contato" className="btn btn--primary btn--sm nav__cta">
-          Iniciar projeto
+          {t("nav.cta")}
         </Link>
 
         <button
@@ -125,7 +134,7 @@ export default function Header() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-label={menuOpen ? t("a11y.closeMenu") : t("a11y.openMenu")}
         >
           <span />
           <span />
@@ -136,7 +145,7 @@ export default function Header() {
       <nav
         id="mobile-nav"
         className={`nav__mobile${menuOpen ? " is-open" : ""}`}
-        aria-label="Navegação mobile"
+        aria-label={t("a11y.mobileNav")}
       >
         {navItems.map((item) => (
           <Link
@@ -159,7 +168,7 @@ export default function Header() {
           onClick={() => setMenuOpen(false)}
           style={{ marginTop: "var(--space-5)", alignSelf: "flex-start" }}
         >
-          Iniciar projeto
+          {t("nav.cta")}
         </Link>
       </nav>
       </div>

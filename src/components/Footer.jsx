@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo.jsx";
-import { INSTAGRAM_URL, LINKEDIN_URL } from "../data.js";
+import { INSTAGRAM_URL, LINKEDIN_URL, CONTACT_EMAIL } from "../data.js";
+import { useI18n } from "../i18n/I18nContext.jsx";
 
 /* ---------------------------------------------------------------
    WE TECH HUB — FOOTER (FASE 8)
@@ -9,16 +10,17 @@ import { INSTAGRAM_URL, LINKEDIN_URL } from "../data.js";
    --------------------------------------------------------------- */
 
 const FOOTER_NAV = [
-  { href: "/#work", label: "Projetos" },
-  { href: "/#expertise", label: "Capacidades" },
-  { href: "/#process", label: "Processo" },
-  { href: "/#about", label: "Sobre" },
-  { href: "/projetos", label: "Todos os Projetos" },
+  { href: "/#solucoes", key: "nav.solutions" },
+  { href: "/#processo", key: "nav.process" },
+  { href: "/#cases", key: "nav.cases" },
+  { href: "/#sobre", key: "nav.about" },
+  { href: "/projetos", key: "footer.allProjects" },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
+  const { t } = useI18n();
 
   return (
     <footer className="footer" role="contentinfo">
@@ -30,7 +32,7 @@ export default function Footer() {
             <Link
               to="/"
               className="footer__brand"
-              aria-label="We Tech Hub — página inicial"
+              aria-label={t("a11y.homeLink")}
               onClick={(e) => {
                 if (location.pathname === "/") {
                   e.preventDefault();
@@ -45,24 +47,20 @@ export default function Footer() {
               <span className="footer__brand-name">We Tech Hub</span>
             </Link>
 
-            <span className="mono footer__descriptor">
-              Digital Product & Engineering Studio
-            </span>
+            <span className="mono footer__descriptor">{t("footer.disciplines")}</span>
 
-            <p className="footer__summary">
-              Produto, design e engenharia conectados ao longo de toda a evolução do produto.
-            </p>
+            <p className="footer__summary">{t("footer.tagline")}</p>
           </div>
 
           {/* Navigation Column (Cols 6–9) */}
           <div className="footer__nav-col">
-            <span className="mono footer__col-title">Navegação</span>
-            <nav className="footer__nav" aria-label="Links do rodapé">
+            <span className="mono footer__col-title">{t("footer.nav")}</span>
+            <nav className="footer__nav" aria-label={t("a11y.footerNav")}>
               <ul className="footer__nav-list" role="list">
                 {FOOTER_NAV.map((item) => (
                   <li key={item.href}>
                     <Link to={item.href} className="footer__link">
-                      {item.label}
+                      {t(item.key)}
                     </Link>
                   </li>
                 ))}
@@ -72,14 +70,33 @@ export default function Footer() {
 
           {/* Channels & Actions Column (Cols 10–12) */}
           <div className="footer__channels-col">
-            <span className="mono footer__col-title">Contato</span>
+            <span className="mono footer__col-title">{t("footer.contact")}</span>
             <div className="footer__channels-list">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="footer__channel-link">
+                <svg
+                  className="footer__social-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-10 6L2 7" />
+                </svg>
+                <span>{t("footer.email")}</span>
+              </a>
+
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__channel-link"
-                aria-label="Acessar o perfil oficial da We Tech Hub no Instagram"
+                aria-label={`Instagram ${t("a11y.externalLink")}`}
               >
                 <svg
                   className="footer__social-icon"
@@ -105,7 +122,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__channel-link"
-                aria-label="Acessar a página oficial da We Tech Hub no LinkedIn"
+                aria-label={`LinkedIn ${t("a11y.externalLink")}`}
               >
                 <svg
                   className="footer__social-icon"
@@ -129,7 +146,7 @@ export default function Footer() {
               <Link
                 to="/#top"
                 className="footer__back-to-top"
-                aria-label="Voltar ao topo da página"
+                aria-label={t("a11y.backToTop")}
                 onClick={(e) => {
                   e.preventDefault();
                   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -138,7 +155,7 @@ export default function Footer() {
                   }
                 }}
               >
-                <span>Voltar ao topo</span>
+                <span>{t("footer.backToTop")}</span>
               </Link>
             </div>
           </div>
@@ -147,7 +164,7 @@ export default function Footer() {
         {/* Footer Bottom Metadata Bar */}
         <div className="footer__bottom">
           <span className="mono footer__copyright">
-            © {currentYear} We Tech Hub. Todos os direitos reservados.
+            © {currentYear} We Tech Hub. {t("footer.rights")}
           </span>
 
           <span className="mono footer__bottom-label">

@@ -3,22 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>We Tech Hub — Digital Product & Engineering Studio</title>
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0B0D10" />
+    <!-- Apply the saved theme before first paint to avoid a flash. -->
+    <script>
+      (function () {
+        var theme = "dark";
+        try {
+          var saved = localStorage.getItem("wt-theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "light") {
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute("content", "#F6F5F1");
+        }
+      })();
+    </script>
+    <title>We Tech Hub — Tecnologia para negócios que já funcionam</title>
     <meta
       name="description"
-      content="Design e engenharia para produtos digitais que precisam ir além do lançamento. Produto, design e engenharia integrados em um único time."
+      content="A We Tech identifica onde a tecnologia limita o crescimento do seu negócio e constrói a solução: automação, e-commerce, produtos digitais, modernização e IA aplicada."
     />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="We Tech Hub — Digital Product & Engineering Studio" />
-    <meta property="og:description" content="Design e engenharia para produtos digitais que precisam ir além do lançamento." />
+    <meta property="og:title" content="We Tech Hub — Tecnologia para negócios que já funcionam" />
+    <meta property="og:description" content="Identificamos onde a tecnologia limita o crescimento do seu negócio e construímos a solução." />
     <meta property="og:site_name" content="We Tech Hub" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="We Tech Hub — Digital Product & Engineering Studio" />
-    <meta name="twitter:description" content="Design e engenharia para produtos digitais que precisam ir além do lançamento." />
+    <meta name="twitter:title" content="We Tech Hub — Tecnologia para negócios que já funcionam" />
+    <meta name="twitter:description" content="Identificamos onde a tecnologia limita o crescimento do seu negócio e construímos a solução." />
 
     <!-- Favicon — inline SVG -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='1' y='1' width='8' height='8' rx='1' fill='%23FF4D00'/><rect x='12' y='1' width='8' height='8' rx='1' fill='%235A5F6B' opacity='.35'/><rect x='23' y='1' width='8' height='8' rx='1' fill='%23FF4D00'/><rect x='1' y='12' width='8' height='8' rx='1' fill='%23FF4D00'/><rect x='12' y='12' width='8' height='8' rx='1' fill='%23FF4D00'/><rect x='23' y='12' width='8' height='8' rx='1' fill='%235A5F6B' opacity='.35'/><rect x='1' y='23' width='8' height='8' rx='1' fill='%235A5F6B' opacity='.35'/><rect x='12' y='23' width='8' height='8' rx='1' fill='%23FF4D00'/><rect x='23' y='23' width='8' height='8' rx='1' fill='%235A5F6B' opacity='.35'/></svg>" type="image/svg+xml" />

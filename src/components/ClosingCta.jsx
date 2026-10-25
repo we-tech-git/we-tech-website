@@ -1,112 +1,42 @@
-import { useEffect, useRef } from "react";
-import useReveal from "../hooks/useReveal.js";
-import { INSTAGRAM_URL } from "../data.js";
-import { initMagneticElement } from "../motion.js";
+import { useI18n } from "../i18n/I18nContext.jsx";
+import { CONTACT_EMAIL, mailtoLink } from "../data.js";
 import { ActionIcon } from "./Icons.jsx";
-
-/* ---------------------------------------------------------------
-   WE TECH HUB — CLOSING CTA (FASE 8 & FASE F)
-   Direction: PROJECT INITIATION
-   Motion: CONVERGENCE & MAGNETIC INVITATION
-   Transforms built trust into a clear, direct, and factual next step.
-   --------------------------------------------------------------- */
-
-const INITIATION_PILLARS = [
-  {
-    num: "01",
-    label: "Contexto & estágio",
-    detail: "Onde o produto está hoje e o que precisa acontecer a seguir.",
-  },
-  {
-    num: "02",
-    label: "Desafio central",
-    detail: "Qual é o principal desafio de produto, experiência ou tecnologia.",
-  },
-  {
-    num: "03",
-    label: "Objetivo esperado",
-    detail: "O que precisa mudar, lançar ou evoluir.",
-  },
-];
+import { Reveal } from "./Section.jsx";
 
 export default function ClosingCta() {
-  const introReveal = useReveal({ variant: "mask" });
-  const pillarsReveal = useReveal({ variant: "standard", threshold: 0.08 });
-  const cardReveal = useReveal({ variant: "standard", threshold: 0.08 });
-  const primaryBtnRef = useRef(null);
-
-  /* ---- Magnetic CTA interaction (Desktop only) ---- */
-  useEffect(() => {
-    const cleanup = initMagneticElement(primaryBtnRef.current, 0.22, 6);
-    return cleanup;
-  }, []);
-
+  const { t } = useI18n();
   return (
-    <section
-      id="contato"
-      className="section closing-cta-section"
-      aria-labelledby="cta-heading"
-    >
-      <div className="container">
-        {/* Top metadata & Eyebrow */}
-        <div
-          ref={introReveal.ref}
-          className={`${introReveal.className} closing-cta-header`}
-        >
-          <div className="closing-cta-eyebrow-row">
-            <span className="eyebrow">Começar um projeto</span>
-          </div>
-
-          <h2 id="cta-heading" className="heading-xl closing-cta-heading">
-            Conte o que você está construindo.
+    <section id="contato" className="section h-section h-cta" aria-labelledby="cta-title">
+      <div className="container container--narrow h-cta__inner">
+        <Reveal>
+          <span className="eyebrow">{t("contact.eyebrow")}</span>
+          <h2 id="cta-title" className="h-cta__title">
+            {t("contact.title")}
           </h2>
-
-          <p className="body-lg closing-cta-lead">
-            Se existe um produto para lançar, evoluir ou reorganizar, comece
-            pelo contexto. A conversa parte do problema real e dos objetivos do
-            negócio — não de uma lista genérica de funcionalidades.
-          </p>
-        </div>
-
-        {/* Initiation Guidelines — 3 columns */}
-        <div
-          ref={pillarsReveal.ref}
-          className={`closing-cta-pillars reveal-stagger ${pillarsReveal.className}`}
-          role="list"
-        >
-          {INITIATION_PILLARS.map((pillar) => (
-            <div
-              key={pillar.label}
-              className="closing-cta-pillar"
-              role="listitem"
+          <p className="h-cta__body">{t("contact.body")}</p>
+          <p className="h-cta__note">{t("contact.note")}</p>
+          <ol className="h-cta__steps">
+            {t("contact.steps").map((step, i) => (
+              <li key={step}>
+                <span className="h-cta__step-num" aria-hidden="true">
+                  {i + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+          <div className="h-cta__actions">
+            <a
+              className="btn btn--primary"
+              href={mailtoLink(t("contact.mailSubject"), t("contact.mailBody"))}
             >
-              <div className="pillar-top">
-                <span className="pillar-label">{pillar.label}</span>
-              </div>
-              <p className="pillar-detail">{pillar.detail}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Action Row */}
-        <div
-          ref={cardReveal.ref}
-          className={`${cardReveal.className} closing-cta-actions-wrap`}
-        >
-          <div className="closing-cta-actions">
-            <div ref={primaryBtnRef} className="cta-magnetic-wrap">
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--primary closing-cta-primary-btn"
-                aria-label="Abrir Instagram da We Tech Hub para falar sobre o projeto"
-              >
-                Falar sobre o projeto <ActionIcon />
-              </a>
-            </div>
+              {t("contact.cta")} <ActionIcon />
+            </a>
+            <p className="h-cta__email">
+              {t("contact.emailLabel")} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

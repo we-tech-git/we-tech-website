@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import Seo from "../components/Seo.jsx";
 import useReveal from "../hooks/useReveal.js";
-import { projetos } from "../projetos.js";
+import { projetos, localizeProjeto } from "../projetos.js";
+import { useI18n } from "../i18n/I18nContext.jsx";
 
 /* ---------------------------------------------------------------
    PROJECTS GALLERY — Index page
@@ -17,7 +17,9 @@ function getImgSources(path) {
   return { webp: null, src: path };
 }
 
-function ProjectItem({ projeto, index }) {
+function ProjectItem({ projeto: base, index }) {
+  const { t, lang } = useI18n();
+  const projeto = localizeProjeto(base, lang);
   const { ref, className } = useReveal();
   const num = String(index + 1).padStart(2, "0");
   const { webp, src } = getImgSources(projeto.preview || projeto.capa);
@@ -29,7 +31,6 @@ function ProjectItem({ projeto, index }) {
         ref={ref}
         className={`pg__link ${className}`}
         style={{ transitionDelay: `${index * 0.06}s` }}
-        aria-label={`Ver projeto ${projeto.nome}`}
       >
         {/* Info */}
         <div>
@@ -49,7 +50,7 @@ function ProjectItem({ projeto, index }) {
             {webp && <source srcSet={webp} type="image/webp" />}
             <img
               src={src}
-              alt={`Interface do projeto ${projeto.nome}`}
+              alt={`${t("projects.interfaceOf")} ${projeto.nome}`}
               loading={index === 0 ? "eager" : "lazy"}
               width={1400}
               height={740}
@@ -64,26 +65,19 @@ function ProjectItem({ projeto, index }) {
 
 export default function ProjectsGallery() {
   const intro = useReveal();
-
-  useEffect(() => {
-    document.title = "Projetos — We Tech Hub";
-    return () => { document.title = "We Tech Hub"; };
-  }, []);
+  const { t } = useI18n();
 
   return (
-    <main>
-      <Seo />
+    <main id="main" tabIndex={-1}>
+      <Seo title={t("meta.projectsTitle")} description={t("meta.projectsDescription")} />
       <section className="pg">
         <div className="container">
           <div ref={intro.ref} className={`pg__intro ${intro.className}`}>
             <div style={{ marginBottom: "var(--space-4)" }}>
-              <span className="eyebrow">Projetos selecionados</span>
+              <span className="eyebrow">{t("projects.eyebrow")}</span>
             </div>
-            <h1 className="pg__heading">Projetos</h1>
-            <p className="pg__sub">
-              Produtos digitais construídos para contextos reais — cada projeto
-              representa um desafio diferente.
-            </p>
+            <h1 className="pg__heading">{t("projects.title")}</h1>
+            <p className="pg__sub">{t("projects.sub")}</p>
           </div>
 
           <div className="pg__list">

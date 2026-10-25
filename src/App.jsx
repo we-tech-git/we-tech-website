@@ -5,11 +5,22 @@ import ScrollToHash from "./components/ScrollToHash.jsx";
 import Home from "./pages/Home.jsx";
 import ProjectsGallery from "./pages/ProjectsGallery.jsx";
 import ProjectDetail from "./pages/ProjectDetail.jsx";
+import { useI18n } from "./i18n/I18nContext.jsx";
 import NotFound from "./pages/NotFound.jsx";
+
+function SkipLink() {
+  const { t } = useI18n();
+  return (
+    <a className="skip-link" href="#main">
+      {t("a11y.skipToContent")}
+    </a>
+  );
+}
 
 export default function App() {
   return (
     <BrowserRouter>
+      <SkipLink />
       <ScrollToHash />
       <Header />
       <Routes>

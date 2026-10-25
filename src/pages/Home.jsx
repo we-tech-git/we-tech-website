@@ -1,22 +1,28 @@
+import { useI18n } from "../i18n/I18nContext.jsx";
 import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
-import SelectedWork from "../components/SelectedWork.jsx";
-import Capabilities from "../components/Capabilities.jsx";
-import EngagementModel from "../components/EngagementModel.jsx";
+import Identify from "../components/Identify.jsx";
+import Solutions from "../components/Solutions.jsx";
+import Principle from "../components/Principle.jsx";
 import Process from "../components/Process.jsx";
-import WhyWeTech from "../components/WhyWeTech.jsx";
+import Cases from "../components/Cases.jsx";
+import About from "../components/About.jsx";
+import Audience from "../components/Audience.jsx";
 import ClosingCta from "../components/ClosingCta.jsx";
 
 export default function Home() {
+  const { t } = useI18n();
   return (
-    <main>
-      <Seo />
+    <main id="main" tabIndex={-1}>
+      <Seo title={t("meta.homeTitle")} description={t("meta.homeDescription")} />
       <Hero />
-      <WhyWeTech />
-      <Capabilities />
+      <Identify />
+      <Solutions />
+      <Principle />
       <Process />
-      <EngagementModel />
-      <SelectedWork />
+      <Cases />
+      <About />
+      <Audience />
       <ClosingCta />
     </main>
   );

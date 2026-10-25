@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useReveal from "../hooks/useReveal.js";
-import { getProjeto, projetos } from "../projetos.js";
+import { getProjeto, projetos, localizeProjeto } from "../projetos.js";
+import { useI18n } from "../i18n/I18nContext.jsx";
 import Seo from "../components/Seo.jsx";
 import NotFound from "./NotFound.jsx";
 import { StepArrowIcon, ExploreIcon, ActionIcon } from "../components/Icons.jsx";
@@ -21,6 +22,7 @@ function getImgSources(path) {
 
 /* Prev/Next navigation */
 function ProjectNav({ currentSlug }) {
+  const { t, lang } = useI18n();
   const currentIndex = projetos.findIndex((p) => p.slug === currentSlug);
   if (currentIndex === -1) return null;
 
@@ -28,21 +30,19 @@ function ProjectNav({ currentSlug }) {
   const next = currentIndex < projetos.length - 1 ? projetos[currentIndex + 1] : projetos[0];
 
   return (
-    <nav className="pd__nav" aria-label="Navegação entre projetos">
+    <nav className="pd__nav" aria-label={t("projects.navLabel")}>
       <Link
         to={`/projetos/${prev.slug}`}
         className="pd__nav-item"
-        aria-label={`Projeto anterior: ${prev.nome}`}
       >
-        <span className="pd__nav-label">← Anterior</span>
+        <span className="pd__nav-label">{t("projects.previous")}</span>
         <span className="pd__nav-name">{prev.nome}</span>
       </Link>
       <Link
         to={`/projetos/${next.slug}`}
         className="pd__nav-item pd__nav-item--next"
-        aria-label={`Próximo projeto: ${next.nome}`}
       >
-        <span className="pd__nav-label">Próximo <StepArrowIcon /></span>
+        <span className="pd__nav-label">{t("projects.next")} <StepArrowIcon /></span>
         <span className="pd__nav-name">{next.nome}</span>
       </Link>
     </nav>
@@ -51,7 +51,8 @@ function ProjectNav({ currentSlug }) {
 
 export default function ProjectDetail() {
   const { slug } = useParams();
-  const projeto = getProjeto(slug);
+  const { t, lang } = useI18n();
+  const projeto = localizeProjeto(getProjeto(slug), lang);
   const header = useReveal();
   const coverReveal = useReveal();
 
@@ -60,11 +61,6 @@ export default function ProjectDetail() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  useEffect(() => {
-    document.title = projeto ? `${projeto.nome} — We Tech Hub` : "Projeto não encontrado — We Tech Hub";
-    return () => { document.title = "We Tech Hub"; };
-  }, [projeto]);
-
   if (!projeto) return <NotFound />;
 
   const hasBanner = projeto.capa !== projeto.preview;
@@ -72,13 +68,13 @@ export default function ProjectDetail() {
   const previewImg = projeto.preview;
 
   return (
-    <main>
-      <Seo />
+    <main id="main" tabIndex={-1}>
+      <Seo title={`${projeto.nome} — ${t("meta.projectSuffix")}`} description={projeto.resumo} />
       <section className="pd">
         <div className="container" style={{ maxWidth: 960 }}>
           {/* Back link */}
           <Link to="/projetos" className="pd__back">
-            ← Projetos
+            {t("projects.back")}
           </Link>
 
           {/* Header */}
@@ -109,7 +105,7 @@ export default function ProjectDetail() {
                   {webp && <source srcSet={webp} type="image/webp" />}
                   <img
                     src={src}
-                    alt={`Interface do projeto ${projeto.nome}`}
+                    alt={`${t("projects.interfaceOf")} ${projeto.nome}`}
                     width={1400}
                     height={740}
                     loading="eager"
@@ -144,7 +140,7 @@ export default function ProjectDetail() {
                     {webp && <source srcSet={webp} type="image/webp" />}
                     <img
                       src={src}
-                      alt={`Preview da interface ${projeto.nome}`}
+                      alt={`${t("projects.previewOf")} ${projeto.nome}`}
                       width={1400}
                       height={740}
                       loading="lazy"
@@ -164,11 +160,11 @@ export default function ProjectDetail() {
                 rel="noopener noreferrer"
                 className="btn btn--primary"
               >
-                Visitar site <ActionIcon />
+                {t("projects.visit")} <span className="h-sr">{t("a11y.externalLink")}</span> <ActionIcon />
               </a>
             )}
             <Link to="/projetos" className="btn btn--ghost">
-              Ver outros projetos
+              {t("projects.others")}
             </Link>
           </div>
         </div>
