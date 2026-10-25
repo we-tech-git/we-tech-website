@@ -56,8 +56,8 @@ test.describe("responsividade da home", () => {
   test("grades reorganizam por breakpoint", async ({ page, context }, info) => {
     await seed(context);
     await page.goto("/");
-    const cols = await page.locator(".h-cards").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
-    const expected = { desktop: 3, tablet: 2, mobile: 1 }[info.project.name];
+    const cols = await page.locator(".why-grid").first().evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+    const expected = { desktop: 12, tablet: 1, mobile: 1 }[info.project.name];
     expect(cols).toBe(expected);
   });
 

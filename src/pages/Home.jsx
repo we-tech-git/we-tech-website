@@ -3,9 +3,8 @@ import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
 import Identify from "../components/Identify.jsx";
 import Solutions from "../components/Solutions.jsx";
-import Principle from "../components/Principle.jsx";
 import Process from "../components/Process.jsx";
-import Cases from "../components/Cases.jsx";
+import SelectedWork from "../components/SelectedWork.jsx";
 import About from "../components/About.jsx";
 import Audience from "../components/Audience.jsx";
 import ClosingCta from "../components/ClosingCta.jsx";
@@ -18,9 +17,8 @@ export default function Home() {
       <Hero />
       <Identify />
       <Solutions />
-      <Principle />
       <Process />
-      <Cases />
+      <SelectedWork />
       <About />
       <Audience />
       <ClosingCta />

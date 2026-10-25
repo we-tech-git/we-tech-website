@@ -40,6 +40,7 @@
   --nav-bg: rgba(246, 245, 241, 0.88);
   --nav-bg-floating: rgba(255, 255, 255, 0.86);
   --nav-bg-solid: #f6f5f1;
+  --hero-bg: #f6f5f1;
 }
 
 :root[data-theme="light"] .nav--floating {
@@ -47,6 +48,57 @@
   border-color: var(--hairline-strong);
 }
 
-:root[data-theme="light"] .h-hero::before {
-  opacity: 0.9;
+/* ------------------------------------------------------------
+   Sections of the original (dark) design that used literal colors.
+   Overridden only for light mode; dark stays exactly as designed.
+   ------------------------------------------------------------ */
+:root[data-theme="light"] {
+  --tone-00: #efede7;
+}
+
+:root[data-theme="light"] .hero__body {
+  color: var(--text-secondary);
+}
+
+:root[data-theme="light"] .why-section {
+  background: linear-gradient(180deg, #f6f5f1 0%, #efede7 160px, #efede7 100%);
+}
+
+:root[data-theme="light"] .why-tag {
+  background: var(--hairline);
+}
+
+:root[data-theme="light"] .why-principle-item:hover {
+  color: var(--text-muted);
+}
+
+:root[data-theme="light"] .why-principle-item:hover .why-principle-title {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .protocol-deck-panel,
+:root[data-theme="light"] .protocol-dossier-card,
+:root[data-theme="light"] .protocol-mobile-block {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+:root[data-theme="light"] .protocol-stage-btn.active .protocol-stage-name {
+  color: var(--text-primary);
+}
+
+/* Illustrations (hero mockup, process artifact) keep their dark "screen" look in both themes. */
+
+:root[data-theme="light"] .sw .eyebrow,
+:root[data-theme="light"] .sw-row__num,
+:root[data-theme="light"] .sw-row__cat {
+  color: var(--accent-text);
+}
+
+:root[data-theme="light"] .sw-chrome__address {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
+}
+
+:root[data-theme="light"] .ea-mobile-tab.is-active {
+  color: var(--text-primary);
 }

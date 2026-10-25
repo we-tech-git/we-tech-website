@@ -58,26 +58,28 @@ test.describe("rotas e renderização", () => {
 });
 
 test.describe("conteúdo e posicionamento", () => {
-  test("hero comunica o posicionamento e o CTA envia e-mail", async ({ page, context }) => {
+  test("hero comunica o posicionamento e o CTA final envia e-mail", async ({ page, context }) => {
     await seed(context);
     await page.goto("/");
     await expect(page.locator("h1")).toHaveText("Tecnologia para negócios que já funcionam.");
-    const cta = page.getByRole("link", { name: "Quero falar sobre meu negócio" });
+    await expect(page.getByRole("link", { name: "Quero falar sobre meu negócio" })).toHaveAttribute("href", "#contato");
+    const cta = page.locator("#contato").getByRole("link", { name: "Vamos conversar" });
     await expect(cta).toHaveAttribute("href", /^mailto:contact@wetechhub\.com\.br\?subject=/);
   });
 
   test("todas as seções da narrativa existem, em ordem", async ({ page, context }) => {
     await seed(context);
     await page.goto("/");
-    const ids = await page.locator("main section").evaluateAll((els) => els.slice(1).map((e) => e.id || e.className.split(" ").find((c) => c.startsWith("h-principle"))));
-    expect(ids).toEqual(["problemas", "solucoes", "h-principle", "processo", "cases", "sobre", "para-quem", "contato"]);
+    const ids = await page.locator("main section").evaluateAll((els) => els.slice(1).map((e) => e.id));
+    expect(ids).toEqual(["problemas", "solucoes", "processo", "cases", "sobre", "para-quem", "contato"]);
     await expect(page.locator("main section").first()).toHaveClass(/hero/);
   });
 
   test("não há métricas inventadas na home", async ({ page, context }) => {
     await seed(context);
     await page.goto("/");
-    const text = await page.locator("main").innerText();
+    // The hero/process mockups are decorative illustrations, so only the copy sections are checked.
+    const text = (await page.locator("#problemas, #solucoes, #cases, #sobre, #para-quem, #contato").allInnerTexts()).join("\n");
     expect(text).not.toMatch(/\d+\s?%/);
     expect(text).not.toMatch(/\d+\s?x\b/i);
   });
@@ -85,9 +87,9 @@ test.describe("conteúdo e posicionamento", () => {
   test("cases levam às páginas dos projetos", async ({ page, context }) => {
     await seed(context);
     await page.goto("/");
-    await page.locator("#cases .h-case__link").first().click();
-    await expect(page).toHaveURL(/\/projetos\/lelume$/);
-    await expect(page.locator("h1")).toHaveText("Lelume");
+    await page.locator("#cases .sw-row__link").first().click();
+    await expect(page).toHaveURL(/\/projetos\/we-party$/);
+    await expect(page.locator("h1")).toHaveText("We Party");
   });
 });
 

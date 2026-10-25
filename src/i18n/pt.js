@@ -43,6 +43,7 @@ export default {
   hero: {
     eyebrow: "Engenharia aplicada ao seu crescimento",
     title: "Tecnologia para negócios que já funcionam.",
+    titleLines: ["Tecnologia para", "negócios que", "já funcionam."],
     subtitle: "Seu negócio cresceu. Sua tecnologia precisa acompanhar.",
     body: "A We Tech transforma gargalos operacionais, comerciais e digitais em soluções que ajudam empresas a vender melhor, operar com mais eficiência e crescer sem aumentar a complexidade na mesma proporção.",
     tagline:
@@ -81,6 +82,7 @@ export default {
       "Você tem dados, mas não enxerga sua operação com clareza.",
       "Existe uma oportunidade em automação e IA, mas você não sabe onde ela realmente faria diferença.",
     ],
+    bridgeLabel: "Reconhece?",
     outro: "É nesse ponto que a We Tech entra.",
   },
 
@@ -137,39 +139,94 @@ export default {
   },
 
   process: {
-    eyebrow: "Como trabalhamos",
-    title: "Do problema ao produto.",
-    lead: "Não começamos pelo código. Começamos pelo seu negócio.",
-    steps: [
+    "eyebrow": "Como trabalhamos",
+    "title": "Do problema ao produto.",
+    "highlight": "Começamos pelo seu negócio, não pelo código.",
+    "lead": "Cada etapa aumenta a clareza sobre o que está sendo construído antes da próxima decisão.",
+    "ui": {
+      "deck": "Etapas do processo",
+      "criteria": "Critérios da etapa",
+      "prev": "← Anterior",
+      "prevLabel": "Etapa anterior",
+      "next": "Próxima etapa",
+      "nextLabel": "Próxima etapa",
+      "view": "Visão da etapa",
+      "closing": "Não entregamos só um projeto. Construímos a base para a próxima fase do negócio."
+    },
+    "steps": [
       {
-        title: "Entendemos",
-        text: "Mergulhamos no negócio, no processo e no problema antes de propor qualquer solução.",
+        "label": "Entender",
+        "discipline": "CONCEPÇÃO",
+        "question": "O que está acontecendo no negócio?",
+        "text": "Mergulhamos no negócio, no processo e no problema antes de propor qualquer solução.",
+        "focus": "Contexto e objetivos",
+        "badge": "Estrutura inicial",
+        "deliverables": [
+          "Mapeamento do processo",
+          "Alinhamento de objetivos",
+          "Definição de restrições"
+        ]
       },
       {
-        title: "Diagnosticamos",
-        text: "Identificamos gargalos, oportunidades e o impacto que a tecnologia pode gerar.",
+        "label": "Diagnosticar",
+        "discipline": "DIAGNÓSTICO",
+        "question": "Onde está o gargalo?",
+        "text": "Identificamos gargalos, oportunidades e o impacto que a tecnologia pode ter.",
+        "focus": "Gargalos e oportunidades",
+        "badge": "Diagnóstico feito",
+        "deliverables": [
+          "Gargalos priorizados",
+          "Oportunidades de automação",
+          "Impacto esperado"
+        ]
       },
       {
-        title: "Definimos",
-        text: "Escolhemos a estratégia e a tecnologia mais adequadas para aquele cenário.",
+        "label": "Definir",
+        "discipline": "ESTRATÉGIA",
+        "question": "Qual é a solução certa?",
+        "text": "Escolhemos a estratégia e a tecnologia que melhor se encaixam nesse cenário.",
+        "focus": "Estratégia e tecnologia",
+        "badge": "Caminho definido",
+        "deliverables": [
+          "Escopo e prioridades",
+          "Plataforma, integração ou sob medida",
+          "Plano de entrega"
+        ]
       },
       {
-        title: "Construímos",
-        text: "Design, engenharia, integrações, automação e desenvolvimento trabalhando em conjunto.",
+        "label": "Construir",
+        "discipline": "ENGENHARIA",
+        "question": "Como colocar isso em operação?",
+        "text": "Design, engenharia, integrações, automação e desenvolvimento trabalhando juntos.",
+        "focus": "Implementação",
+        "badge": "Solução construída",
+        "deliverables": [
+          "Design e interface",
+          "Integrações e automações",
+          "Código pronto para evoluir"
+        ]
       },
       {
-        title: "Evoluímos",
-        text: "Depois da entrega, seguimos ao lado do negócio para corrigir, melhorar e construir a próxima etapa.",
-      },
-    ],
-    closing:
-      "Não entregamos apenas um projeto. Construímos a base para o próximo estágio do negócio.",
+        "label": "Evoluir",
+        "discipline": "CONTINUIDADE",
+        "question": "O que vem depois da entrega?",
+        "text": "Depois da entrega, seguimos ao lado do negócio para corrigir, melhorar e construir o próximo passo.",
+        "focus": "Evolução contínua",
+        "badge": "Evolução contínua",
+        "deliverables": [
+          "Ajustes e melhorias",
+          "Próximas funcionalidades",
+          "Acompanhamento"
+        ]
+      }
+    ]
   },
 
   cases: {
     eyebrow: "Cases",
     title: "Tecnologia que já está em operação.",
     lead: "Preferimos mostrar o que já construímos a prometer o que poderíamos fazer.",
+    count: "projetos",
     cta: "Conheça o projeto",
     all: "Ver todos os projetos",
     items: {
@@ -236,6 +293,7 @@ export default {
       "enxergam tecnologia como investimento;",
       "procuram um parceiro para construir no longo prazo.",
     ],
+    bridgeLabel: "Conversa",
     closing:
       "Se o seu negócio já funciona, mas você sabe que poderia funcionar muito melhor, provavelmente temos uma conversa para ter.",
     notFor:

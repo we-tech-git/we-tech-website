@@ -41,6 +41,7 @@ export default {
   hero: {
     eyebrow: "Engineering applied to your growth",
     title: "Technology for businesses that already work.",
+    titleLines: ["Technology for", "businesses that", "already work."],
     subtitle: "Your business has grown. Your technology needs to keep up.",
     body: "We Tech turns operational, commercial and digital bottlenecks into solutions that help companies sell better, run more efficiently and grow without adding complexity at the same pace.",
     tagline:
@@ -79,6 +80,7 @@ export default {
       "You have data, but you can't see your operation clearly.",
       "There's an opportunity in automation and AI, but you don't know where it would really make a difference.",
     ],
+    bridgeLabel: "Sound familiar?",
     outro: "That's where We Tech comes in.",
   },
 
@@ -135,39 +137,94 @@ export default {
   },
 
   process: {
-    eyebrow: "How we work",
-    title: "From problem to product.",
-    lead: "We don't start with code. We start with your business.",
-    steps: [
+    "eyebrow": "How we work",
+    "title": "From problem to product.",
+    "highlight": "We start with your business, not the code.",
+    "lead": "Each step adds clarity about what is being built before the next decision.",
+    "ui": {
+      "deck": "Process steps",
+      "criteria": "Step criteria",
+      "prev": "← Previous",
+      "prevLabel": "Previous step",
+      "next": "Next step",
+      "nextLabel": "Next step",
+      "view": "Step view",
+      "closing": "We don't just deliver a project. We build the foundation for the business's next stage."
+    },
+    "steps": [
       {
-        title: "We understand",
-        text: "We dive into the business, the process and the problem before proposing any solution.",
+        "label": "Understand",
+        "discipline": "DISCOVERY",
+        "question": "What is going on in the business?",
+        "text": "We dive into the business, the process and the problem before proposing any solution.",
+        "focus": "Context and goals",
+        "badge": "Initial structure",
+        "deliverables": [
+          "Process mapping",
+          "Goal alignment",
+          "Constraint definition"
+        ]
       },
       {
-        title: "We diagnose",
-        text: "We identify bottlenecks, opportunities and the impact technology can have.",
+        "label": "Diagnose",
+        "discipline": "DIAGNOSIS",
+        "question": "Where is the bottleneck?",
+        "text": "We identify bottlenecks, opportunities and the impact technology can have.",
+        "focus": "Bottlenecks and opportunities",
+        "badge": "Diagnosis done",
+        "deliverables": [
+          "Prioritized bottlenecks",
+          "Automation opportunities",
+          "Expected impact"
+        ]
       },
       {
-        title: "We define",
-        text: "We choose the strategy and technology that best fit that scenario.",
+        "label": "Define",
+        "discipline": "STRATEGY",
+        "question": "What is the right solution?",
+        "text": "We choose the strategy and technology that best fit that scenario.",
+        "focus": "Strategy and technology",
+        "badge": "Path defined",
+        "deliverables": [
+          "Scope and priorities",
+          "Platform, integration or custom",
+          "Delivery plan"
+        ]
       },
       {
-        title: "We build",
-        text: "Design, engineering, integrations, automation and development working together.",
+        "label": "Build",
+        "discipline": "ENGINEERING",
+        "question": "How do we put this into operation?",
+        "text": "Design, engineering, integrations, automation and development working together.",
+        "focus": "Implementation",
+        "badge": "Solution built",
+        "deliverables": [
+          "Design and interface",
+          "Integrations and automations",
+          "Code ready to evolve"
+        ]
       },
       {
-        title: "We evolve",
-        text: "After delivery, we stay beside the business to fix, improve and build the next step.",
-      },
-    ],
-    closing:
-      "We don't just deliver a project. We build the foundation for the business's next stage.",
+        "label": "Evolve",
+        "discipline": "CONTINUITY",
+        "question": "What comes after delivery?",
+        "text": "After delivery, we stay beside the business to fix, improve and build the next step.",
+        "focus": "Continuous evolution",
+        "badge": "Continuous evolution",
+        "deliverables": [
+          "Adjustments and improvements",
+          "Next features",
+          "Follow-up"
+        ]
+      }
+    ]
   },
 
   cases: {
     eyebrow: "Cases",
     title: "Technology already in operation.",
     lead: "We'd rather show what we've built than promise what we could do.",
+    count: "projects",
     cta: "See the project",
     all: "See all projects",
     items: {
@@ -234,6 +291,7 @@ export default {
       "see technology as an investment;",
       "are looking for a long-term partner to build with.",
     ],
+    bridgeLabel: "Conversation",
     closing:
       "If your business already works, but you know it could work much better, we probably have a conversation to have.",
     notFor:

@@ -40,7 +40,7 @@ test.describe("teclado e semântica", () => {
     await seed(context);
     await page.goto("/");
     await expect(page.locator("h1")).toHaveCount(1);
-    expect(await page.locator("main section h2").count()).toBeGreaterThanOrEqual(8);
+    expect(await page.locator("main section h2").count()).toBeGreaterThanOrEqual(7);
   });
 
   test("links externos avisam que abrem em nova aba", async ({ page, context }) => {
@@ -54,7 +54,7 @@ test.describe("teclado e semântica", () => {
   test("prefers-reduced-motion mantém o conteúdo visível", async ({ page, context }) => {
     await seed(context);
     await page.goto("/");
-    const opacity = await page.locator(".h-card").first().evaluate((el) => getComputedStyle(el).opacity);
+    const opacity = await page.locator(".why-principle-item").first().evaluate((el) => getComputedStyle(el).opacity);
     expect(opacity).toBe("1");
   });
 });

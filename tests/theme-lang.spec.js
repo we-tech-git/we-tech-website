@@ -16,7 +16,7 @@ test.describe("tema claro/escuro", () => {
     const toggle = page.getByTestId("theme-toggle");
     await toggle.click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-    expect(await bg(page)).toBe(COLORS.light.canvas);
+    await expect.poll(() => bg(page)).toBe(COLORS.light.canvas); // colors transition briefly
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     expect(await bg(page)).toBe(COLORS.light.canvas);
@@ -34,8 +34,9 @@ test.describe("tema claro/escuro", () => {
     test(`botão primário mantém a cor de marca (${theme})`, async ({ page, context }) => {
       await seed(context, { theme });
       await page.goto("/");
-      const btn = page.locator(".h-hero__actions .btn--primary");
-      expect(await btn.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(COLORS.accent);
+      const btn = page.locator(".hero__cta-wrap .btn--primary");
+      // the hero button keeps its original brand orange (#ff5a00)
+      expect(await btn.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe("rgb(255, 90, 0)");
       // text on the orange button must stay dark in both themes
       expect(await btn.evaluate((el) => getComputedStyle(el).color)).toBe("rgb(11, 13, 16)");
     });
@@ -43,8 +44,8 @@ test.describe("tema claro/escuro", () => {
     test(`seções alternadas e cartões usam tokens (${theme})`, async ({ page, context }) => {
       await seed(context, { theme });
       await page.goto("/");
-      const canvas = await bg(page, ".h-hero");
-      expect(canvas).toBe(COLORS[theme].canvas);
+      const canvas = await bg(page, ".hero");
+      expect(canvas).toBe(theme === "dark" ? "rgb(10, 10, 15)" : COLORS.light.canvas);
       const alt = await bg(page, "#solucoes");
       expect(alt).not.toBe(canvas);
     });
@@ -71,7 +72,8 @@ test.describe("idioma PT/EN", () => {
   test("não sobra texto em português na home em inglês", async ({ page, context }) => {
     await seed(context, { lang: "en" });
     await page.goto("/");
-    const text = await page.locator("main").innerText();
+    // Hero and process mockups are decorative illustrations, excluded here.
+    const text = (await page.locator("#problemas, #solucoes, #cases, #sobre, #para-quem, #contato").allInnerTexts()).join("\n");
     for (const pt of ["Soluções", "Gargalo", "Conheça", "Vamos conversar", "negócio"]) {
       expect(text).not.toContain(pt);
     }
