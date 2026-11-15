@@ -43,7 +43,7 @@ export default function Footer() {
                 }
               }}
             >
-              <Logo size={20} />
+              <Logo size={22} />
               <span className="footer__brand-name">We Tech Hub</span>
             </Link>
 

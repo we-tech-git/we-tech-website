@@ -1,41 +1,32 @@
-export default function Logo({ size = 20 }) {
-  // Grid mark — 3x3, accent on key positions
-  // Pattern creates a recognizable "W" diagonal
-  const cells = [
-    1, 0, 1,
-    1, 1, 0,
-    0, 1, 0,
-  ];
-
-  const cellSize = size / 3;
-  const gap = 1.5;
+// Símbolo "wt" da marca We Tech (Figma "We Tech" → Marca → Símbolo).
+// O "w" fica sempre no laranja da marca; o "t" segue a cor do texto do tema
+// (claro no tema escuro, tinta no tema claro), como as versões "fundo escuro"
+// e "fundo claro" do Figma. Abaixo de 32px usa o traço mais grosso ("Pequeno").
+export default function Logo({ size = 24 }) {
+  const stroke = size < 32 ? 14 : 11;
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox="0 0 100 100"
       fill="none"
       aria-hidden="true"
       style={{ flexShrink: 0 }}
     >
-      {cells.map((active, i) => {
-        const col = i % 3;
-        const row = Math.floor(i / 3);
-        const s = cellSize - gap;
-        return (
-          <rect
-            key={i}
-            x={col * cellSize + gap / 2}
-            y={row * cellSize + gap / 2}
-            width={s}
-            height={s}
-            rx={1}
-            fill={active ? "var(--accent, #FF4D00)" : "var(--text-faint, #5A5F6B)"}
-            opacity={active ? 1 : 0.35}
-          />
-        );
-      })}
+      <path
+        d="M8 34L21 76L35 44L49 76L62 34H92"
+        stroke="#F0602A"
+        strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M77 16V64C77 73.3333 81.6667 78 91 78"
+        stroke="var(--text-primary, #F2F1EC)"
+        strokeWidth={stroke}
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

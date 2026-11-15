@@ -52,10 +52,10 @@
   --text-faint:       #7E8594;
 
   /* Accent */
-  --accent:           #FF4D00;
-  --accent-hover:     #E64500;
-  --accent-subtle:    rgba(255, 77, 0, 0.12);
-  --accent-text:      #FF6A2B;
+  --accent:           #F0602A;
+  --accent-hover:     #D9521F;
+  --accent-subtle:    rgba(240, 96, 42, 0.12);
+  --accent-text:      #F47A4C;
 
   /* Borders & Hairlines */
   --hairline:         rgba(255, 255, 255, 0.08);
@@ -468,7 +468,7 @@ img, svg, video {
   border-color: var(--accent);
   color: var(--accent-text);
   transform: translate(2px, -2px) scale(1.06);
-  box-shadow: 0 0 12px rgba(255, 77, 0, 0.3);
+  box-shadow: 0 0 12px rgba(240, 96, 42, 0.3);
 }
 
 /* 3. Section Bridge Flow Beacon (down vector) */
@@ -478,8 +478,8 @@ img, svg, video {
   justify-content: center;
   padding: 4px 8px;
   border-radius: 9999px;
-  background: rgba(255, 77, 0, 0.08);
-  border: 1px solid rgba(255, 77, 0, 0.28);
+  background: rgba(240, 96, 42, 0.08);
+  border: 1px solid rgba(240, 96, 42, 0.28);
   color: var(--accent-text);
   margin-left: var(--space-2);
   flex-shrink: 0;
@@ -491,10 +491,10 @@ img, svg, video {
 }
 
 .strata-bridge-link:hover .strata-bridge-indicator {
-  background: rgba(255, 77, 0, 0.18);
+  background: rgba(240, 96, 42, 0.18);
   border-color: var(--accent);
   transform: translateY(3px);
-  box-shadow: 0 4px 14px rgba(255, 77, 0, 0.3);
+  box-shadow: 0 4px 14px rgba(240, 96, 42, 0.3);
 }
 
 /* 4. Fronts Action Badge (Tech / Performance engagement cards) */
@@ -521,7 +521,7 @@ img, svg, video {
   border-color: var(--accent);
   color: var(--accent-text);
   transform: translateX(4px);
-  box-shadow: 0 0 12px rgba(255, 77, 0, 0.25);
+  box-shadow: 0 0 12px rgba(240, 96, 42, 0.25);
 }
 
 .fronts-integrated-action-btn .fronts-cta-badge {
@@ -1132,14 +1132,14 @@ img, svg, video {
 }
 
 .hero__primary-btn {
-  background: #ff5a00 !important;
+  background: #F0602A !important;
   color: var(--on-accent, #0b0d10) !important;
-  box-shadow: 0 4px 22px -2px rgba(255, 90, 0, 0.38) !important;
+  box-shadow: 0 4px 22px -2px rgba(240, 96, 42, 0.38) !important;
 }
 
 .hero__primary-btn:hover {
   background: #e65100 !important;
-  box-shadow: 0 6px 26px -2px rgba(255, 90, 0, 0.5) !important;
+  box-shadow: 0 6px 26px -2px rgba(240, 96, 42, 0.5) !important;
   transform: translateY(-2px);
 }
 
@@ -1147,7 +1147,7 @@ img, svg, video {
    EDITORIAL DIGITAL PRODUCT ARTIFACT (Pure Vector / Code Hero Object)
    - Layer 1: Frame Substrate
    - Layer 2: Dominant Main Plane (Produto mass + Sistema rhythm)
-   - Layer 3: Single Orange Accent, docked to Produto (#FF4D00)
+   - Layer 3: Single Orange Accent, docked to Produto (#F0602A)
    - Layer 4: Integrated Lateral Extension (Evolução)
    ============================================================ */
 
@@ -1173,7 +1173,7 @@ img, svg, video {
   left: -24%;
   width: 135%;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 18%, rgba(255, 77, 0, 0.22) 75%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 18%, rgba(240, 96, 42, 0.22) 75%, transparent 100%);
   pointer-events: none;
   z-index: 0;
   transform-origin: left center;
@@ -1244,7 +1244,7 @@ img, svg, video {
   height: 7px;
   background: var(--accent);
   border-radius: 1.5px;
-  box-shadow: 0 0 8px rgba(255, 77, 0, 0.6);
+  box-shadow: 0 0 8px rgba(240, 96, 42, 0.6);
   flex-shrink: 0;
 }
 
@@ -1470,7 +1470,7 @@ img, svg, video {
   min-height: 106px;
   position: relative;
   border-radius: 5px;
-  background: linear-gradient(150deg, rgba(255, 77, 0, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(150deg, rgba(240, 96, 42, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   padding: 10px 12px;
@@ -1515,8 +1515,8 @@ img, svg, video {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  background: rgba(255, 77, 0, 0.12);
-  border: 1px solid rgba(255, 77, 0, 0.35);
+  background: rgba(240, 96, 42, 0.12);
+  border: 1px solid rgba(240, 96, 42, 0.35);
   border-radius: 4px;
   padding: 3px 6px;
 }
@@ -1525,7 +1525,7 @@ img, svg, video {
   font-family: var(--font-mono, monospace);
   font-size: 0.72rem;
   font-weight: 800;
-  color: #FF8547;
+  color: #F58A5F;
 }
 
 .ea-prod-metric-lbl {
@@ -1599,10 +1599,10 @@ img, svg, video {
 
 @keyframes chartDotGlow {
   0%, 100% {
-    filter: drop-shadow(0 0 3px #FF5A00);
+    filter: drop-shadow(0 0 3px #F0602A);
   }
   50% {
-    filter: drop-shadow(0 0 8px #FF5A00);
+    filter: drop-shadow(0 0 8px #F0602A);
   }
 }
 
@@ -1627,7 +1627,7 @@ img, svg, video {
   letter-spacing: 0.06em;
   color: var(--on-accent, #0b0d10);
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(255, 77, 0, 0.4);
+  box-shadow: 0 4px 14px rgba(240, 96, 42, 0.4);
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1636,7 +1636,7 @@ img, svg, video {
 
 .ea-prod-action-btn:hover {
   transform: translateY(-1.5px);
-  box-shadow: 0 6px 20px rgba(255, 90, 0, 0.65), 0 0 12px rgba(255, 90, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(240, 96, 42, 0.65), 0 0 12px rgba(240, 96, 42, 0.3);
   filter: brightness(1.08);
 }
 
@@ -1652,14 +1652,14 @@ img, svg, video {
 
 /* Narrativa de Conversão: Ao interagir com o botão, a engine de conversão inteira responde */
 .ea-prod-hero-stage:has(.ea-prod-action-btn:hover) .ea-chart-base-curve {
-  filter: drop-shadow(0 0 8px #FF5A00);
+  filter: drop-shadow(0 0 8px #F0602A);
   stroke-width: 2.6;
 }
 
 .ea-prod-hero-stage:has(.ea-prod-action-btn:hover) .ea-prod-metric-badge {
   transform: scale(1.05);
-  border-color: rgba(255, 90, 0, 0.6);
-  box-shadow: 0 0 14px rgba(255, 90, 0, 0.3);
+  border-color: rgba(240, 96, 42, 0.6);
+  box-shadow: 0 0 14px rgba(240, 96, 42, 0.3);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -1845,9 +1845,9 @@ img, svg, video {
   font-family: var(--font-mono, monospace);
   font-size: 0.52rem;
   font-weight: 700;
-  color: #FF8547;
-  background: rgba(255, 77, 0, 0.12);
-  border: 1px solid rgba(255, 77, 0, 0.3);
+  color: #F58A5F;
+  background: rgba(240, 96, 42, 0.12);
+  border: 1px solid rgba(240, 96, 42, 0.3);
   padding: 1px 4px;
   border-radius: 2px;
 }
@@ -1881,9 +1881,9 @@ img, svg, video {
 }
 
 .ea-sys-chip--accent {
-  color: #FF8547;
-  border-color: rgba(255, 77, 0, 0.25);
-  background: rgba(255, 77, 0, 0.06);
+  color: #F58A5F;
+  border-color: rgba(240, 96, 42, 0.25);
+  background: rgba(240, 96, 42, 0.06);
 }
 
 .ea-sys-metric {
@@ -2061,9 +2061,9 @@ img, svg, video {
 }
 
 .ea-evo-card--scale {
-  background: rgba(255, 77, 0, 0.06);
-  border-color: rgba(255, 77, 0, 0.35);
-  box-shadow: 0 4px 14px rgba(255, 77, 0, 0.1);
+  background: rgba(240, 96, 42, 0.06);
+  border-color: rgba(240, 96, 42, 0.35);
+  box-shadow: 0 4px 14px rgba(240, 96, 42, 0.1);
 }
 
 .ea-evo-card--extend {
@@ -2083,7 +2083,7 @@ img, svg, video {
 }
 
 .ea-evo-card-badge--accent {
-  color: #FF8547;
+  color: #F58A5F;
 }
 
 .ea-evo-milestone-dot {
@@ -2096,7 +2096,7 @@ img, svg, video {
 
 .ea-evo-milestone-dot.active {
   background: var(--accent);
-  box-shadow: 0 0 6px rgba(255, 77, 0, 0.6);
+  box-shadow: 0 0 6px rgba(240, 96, 42, 0.6);
 }
 
 .ea-evo-milestone-dot.ghost {
@@ -2156,9 +2156,9 @@ img, svg, video {
 }
 
 .ea-evo-status-tag--active {
-  background: rgba(255, 90, 0, 0.15);
-  color: #FF8547;
-  border: 1px solid rgba(255, 90, 0, 0.3);
+  background: rgba(240, 96, 42, 0.15);
+  color: #F58A5F;
+  border: 1px solid rgba(240, 96, 42, 0.3);
 }
 
 .ea-evo-chips {
@@ -2182,9 +2182,9 @@ img, svg, video {
 }
 
 .ea-evo-chip--active {
-  background: rgba(255, 90, 0, 0.08);
-  border-color: rgba(255, 90, 0, 0.25);
-  color: #ff9d66;
+  background: rgba(240, 96, 42, 0.08);
+  border-color: rgba(240, 96, 42, 0.25);
+  color: #F79C75;
 }
 
 /* ============================================================
@@ -2217,7 +2217,7 @@ img, svg, video {
   background: radial-gradient(
     ellipse at 50% 50%,
     rgba(5, 10, 20, 0.95) 0%,
-    rgba(255, 90, 0, 0.08) 35%,
+    rgba(240, 96, 42, 0.08) 35%,
     rgba(56, 189, 248, 0.04) 65%,
     transparent 80%
   );
@@ -2276,15 +2276,15 @@ img, svg, video {
   left: 20%;
   top: 32%;
   transform: translate3d(0, 0, 65px) rotateX(90deg);
-  background: linear-gradient(180deg, rgba(255, 90, 0, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
-  box-shadow: 0 0 10px rgba(255, 90, 0, 0.6);
+  background: linear-gradient(180deg, rgba(240, 96, 42, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
+  box-shadow: 0 0 10px rgba(240, 96, 42, 0.6);
 }
 
 .exploded-conduit--center {
   left: 55%;
   top: 45%;
   transform: translate3d(0, 0, 65px) rotateX(90deg);
-  background: linear-gradient(180deg, rgba(255, 90, 0, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
+  background: linear-gradient(180deg, rgba(240, 96, 42, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
 }
 
@@ -2292,7 +2292,7 @@ img, svg, video {
   left: 82%;
   top: 36%;
   transform: translate3d(0, 0, 65px) rotateX(90deg);
-  background: linear-gradient(180deg, rgba(255, 90, 0, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
+  background: linear-gradient(180deg, rgba(240, 96, 42, 0.9) 0%, rgba(56, 189, 248, 0.8) 50%, rgba(34, 197, 94, 0.9) 100%);
   box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
 }
 
@@ -2336,7 +2336,7 @@ img, svg, video {
   transition: opacity 400ms ease;
   background: radial-gradient(
     440px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 90, 0, 0.09) 0%,
+    rgba(240, 96, 42, 0.09) 0%,
     rgba(56, 189, 248, 0.035) 45%,
     transparent 75%
   );
@@ -2451,8 +2451,8 @@ img, svg, video {
     transform: translate3d(-40px, -35px, 130px);
     opacity: 1;
     box-shadow: 0 32px 80px -15px rgba(0, 0, 0, 0.92),
-                0 0 0 1px rgba(255, 90, 0, 0.45),
-                0 15px 35px -8px rgba(255, 90, 0, 0.2);
+                0 0 0 1px rgba(240, 96, 42, 0.45),
+                0 15px 35px -8px rgba(240, 96, 42, 0.2);
   }
 
   /* Interatividade: focar em uma camada específica eleva-a para o primeiro plano em destaque */
@@ -2482,8 +2482,8 @@ img, svg, video {
     opacity: 1 !important;
     pointer-events: auto !important;
     box-shadow: 0 40px 90px -12px rgba(0, 0, 0, 0.96),
-                0 0 0 1px rgba(255, 90, 0, 0.5),
-                0 0 25px rgba(255, 90, 0, 0.3) !important;
+                0 0 0 1px rgba(240, 96, 42, 0.5),
+                0 0 25px rgba(240, 96, 42, 0.3) !important;
   }
 }
 
@@ -2540,8 +2540,8 @@ img, svg, video {
 }
 
 .exploded-badge__dot--ui {
-  background: #FF5A00;
-  box-shadow: 0 0 10px rgba(255, 90, 0, 0.9);
+  background: #F0602A;
+  box-shadow: 0 0 10px rgba(240, 96, 42, 0.9);
 }
 
 .exploded-badge__dot--logic {
@@ -2558,8 +2558,8 @@ img, svg, video {
 .exploded-layer--top .exploded-badge {
   top: -24px;
   left: 24px;
-  border-color: rgba(255, 90, 0, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 90, 0, 0.25);
+  border-color: rgba(240, 96, 42, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(240, 96, 42, 0.25);
 }
 
 .exploded-layer--top .exploded-badge::after {
@@ -2569,7 +2569,7 @@ img, svg, video {
   top: 100%;
   width: 1px;
   height: 12px;
-  background: linear-gradient(180deg, rgba(255, 90, 0, 0.6), transparent);
+  background: linear-gradient(180deg, rgba(240, 96, 42, 0.6), transparent);
 }
 
 /* Badge 2: Lógica / Componentes (Middle Layer) */
@@ -2641,8 +2641,8 @@ img, svg, video {
 
 /* Action Button in Running State */
 .ea-prod-action-btn--running {
-  background: linear-gradient(135deg, #FF5A00 0%, #FF8533 100%) !important;
-  box-shadow: 0 0 24px rgba(255, 90, 0, 0.75), 0 4px 14px rgba(255, 90, 0, 0.4) !important;
+  background: linear-gradient(135deg, #F0602A 0%, #F58552 100%) !important;
+  box-shadow: 0 0 24px rgba(240, 96, 42, 0.75), 0 4px 14px rgba(240, 96, 42, 0.4) !important;
   pointer-events: none;
 }
 
@@ -2680,21 +2680,21 @@ img, svg, video {
 
 /* Boosted Metric Badge */
 .ea-prod-metric-badge--sim-boost {
-  border-color: rgba(255, 90, 0, 0.6) !important;
-  background: rgba(255, 90, 0, 0.14) !important;
-  box-shadow: 0 0 18px rgba(255, 90, 0, 0.45) !important;
+  border-color: rgba(240, 96, 42, 0.6) !important;
+  background: rgba(240, 96, 42, 0.14) !important;
+  box-shadow: 0 0 18px rgba(240, 96, 42, 0.45) !important;
   transform: scale(1.05);
   transition: all 0.3s ease;
 }
 
 .ea-prod-metric-badge--sim-boost .ea-prod-metric-val {
-  color: #FFB380 !important;
-  text-shadow: 0 0 10px rgba(255, 90, 0, 0.8);
+  color: #F9B496 !important;
+  text-shadow: 0 0 10px rgba(240, 96, 42, 0.8);
 }
 
 /* Boosted Curve */
 .ea-chart-base-curve--sim {
-  filter: drop-shadow(0 0 10px #FF5A00);
+  filter: drop-shadow(0 0 10px #F0602A);
   stroke-width: 2.8px;
   transition: all 0.3s ease;
 }
@@ -2717,8 +2717,8 @@ img, svg, video {
 
 /* Simulation Diagnostic Strip in Bottom of Dashboard */
 .ea-datum-strip--sim {
-  border-top-color: rgba(255, 90, 0, 0.3) !important;
-  background: linear-gradient(90deg, rgba(255, 90, 0, 0.08) 0%, rgba(56, 189, 248, 0.04) 50%, rgba(0, 229, 117, 0.08) 100%);
+  border-top-color: rgba(240, 96, 42, 0.3) !important;
+  background: linear-gradient(90deg, rgba(240, 96, 42, 0.08) 0%, rgba(56, 189, 248, 0.04) 50%, rgba(0, 229, 117, 0.08) 100%);
   padding: 6px 10px !important;
   border-radius: 4px;
   animation: simBannerIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2746,8 +2746,8 @@ img, svg, video {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #FF5A00;
-  box-shadow: 0 0 8px #FF5A00;
+  background: #F0602A;
+  box-shadow: 0 0 8px #F0602A;
   animation: simDotPulse 1.2s infinite ease-in-out;
   flex-shrink: 0;
 }
@@ -3159,8 +3159,8 @@ img, svg, video {
   }
 
   .ea-mobile-tab__dot--ui {
-    background: #FF5A00;
-    box-shadow: 0 0 6px rgba(255, 90, 0, 0.7);
+    background: #F0602A;
+    box-shadow: 0 0 6px rgba(240, 96, 42, 0.7);
   }
 
   .ea-mobile-tab__dot--logic {
@@ -3174,10 +3174,10 @@ img, svg, video {
   }
 
   .ea-mobile-tab.is-active.ea-mobile-tab--ui {
-    background: rgba(255, 90, 0, 0.16);
-    border-color: rgba(255, 90, 0, 0.6);
+    background: rgba(240, 96, 42, 0.16);
+    border-color: rgba(240, 96, 42, 0.6);
     color: #FFFFFF;
-    box-shadow: 0 0 14px rgba(255, 90, 0, 0.25);
+    box-shadow: 0 0 14px rgba(240, 96, 42, 0.25);
   }
 
   .ea-mobile-tab.is-active.ea-mobile-tab--logic {
@@ -4873,7 +4873,7 @@ img, svg, video {
 .strata-capability-item.hovered {
   background: var(--surface-hover);
   color: var(--text-primary);
-  border-color: rgba(255, 77, 0, 0.2);
+  border-color: rgba(240, 96, 42, 0.2);
 }
 
 .strata-cap-code {
@@ -4912,7 +4912,7 @@ img, svg, video {
   outline: 1.5px solid var(--accent);
   outline-offset: -2px;
   border-radius: var(--radius-sm);
-  box-shadow: inset 0 0 0 4px rgba(255, 77, 0, 0.12);
+  box-shadow: inset 0 0 0 4px rgba(240, 96, 42, 0.12);
   transition: outline-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
 }
 
@@ -5725,8 +5725,8 @@ img, svg, video {
   font-size: 0.75rem;
   letter-spacing: var(--tracking-mono);
   color: var(--accent-text);
-  background: rgba(255, 77, 0, 0.08);
-  border: 1px solid rgba(255, 77, 0, 0.22);
+  background: rgba(240, 96, 42, 0.08);
+  border: 1px solid rgba(240, 96, 42, 0.22);
   padding: 5px 14px;
   border-radius: 20px;
   text-align: center;
@@ -5787,7 +5787,7 @@ img, svg, video {
 .fronts-panel--active {
   background: rgba(20, 24, 30, 0.95);
   border-color: var(--accent);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 77, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 24px rgba(240, 96, 42, 0.15);
   opacity: 1;
   filter: none;
 }
@@ -5799,14 +5799,14 @@ img, svg, video {
 
 .fronts-panel--active .fronts-panel-state-tag {
   color: var(--accent-text);
-  background: rgba(255, 77, 0, 0.12);
-  border-color: rgba(255, 77, 0, 0.3);
+  background: rgba(240, 96, 42, 0.12);
+  border-color: rgba(240, 96, 42, 0.3);
 }
 
 /* 2. SYNERGY / INTEGRATED STATE (Both active with coordinated pulse) */
 .fronts-panel--integrated {
   background: rgba(18, 22, 28, 0.88);
-  border-color: rgba(255, 77, 0, 0.35);
+  border-color: rgba(240, 96, 42, 0.35);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
   opacity: 1;
   filter: none;
@@ -5819,8 +5819,8 @@ img, svg, video {
 
 .fronts-panel--integrated .fronts-panel-state-tag {
   color: var(--accent-text);
-  background: rgba(255, 77, 0, 0.12);
-  border-color: rgba(255, 77, 0, 0.3);
+  background: rgba(240, 96, 42, 0.12);
+  border-color: rgba(240, 96, 42, 0.3);
 }
 
 /* 3. DIMMED STATE (When the other side is selected) */
@@ -5938,8 +5938,8 @@ img, svg, video {
 }
 
 .fronts-cap-row.is-synergy {
-  background: rgba(255, 77, 0, 0.08);
-  border-bottom-color: rgba(255, 77, 0, 0.35);
+  background: rgba(240, 96, 42, 0.08);
+  border-bottom-color: rgba(240, 96, 42, 0.35);
 }
 
 .fronts-cap-row.is-synergy .fronts-cap-title {
@@ -6092,22 +6092,22 @@ img, svg, video {
   color: #FFFFFF;
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(255, 77, 0, 0.65);
+  box-shadow: 0 0 20px rgba(240, 96, 42, 0.65);
   transform: scale(1.12);
 }
 
 .fronts-connector--integrated .fronts-connector-line {
-  background: linear-gradient(90deg, #ff4d00, #ff8547);
+  background: linear-gradient(90deg, #F0602A, #F58A5F);
   height: 2px;
-  box-shadow: 0 0 10px rgba(255, 77, 0, 0.7);
+  box-shadow: 0 0 10px rgba(240, 96, 42, 0.7);
   opacity: 1;
 }
 
 /* Connector in Tech-only Mode (Frente A): light up left line */
 .fronts-connector--a .fronts-connector-line--left {
-  background: linear-gradient(90deg, #ff4d00, #ff7a38);
+  background: linear-gradient(90deg, #F0602A, #F37A4A);
   height: 2px;
-  box-shadow: 0 0 10px rgba(255, 77, 0, 0.7);
+  box-shadow: 0 0 10px rgba(240, 96, 42, 0.7);
   opacity: 1;
 }
 
@@ -6120,17 +6120,17 @@ img, svg, video {
 
 .fronts-connector--a .fronts-connector-badge {
   color: var(--accent-text);
-  border-color: rgba(255, 77, 0, 0.45);
+  border-color: rgba(240, 96, 42, 0.45);
   background: var(--surface);
   transform: scale(1);
-  box-shadow: -3px 0 12px rgba(255, 77, 0, 0.25);
+  box-shadow: -3px 0 12px rgba(240, 96, 42, 0.25);
 }
 
 /* Connector in Performance-only Mode (Frente B): light up right line */
 .fronts-connector--b .fronts-connector-line--right {
-  background: linear-gradient(90deg, #ff7a38, #ff4d00);
+  background: linear-gradient(90deg, #F37A4A, #F0602A);
   height: 2px;
-  box-shadow: 0 0 10px rgba(255, 77, 0, 0.7);
+  box-shadow: 0 0 10px rgba(240, 96, 42, 0.7);
   opacity: 1;
 }
 
@@ -6143,10 +6143,10 @@ img, svg, video {
 
 .fronts-connector--b .fronts-connector-badge {
   color: var(--accent-text);
-  border-color: rgba(255, 77, 0, 0.45);
+  border-color: rgba(240, 96, 42, 0.45);
   background: var(--surface);
   transform: scale(1);
-  box-shadow: 3px 0 12px rgba(255, 77, 0, 0.25);
+  box-shadow: 3px 0 12px rgba(240, 96, 42, 0.25);
 }
 
 .fronts-connector--a:hover .fronts-connector-badge,
@@ -6154,7 +6154,7 @@ img, svg, video {
   border-color: var(--accent);
   color: var(--accent-text);
   transform: scale(1.08);
-  box-shadow: 0 0 14px rgba(255, 77, 0, 0.45);
+  box-shadow: 0 0 14px rgba(240, 96, 42, 0.45);
 }
 
 .fronts-connector--a:hover .fronts-connector-line--right,
@@ -6174,7 +6174,7 @@ img, svg, video {
   margin: 0 auto;
   background: rgba(13, 16, 21, 0.92);
   border: 1px solid var(--hairline-strong);
-  border-top: 1px solid rgba(255, 77, 0, 0.4);
+  border-top: 1px solid rgba(240, 96, 42, 0.4);
   border-radius: var(--radius-sm);
   padding: var(--space-3) var(--space-5);
   display: flex;
@@ -6215,7 +6215,7 @@ img, svg, video {
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(255, 77, 0, 0.35);
+  box-shadow: 0 4px 16px rgba(240, 96, 42, 0.35);
   white-space: nowrap;
   transition: all var(--duration-fast) var(--ease-out);
 }
@@ -6223,7 +6223,7 @@ img, svg, video {
 .fronts-integrated-action-btn:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
-  box-shadow: 0 6px 20px rgba(255, 77, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(240, 96, 42, 0.5);
   transform: translateY(-1px);
 }
 
@@ -6273,14 +6273,14 @@ img, svg, video {
   .fronts-connector--integrated .fronts-connector-line {
     width: 2px;
     height: calc(50% - 19px);
-    background: linear-gradient(180deg, #ff4d00, #ff8547);
+    background: linear-gradient(180deg, #F0602A, #F58A5F);
   }
 
   .fronts-connector--a .fronts-connector-line--left {
     width: 2px;
     height: calc(50% - 19px);
-    background: linear-gradient(180deg, #ff4d00, #ff7a38);
-    box-shadow: 0 0 10px rgba(255, 77, 0, 0.7);
+    background: linear-gradient(180deg, #F0602A, #F37A4A);
+    box-shadow: 0 0 10px rgba(240, 96, 42, 0.7);
     opacity: 1;
   }
 
@@ -6292,8 +6292,8 @@ img, svg, video {
   .fronts-connector--b .fronts-connector-line--right {
     width: 2px;
     height: calc(50% - 19px);
-    background: linear-gradient(180deg, #ff7a38, #ff4d00);
-    box-shadow: 0 0 10px rgba(255, 77, 0, 0.7);
+    background: linear-gradient(180deg, #F37A4A, #F0602A);
+    box-shadow: 0 0 10px rgba(240, 96, 42, 0.7);
     opacity: 1;
   }
 
@@ -6535,7 +6535,7 @@ img, svg, video {
 
 .protocol-meter-tick.active {
   background: var(--accent);
-  box-shadow: 0 0 6px rgba(255, 77, 0, 0.5);
+  box-shadow: 0 0 6px rgba(240, 96, 42, 0.5);
 }
 
 .protocol-stage-list {
@@ -6644,8 +6644,8 @@ img, svg, video {
 
 .protocol-stage-btn.active .protocol-stage-discipline {
   color: var(--accent-text);
-  background: rgba(255, 77, 0, 0.12);
-  border-color: rgba(255, 77, 0, 0.3);
+  background: rgba(240, 96, 42, 0.12);
+  border-color: rgba(240, 96, 42, 0.3);
 }
 
 .protocol-stage-check {
@@ -6656,17 +6656,17 @@ img, svg, video {
 }
 
 .protocol-stage-btn.active {
-  background: rgba(255, 77, 0, 0.07);
-  border-color: rgba(255, 77, 0, 0.22);
+  background: rgba(240, 96, 42, 0.07);
+  border-color: rgba(240, 96, 42, 0.22);
   color: var(--text-primary);
-  box-shadow: inset 0 0 16px rgba(255, 77, 0, 0.05);
+  box-shadow: inset 0 0 16px rgba(240, 96, 42, 0.05);
 }
 
 /* 2. ACTIVE STEP TECHNICAL DOSSIER */
 .protocol-dossier-card {
   background: rgba(13, 16, 21, 0.85);
   border: 1px solid var(--hairline-strong);
-  border-top: 1px solid rgba(255, 77, 0, 0.35);
+  border-top: 1px solid rgba(240, 96, 42, 0.35);
   border-radius: var(--radius-sm);
   padding: var(--space-4);
   display: flex;
@@ -6867,7 +6867,7 @@ img, svg, video {
   justify-content: center;
   padding: var(--space-5);
   position: relative;
-  background: radial-gradient(circle at center, rgba(255, 77, 0, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(240, 96, 42, 0.04) 0%, transparent 70%);
 }
 
 /* --- PROTOCOL ARTIFACT SVG STYLING --- */
@@ -6957,8 +6957,8 @@ img, svg, video {
   color: var(--accent-text);
   padding: 2px 8px;
   border-radius: 2px;
-  background: rgba(255, 77, 0, 0.1);
-  border: 1px solid rgba(255, 77, 0, 0.25);
+  background: rgba(240, 96, 42, 0.1);
+  border: 1px solid rgba(240, 96, 42, 0.25);
 }
 
 .protocol-mobile-focus-bar {
