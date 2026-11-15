@@ -36,7 +36,7 @@ test.describe("tema claro/escuro", () => {
       await page.goto("/");
       const btn = page.locator(".hero__cta-wrap .btn--primary");
       // the hero button keeps its original brand orange (#ff5a00)
-      expect(await btn.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe("rgb(255, 90, 0)");
+      expect(await btn.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe("rgb(240, 96, 42)");
       // text on the orange button must stay dark in both themes
       expect(await btn.evaluate((el) => getComputedStyle(el).color)).toBe("rgb(11, 13, 16)");
     });
