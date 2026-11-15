@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
    2D Editorial System Artifact:
    - Layer 1: Frame Substrate
    - Layer 2: Main Editorial Plane (Produto dominant / Sistema secondary)
-   - Layer 3: Single Orange Accent (attached to Produto, #FF4D00)
+   - Layer 3: Single Orange Accent (attached to Produto, #F0602A)
    - Layer 4: Lateral Extension (Evolução)
    - Layer 5: Structural Datum Strip
    --------------------------------------------------------------- */
@@ -1271,23 +1271,23 @@ export default function Hero() {
                                 <svg className="ea-prod-chart-svg" viewBox="0 0 320 64" fill="none" preserveAspectRatio="none">
                                   <defs>
                                     <linearGradient id="eaChartGrad" x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="0%" stopColor="#FF5A00" stopOpacity="0.25" />
-                                      <stop offset="100%" stopColor="#FF5A00" stopOpacity="0.0" />
+                                      <stop offset="0%" stopColor="#F0602A" stopOpacity="0.25" />
+                                      <stop offset="100%" stopColor="#F0602A" stopOpacity="0.0" />
                                     </linearGradient>
                                     <linearGradient id="eaChartBeamGrad" x1="0" y1="0" x2="1" y2="0">
-                                      <stop offset="0%" stopColor="#FF5A00" stopOpacity="0" />
+                                      <stop offset="0%" stopColor="#F0602A" stopOpacity="0" />
                                       <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.9" />
-                                      <stop offset="100%" stopColor="#FF5A00" stopOpacity="0" />
+                                      <stop offset="100%" stopColor="#F0602A" stopOpacity="0" />
                                     </linearGradient>
                                   </defs>
                                   <line x1="0" y1="18" x2="320" y2="18" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
                                   <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
                                   <path d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4 L 320 64 L 0 64 Z" fill="url(#eaChartGrad)" />
-                                  <path className={`ea-chart-base-curve ${simState !== "idle" ? "ea-chart-base-curve--sim" : ""}`} d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="#FF5A00" strokeWidth="2" fill="none" />
+                                  <path className={`ea-chart-base-curve ${simState !== "idle" ? "ea-chart-base-curve--sim" : ""}`} d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="#F0602A" strokeWidth="2" fill="none" />
                                   <path className="ea-chart-beam-curve" d="M 0 54 Q 60 50 110 38 T 210 20 T 280 8 L 320 4" stroke="url(#eaChartBeamGrad)" strokeWidth="2.5" fill="none" />
-                                  <circle cx="210" cy="20" r="3" fill="#FFFFFF" stroke="#FF5A00" strokeWidth="1.5" />
-                                  <circle cx="280" cy="8" r="8" className="ea-chart-ping-ring" fill="rgba(255, 90, 0, 0.3)" />
-                                  <circle cx="280" cy="8" r="3.5" className="ea-chart-active-dot" fill="#FFFFFF" stroke="#FF5A00" strokeWidth="1.8" />
+                                  <circle cx="210" cy="20" r="3" fill="#FFFFFF" stroke="#F0602A" strokeWidth="1.5" />
+                                  <circle cx="280" cy="8" r="8" className="ea-chart-ping-ring" fill="rgba(240, 96, 42, 0.3)" />
+                                  <circle cx="280" cy="8" r="3.5" className="ea-chart-active-dot" fill="#FFFFFF" stroke="#F0602A" strokeWidth="1.8" />
                                 </svg>
                               </div>
 
@@ -1328,7 +1328,7 @@ export default function Hero() {
                                 <span className="ea-prod-card-tag">36 TOKENS</span>
                               </div>
                               <div className="ea-prod-card-tokens">
-                                <span className="ea-token-dot" style={{ background: "#FF5A00" }} />
+                                <span className="ea-token-dot" style={{ background: "#F0602A" }} />
                                 <span className="ea-token-dot" style={{ background: "#FFFFFF" }} />
                                 <span className="ea-token-dot" style={{ background: "#8A99AD" }} />
                                 <span className="ea-token-dot" style={{ background: "#1F2937" }} />

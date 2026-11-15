@@ -25,10 +25,10 @@
   --text-faint: #5d6572;
 
   /* Accent: the brand orange stays for fills; text uses a darker shade */
-  --accent: #ff4d00;
-  --accent-hover: #e64500;
-  --accent-subtle: rgba(255, 77, 0, 0.1);
-  --accent-text: #b43800;
+  --accent: #F0602A;
+  --accent-hover: #d9521f;
+  --accent-subtle: rgba(240, 96, 42, 0.1);
+  --accent-text: #a83c14;
   --on-accent: #0b0d10;
 
   /* Hairlines */
